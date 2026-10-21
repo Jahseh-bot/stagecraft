@@ -1,31 +1,52 @@
 ---
 title: 版本与迁移
-description: Stagecraft Skills-first 零基础教程：版本与迁移。
+description: 更新项目里已安装的 Skills，区分 GitHub 源码、npm 版本和仓库维护命令。
 ---
 
 # 版本与迁移
 
-> 版本说明：下方 npm 0.4.1 命令仅在该版本发布后可用。当前新版 Skills 请通过 `npx skills add Jahseh-bot/stagecraft` 安装；已有安装运行 `npx skills update` 后重新加载。npm 已发布版本仍为 0.4.0，不含本页新版交互规则。
+## 普通用户：更新已安装的 Skills
 
-
-## 当前版本状态
-
-0.4.1 是当前源码版本，npm 发布尚未完成；npm 当前完整版本为 0.4.0。0.3.0 是旧 runner；0.3.1 发布中断，仅 architect 已上传。
-
-推荐固定版本安装，方便团队成员使用相同技能：
+本教程使用 GitHub 当前版本。先保存产品项目的代码和需求，备份自己改过的技能文件，再在当初安装 Skills 的项目目录运行：
 
 ```sh
-npx --yes @gaaraa/build@0.4.1 init --agent codex --dir "/目标项目路径"
+npx skills check
+npx skills update
 ```
 
-检查可用版本可运行 `npm view @gaaraa/build version --registry=https://registry.npmjs.org`。升级时将安装命令中的版本号替换为目标版本。
+`update` 会检查并更新安装工具登记的 Skills，可能包含你安装的其他来源，阅读输出后确认本次实际更新了什么。更新后重新加载宿主技能或新开项目会话，请 agent 列出读取的 Stagecraft 入口与路径。
 
-## 从旧 runner 迁移
+这更新的是方法文件，不会自动修改产品代码、批准新成果或重新部署。继续已有任务时，要求 agent 读取原工作流，检查新版方法对当前任务和证据的影响。
 
-保留原 `.stagecraft/runs`，用原版本恢复旧任务，或让当前 agent 读取其中 PRD、决定和报告作为新 Skill 的输入。新工作流写到 `.stagecraft/workflows`，不修改旧 runner 控制状态。
+## 以前通过 npm 阶段包安装
 
-已经安装过同名 Skill 时先备份自定义内容；安装器会拒绝静默覆盖。团队协作时固定技能来源版本，交接中记录版本和实际能力，不把换宿主等同于全部验证仍有效。
+npm 安装器复制的文件不一定登记在通用 skills CLI 的来源记录中。如果 `npx skills update` 没有识别到 Stagecraft：
 
-## 获取关键方案确认规则
+1. 记下旧 Skill 目录，备份自己的改动。
+2. 把旧的七个 Stagecraft 技能目录移出宿主扫描位置，保留备份；不要删除产品源码或 `.stagecraft`。
+3. 在产品项目目录运行 `npx skills add Jahseh-bot/stagecraft`，选择需要的阶段和宿主。
+4. 重新加载后核对实际读取路径，避免同时加载项目版与全局旧版。
 
-0.4.0 没有本次完整的关键方案确认规则，请更新到 0.4.1。通过通用 skills CLI 安装的用户可在项目目录运行 `npx skills update`，然后重新加载技能。通过阶段 npm 包安装的用户先备份原 Skill 的自定义修改，将旧目录移出宿主的 skills 目录，再用本指南的 0.4.1 安装命令重新安装所需阶段。安装器不会静默覆盖不同内容。
+安装冲突时先比较文件，不盲目强制覆盖。
+
+## 当前版本状态与固定来源
+
+2026-10-21 核对 npm 时，阶段包最新发布版仍为 0.4.0；0.4.1 是当前源码版本。官网新增评审和方法升级教程对应 GitHub 源码，不承诺 0.4.0 具备同样行为。查看注册表版本：
+
+```sh
+npm view @gaaraa/build version --registry=https://registry.npmjs.org
+```
+
+团队需要完全复现时，记录所安装的 Stagecraft 提交、来源与安装输出，并使用经团队核验的固定提交副本；不要把持续变化的 main 当成固定版本。未来 npm 发布新版后，以[更新记录](/changelog/)中的实际发布状态为准。
+
+## 维护者：更新 Stagecraft 内置三方方法
+
+`npm run update-skills` 和 `npm run upgrade-skills` 是 **Stagecraft 源码仓库**的维护命令，不是在你的产品项目里运行的通用更新命令。
+
+前者追踪已登记来源，后者搜索替代候选。候选可能评分更高却不适合原职责，仍需要内容复核。详见[三方 Skills 维护](./skill-maintenance)。
+
+## 从旧 runner 任务迁移
+
+旧 `.stagecraft/runs` 保留原样，用创建该任务的版本恢复，或把其中的需求、决定和报告作为新 Skills 输入。新工作流位于 `.stagecraft/workflows`，不能把旧状态文件直接复制进去当作已验收成果。
+
+0.3.0 是旧 runner；0.3.1 曾部分发布，不作为当前完整安装路线。旧命令集中在 [CLI 兼容参考](/cli/#legacy-runner)。

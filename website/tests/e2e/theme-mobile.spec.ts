@@ -34,7 +34,7 @@ test('手机菜单、文档侧栏、长内容和减少动态效果可用', async
   await page.locator('.VPNavScreen').getByRole('link', { name: '指南', exact: true }).click()
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('什么是 Stagecraft')
   await page.getByRole('button', { name: '文档导航' }).click()
-  await page.getByRole('link', { name: '创建需求说明', exact: true }).click()
+  await page.getByRole('navigation', { name: 'Sidebar Navigation' }).getByRole('link', { name: '创建需求说明', exact: true }).click()
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('创建需求说明')
   for (const path of ['/', '/guide/requirements.html', '/guide/confirmation.html', '/cli/']) {
     await page.goto(path)

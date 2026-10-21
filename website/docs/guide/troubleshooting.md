@@ -5,20 +5,21 @@ description: Stagecraft Skills-first 零基础教程：故障排查与平台说�
 
 # 故障排查与平台说明
 
-> 版本说明：下方 npm 0.4.1 命令仅在该版本发布后可用。当前新版 Skills 请通过 `npx skills add Jahseh-bot/stagecraft` 安装；已有安装运行 `npx skills update` 后重新加载。npm 已发布版本仍为 0.4.0，不含本页新版交互规则。
-
-
 ## 常见问题与下一步
 
 | 现象 | 处理 |
 | --- | --- |
-| 找不到 node | 安装 Node.js 22+，重新打开终端 |
+| 找不到 node | 安装 Node.js 22.20.0 或更高版本，重新打开终端 |
+| Git 不存在或安装无法获取来源 | 运行 `git --version` 检查 Git；确认能访问 npm 和 GitHub，安装后重开终端 |
 | 找不到 Skill | 检查 --agent 与宿主一致；重载项目；让 agent 直接读取安装后的 SKILL.md |
-| npm 下载 0.4.1 返回 404 | 检查包名及版本；若使用镜像源，命令改为 `npx --yes --registry=https://registry.npmjs.org @gaaraa/build@0.4.1 init --agent codex --dir "目标项目路径"` 后重试 |
+| npm 下载 0.4.1 返回 404 | 截至 2026-10-21 该版本尚未发布；改用 `npx skills add Jahseh-bot/stagecraft` 安装当前 GitHub Skills，换镜像不能解决未发布版本 |
 | 安装提示不同内容 | 原有技能可能被修改；先备份和对比，不强制覆盖 |
 | 提示符后输入“是”报错 | 系统终端不是 agent 对话框。新版在 agent 会话直接回答 |
 | workflow locked | 检查占用者与进程是否仍运行；不要自动删除活跃锁 |
 | 验证工具不可用 | 补充环境或权限；agent 保留 blocked/partial，不能声称通过 |
+| 产品目录运行 update-skills 提示 Missing script | 这是 Stagecraft 源码仓库维护命令；普通用户运行 `npx skills update` |
+| 安装更新了但仍用旧规则 | 检查项目与全局是否各有一份旧技能；重新加载，让 agent 报告实际读取的路径 |
+| 推送完成但地址打不开 | 检查部署流水线和本次运行版本；让 deploy 阶段继续验证，不把 Git 推送当上线完成 |
 | 下一 Skill 没安装 | 安装该阶段并读取已有交接，不需重做已完成工作 |
 
 ## Windows、macOS 和 Linux

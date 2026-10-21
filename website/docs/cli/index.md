@@ -1,26 +1,55 @@
 ---
 title: CLI 参考
-description: Skills 安装器与可选交接助手；旧 runner 兼容入口。
+description: 当前 Skills 安装、用户更新、仓库维护命令，以及旧 runner 的独立兼容参考。
 ---
 
 # CLI 参考
 
-## Skills 安装器
+## 当前使用方式
 
-新版默认在 coding agent 会话中使用技能。CLI 负责复制技能，不运行模型。
+在你的产品项目终端安装，在 agent 会话里调用：
 
 ```sh
-npx --yes @gaaraa/build@0.4.1 init --agent codex --dir ./my-project
-npx --yes @gaaraa/test@0.4.1 init --skills-dir .custom/skills --dir ./my-project --dry-run
+npx skills add Jahseh-bot/stagecraft
+npx skills check
+npx skills update
 ```
 
-`--agent` 支持 codex、claude、cursor、copilot、gemini、opencode、generic。`--skills-dir` 与 `--agent` 二选一；`--dry-run` 只预览。不同内容冲突拒绝覆盖。
+以上工具负责安装或更新方法文件。安装后把[完整提示词](/guide/first-run#prd-to-deploy)发给 agent 才会开始产品工作。参见[技能安装](/guide/packages)了解阶段与宿主选择。
+
+## Stagecraft 仓库维护命令
+
+下面的命令在 Stagecraft 源码仓库执行，不在普通产品目录执行：
+
+```sh
+npm run update-skills -- --dry-run
+npm run upgrade-skills -- --dry-run
+npm run audit:skills
+```
+
+去掉 `--dry-run` 会应用合格变更并验证。维护程序退出码：0 表示运行无未解决错误（仍须看报告是否有变化），1 表示操作或验证失败，2 表示有未解决条目或部分成功。与下面旧 runner 的退出码含义不同。其他选项及恢复见[维护教程](/guide/skill-maintenance)。
+
+## npm 阶段安装器
+
+源码提供 `init`，**init 只安装技能，不会执行模型或生成应用**。截至 2026-10-21，npm 发布版为 0.4.0；要使用当前教程功能，请用 GitHub 安装方式。旧版复现示例：
+
+```sh
+npx --yes @gaaraa/build@0.4.0 init --agent codex --dir ./my-project
+```
+
+该安装器的 `--agent` 支持 codex、claude、cursor、copilot、gemini、opencode、generic；`--skills-dir` 与它二选一，`--dry-run` 只预览，不同内容冲突拒绝覆盖。这不是通用 skills CLI 的参数表。
 
 ## 可选交接助手
 
-由 agent 调用技能内的 `scripts/handoff.mjs`，支持 init、status、begin、submit、review、complete、block，维护 `.stagecraft/workflows`。v2 在 submit 后保存产物快照并等待用户评审，review 记录实际意见，complete 仅接受已批准且未变化的提交。用户不需要填写状态文件或答案 JSON。
+agent 可调用技能内 `scripts/handoff.mjs` 的 init、status、begin、submit、review、complete、block。v2 提交后保存内容快照，review 记录真实用户意见，complete 检查评审和文件是否仍有效。协议仍需 agent 实际遵守；没有调用助手时不能声称助手已强制检查。
 
-## 旧 runner 兼容参考
+用户不需要填写状态 JSON，也不要自行运行 review 伪造评审。具体使用见[产物追溯](/guide/artifact-reviews)。
+
+## 旧 runner 兼容参考 {#legacy-runner}
+
+<details>
+<summary>展开旧任务命令；新项目不需要这部分</summary>
+
 
 以下 start、answer、resume 等命令供旧任务使用，要求已登录的 Codex CLI。新版 Skills 不依赖这些执行入口；旧运行器 init 只安装技能，不等于 agent 已完成任务。旧 JSON 协议仍接受 answers.json。0.4.1 源码兼容入口额外支持终端交互与 --json。
 
@@ -112,7 +141,7 @@ npx --yes @gaaraa/runner@0.3.0 status --run "$RUN_DIR"
 - 暂停：按一次 `Ctrl + C`，等待退出，再用同版本 `resume`。
 - 完成：阅读运行目录中的 `delivery.md`，按实际启动 argv 和 Smoke URL 打开应用。
 
-完整文件创建操作见[回答问题与确认方案](/guide/confirmation)。
+以上答案文件只用于旧 runner。新版在 agent 对话中回答，见[方案确认](/guide/confirmation)。
 
 ## 常用退出码
 
@@ -151,3 +180,5 @@ npx --yes @gaaraa/runner@0.3.0 status --run "$RUN_DIR"
 - 健康检查失败：保留服务和日志，不自动清理、回滚或重复发布。
 
 成功后按 `delivery.md` 的 `Scoped cleanup argv` 清理。仅验证单机服务，不代表生产可用性证明；审批与执行之间应避免改动源码、外部环境或镜像标签。更多步骤见[本机部署](/guide/deployment)。
+
+</details>

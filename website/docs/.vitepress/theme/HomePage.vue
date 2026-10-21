@@ -16,15 +16,15 @@ import StageFlow from './StageFlow.vue'
       <div class="workbench" aria-label="终端命令与开发流程示意">
         <div class="terminal">
           <div class="terminal-bar"><span class="terminal-mark" aria-hidden="true">›_</span><span>在 agent 会话中直接使用</span><span class="terminal-label">对话示例</span></div>
-          <pre tabindex="0" aria-label="Stagecraft 启动命令"><code>使用 stagecraft-build 和 stagecraft-test，
-把 PRD.md 实现成可运行应用。
+          <pre tabindex="0" aria-label="Stagecraft 启动命令"><code>使用 Stagecraft 七阶段 Skills，
+先评审 PRD.md，再实现可运行应用。
 关键方案先给选项与理由，等我确认。
 逐环节先讨论：推荐选项在前，也可自由补充。
-确认后执行，再准备下一环节方案。</code></pre>
+成果保存并展示，评审后继续。</code></pre>
           <p class="terminal-note">“我想做一个中文温度换算网页。”</p>
         </div>
         <div class="flow-panel"><StageFlow compact /></div>
-        <div class="workbench-foot"><span class="status-dot" aria-hidden="true"></span>关键方向先选方案，确认后自动推进。</div>
+        <div class="workbench-foot"><span class="status-dot" aria-hidden="true"></span>方案先选择，成果要评审，记录可追溯。</div>
       </div>
     </section>
 
@@ -39,9 +39,9 @@ import StageFlow from './StageFlow.vue'
 
     <section class="entry-section" aria-labelledby="entry-title">
       <h2 id="entry-title">从你现在的位置开始</h2>
-      <p class="section-description">新想法、已有项目，或准备在本机持续运行的应用。</p>
+      <p class="section-description">新想法、已有项目，或准备发布上线的应用。</p>
       <div class="entry-list">
-        <a class="entry" :href="withBase('/guide/requirements.html')"><span class="entry-symbol" aria-hidden="true">＋</span><div><h3>我有一个想法</h3><p>写下需求，在 agent 内调用开发和测试技能。</p></div><span class="entry-link">从需求开始</span></a>
+        <a class="entry" :href="withBase('/guide/requirements.html')"><span class="entry-symbol" aria-hidden="true">＋</span><div><h3>我有一个想法</h3><p>从需求评审到设计、架构、实现与测试。</p></div><span class="entry-link">从需求开始</span></a>
         <a class="entry" :href="withBase('/guide/existing-project.html')"><span class="entry-symbol" aria-hidden="true">✓</span><div><h3>我有一个项目</h3><p>检查现有应用，选择只审计或允许修复。</p></div><span class="entry-link">进入测试</span></a>
         <a class="entry" :href="withBase('/guide/deployment.html')"><span class="entry-symbol" aria-hidden="true">▣</span><div><h3>我想保持应用运行</h3><p>在已授权目标发布，验证实际版本与访问地址。</p></div><span class="entry-link">了解部署验证</span></a>
       </div>
@@ -49,7 +49,7 @@ import StageFlow from './StageFlow.vue'
 
     <section class="getting-started" aria-labelledby="getting-started-title">
       <div><h2 id="getting-started-title">第一次打开终端？<br>我们从这里一起开始。</h2><p>跟着完整教程做一个温度换算网页。从安装技能到在 agent 中提出任务，每一步都有操作说明。</p><a class="primary" :href="withBase('/guide/preparation.html')">准备运行环境</a></div>
-      <ol class="reading-path"><li><a :href="withBase('/guide/preparation.html')">安装工具，检查连接</a><span>安装器、coding agent 和阶段技能</span></li><li><a :href="withBase('/guide/first-run.html')">在 agent 中开始任务</a><span>方案确认与自动交接</span></li><li><a :href="withBase('/guide/delivery.html')">找到结果，打开网页</a><span>阅读交付说明，亲手试一试</span></li></ol>
+      <ol class="reading-path"><li><a :href="withBase('/guide/preparation.html')">安装工具，检查连接</a><span>安装器、coding agent 和阶段技能</span></li><li><a :href="withBase('/guide/first-run.html')">在 agent 中开始任务</a><span>七阶段调用提示词与成果评审</span></li><li><a :href="withBase('/guide/delivery.html')">找到结果，打开网页</a><span>阅读交付说明，亲手试一试</span></li></ol>
     </section>
     <p class="scope-note">Stagecraft 使用当前 agent 的账号、工具和权限。能力取决于宿主与环境；安装技能不提供模型或托管服务。<a :href="withBase('/guide/troubleshooting.html')">查看平台支持与常见问题</a></p>
   </main>

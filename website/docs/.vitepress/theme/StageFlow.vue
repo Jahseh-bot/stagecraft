@@ -3,10 +3,10 @@ withDefaults(defineProps<{ compact?: boolean }>(), { compact: false })
 const stages = [
   { title: '创意判断', detail: '研究证据、挑战假设、形成可验证的方向。' },
   { title: '需求规格', detail: '补齐关键规则，形成可观察的验收条件。' },
-  { title: '体验设计', detail: '完成流程、状态与响应式设计并检查。' },
+  { title: '体验设计', detail: '比较流程与视觉方案，展示设计稿并评审。' },
   { title: '技术架构', detail: '验证技术约束，确定实现与测试路径。' },
   { title: '开发实现', detail: '实现、自测、诊断和修复。' },
-  { title: '测试回归', detail: '执行测试，在授权范围内修复并复验。' },
+  { title: '测试回归', detail: '先生成与评审用例，再执行、修复和回归。' },
   { title: '部署验证', detail: '向授权目标发布，验证实际版本与地址。' }
 ]
 </script>

@@ -1,77 +1,80 @@
 ---
 title: 阶段包与技能安装
-description: Stagecraft Skills-first 零基础教程：阶段包与技能安装。
+description: 当前可用的 GitHub 安装方式、七阶段选择、宿主发现与 npm 版本区别。
 ---
 
 # 阶段包与技能安装
 
-> 版本说明：下方 npm 0.4.1 命令仅在该版本发布后可用。当前新版 Skills 请通过 `npx skills add Jahseh-bot/stagecraft` 安装；已有安装运行 `npx skills update` 后重新加载。npm 已发布版本仍为 0.4.0，不含本页新版交互规则。
+## 推荐：安装当前 GitHub 版本
 
-
-## 七个包各司其职
-
-| npm 包 | Skill | 用途 |
-| --- | --- | --- |
-| @gaaraa/discover | stagecraft-discover | 创意、证据和验证实验 |
-| @gaaraa/spec | stagecraft-spec | 需求与可验证规格 |
-| @gaaraa/design | stagecraft-design | 体验、界面和交互 |
-| @gaaraa/architect | stagecraft-architect | 架构与技术可行性 |
-| @gaaraa/build | stagecraft-build | 实现、自测和修复 |
-| @gaaraa/test | stagecraft-test | 测试、审计或授权修复 |
-| @gaaraa/deploy | stagecraft-deploy | 发布、验证和回滚 |
-
-只装你需要的阶段即可；多阶段连续交付需安装目标范围里的技能。以下每一行是独立安装命令，把路径替换为你的项目完整路径，把 `codex` 替换为下表对应的 agent：
+先完成[环境准备](./preparation)，在你自己的产品目录执行：
 
 ```sh
-npx --yes @gaaraa/discover@0.4.1 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/spec@0.4.1 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/design@0.4.1 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/architect@0.4.1 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/build@0.4.1 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/test@0.4.1 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/deploy@0.4.1 init --agent codex --dir "/目标项目路径"
-```
-
-这些命令通过 npm 下载包，并把技能文件复制到项目的宿主技能目录。仅执行 `npm install @gaaraa/build` 会把包放入 node_modules，不等于完成技能安装；新手建议直接使用上面的 npx 命令。`@gaaraa/runner@0.4.1` 供旧任务恢复使用，直接使用 Skills 不需要安装 runner。
-
-## 使用通用 skills CLI 安装整套技能
-
-也可以通过 [skills CLI](https://github.com/vercel-labs/skills) 直接从 GitHub 安装。此方式需要 Node.js 22.20 或以上版本及 Git。先在终端进入你的目标项目：
-
-```sh
-cd "/目标项目路径"
 npx skills add Jahseh-bot/stagecraft
 ```
 
-按界面提示选择技能和 coding agent。只安装开发、测试两个技能到 Codex，可执行：
+1. npm 若询问是否下载 skills 工具，确认后等待下载。
+2. 安装界面列出 Skills 时，完整产品流程请选择下面的七个 `stagecraft-*` 入口。测试用例子技能已经包含在 test 中，不必另选。
+3. 选择实际使用的 coding agent；若询问安装范围，新手选当前项目。
+4. 按界面提示完成安装，记下输出的技能目录。
+5. 回到 agent 打开同一个项目，重新加载 Skills 或新建项目会话。
 
-```sh
-npx skills add Jahseh-bot/stagecraft --skill stagecraft-build stagecraft-test --agent codex
-```
+安装完成只表示技能文件已就位，**还没有开始写产品**。下一步需要发送[任务提示词](./first-run#prd-to-deploy)。
 
-安装全部七个技能到 Codex：
+## 七个入口的分工
 
-```sh
-npx skills add Jahseh-bot/stagecraft --skill '*' --agent codex
-```
-
-正确顺序是 `npx skills add`。通用 CLI 的 agent 名称由它自己定义，例如 Claude Code 使用 `--agent claude-code`，与上方 Stagecraft 安装器的 `--agent claude` 不同。两种安装方式选一种即可；通用 CLI 使用 GitHub 当前版本，固定 npm 0.4.1 则使用上方各阶段命令。
-
-仓库根目录和 release 产物最外层的 `skills/` 都包含七个完整技能，以及各自的引用资料、报告模板、脚本和许可证。源码仍维护在 `packages/<阶段>/skills/`，通过 `npm run build` 自动同步根目录，避免手工维护两份。
-
-## 宿主目录
-
-| --agent | 项目内目录 |
+| Skill | 工作与主要成果 |
 | --- | --- |
-| codex / generic | .agents/skills |
-| claude | .claude/skills |
-| cursor | .cursor/skills |
-| copilot | .github/skills |
-| gemini | .gemini/skills |
-| opencode | .opencode/skills |
+| stagecraft-discover | 判断用户问题与产品机会，比较 MVP 和验证方向 |
+| stagecraft-spec | 形成 PRD、业务规则、术语与验收标准 |
+| stagecraft-design | 产品流程、页面状态、视觉方案与实际预览 |
+| stagecraft-architect | 技术方案、数据与接口契约、实施顺序 |
+| stagecraft-build | 实现、自测、修复与可运行交付 |
+| stagecraft-test | 先设计与评审用例，再执行、记录缺陷和回归 |
+| stagecraft-deploy | 发布前评审、实际部署、访问验证和回滚交接 |
 
-其他宿主可用 `--skills-dir "自定义技能目录"`，它与 `--agent` 二选一。通用兜底是让 agent 直接读取 SKILL.md。目录适配经过自动化安装测试，不表示所有宿主和模型都已实机跑过完整任务。
+完整流程推荐一次装齐七个入口，agent 根据已有成果选择从哪里开始，不会强制重复所有阶段。单点任务也可以只装需要的阶段。
 
-## 预览与冲突
+## 已知道技能与 agent 时
 
-命令末尾加 `--dry-run` 只预览，不写文件。重复安装相同内容安全；发现已有不同内容会拒绝覆盖，先备份自定义修改再决定替换。安装器不会修改你的 AGENTS.md、CLAUDE.md 或全局 agent 配置。
+只安装测试入口：
+
+```sh
+npx skills add Jahseh-bot/stagecraft --skill stagecraft-test
+```
+
+为 Codex 安装全部七个入口：
+
+```sh
+npx skills add Jahseh-bot/stagecraft --skill stagecraft-discover stagecraft-spec stagecraft-design stagecraft-architect stagecraft-build stagecraft-test stagecraft-deploy --agent codex
+```
+
+通用 CLI 中 Claude Code 使用 `--agent claude-code`，Cursor 使用 `--agent cursor`。不确定宿主标识就用第一条交互式命令选择。其他选项以 [skills CLI 官方说明](https://github.com/vercel-labs/skills)及安装输出为准。
+
+## 确认 agent 能读取
+
+在 agent 对话框发送：
+
+```text
+请检查当前项目可用的 Stagecraft Skills。
+列出已找到的七个阶段入口及实际路径，读取各入口说明。
+本次只检查安装，不开始开发；缺少哪个入口请明确告诉我。
+```
+
+Codex 的常见项目路径是 `.agents/skills/stagecraft-build/SKILL.md`。其他宿主以安装器输出为准，不要盲目复制 Codex 的目录。宿主支持的目录适配不等于所有模型和环境都经过完整实机验证。
+
+## npm 阶段包与当前教程的区别
+
+七个阶段也有 `@gaaraa/discover`、`@gaaraa/spec`、`@gaaraa/design`、`@gaaraa/architect`、`@gaaraa/build`、`@gaaraa/test`、`@gaaraa/deploy` npm 包。
+
+截至 2026-10-21，已发布版本为 0.4.0；0.4.1 是源码版本，尚未发布。**要使用本教程的新评审协议和最近的方法升级，请用上面的 GitHub 安装方式。** 不要执行不存在的 `@gaaraa/build@0.4.1` 下载命令。
+
+仅为了复现旧版行为，可以使用已发布的安装器：
+
+```sh
+npx --yes @gaaraa/build@0.4.0 init --agent codex --dir "/目标项目路径"
+```
+
+这个旧版安装器的 `--agent claude` 与通用 skills CLI 的 `--agent claude-code` 不是同一组参数。它的 `--dry-run` 可预览，冲突时拒绝静默覆盖；不要把这些规则套到另一个安装工具。
+
+只运行 `npm install @gaaraa/build` 会下载包到 node_modules，不等于宿主已经发现技能。新项目无需安装 runner。后续更新见[版本与迁移](./upgrading)。
