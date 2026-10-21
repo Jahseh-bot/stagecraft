@@ -19,6 +19,8 @@ npm run verify:registry
 
 `npm run release` 自动更新当前 scope/version 对应的包 README；docs/npm-usage.md 与官网教程需同步维护。`output/releases/<version>/manifest.json` 记录八个包的文件清单、SHA256、npm integrity；`publish-results.json` 保存逐包结果；`registry-verification.json` 验证公共registry的完整性，并在仓库外使用独立缓存执行全部八个包的 npx 入口。
 
+预检先校验清单、哈希与公开包元数据，再使用 `npm pack <tarball> --dry-run --json` 本地验证原始 tarball。这样已发布版本的后续 CI 不会被 npm 的“禁止重复发布”检查误判。正式发布仍查询 registry 并拒绝覆盖不同字节。
+
 首次发布可能要求 npm 2FA/网页验证，应在自己的终端完成。脚本不收集凭据。dry-run 不验证scope所有权，也不能证明实际发布权限。
 
 ## 发布重试与版本规则
@@ -53,3 +55,9 @@ npm run verify:registry
 原始记录：output/releases/0.3.0/registry-verification.json。此次发布验收没有重新执行完整PRD模型开发与Docker链路；该链路的先前真实验收见docs/package-live-drill.md，本次另有48项包级回归。
 
 macOS临时目录的 /var 为符号链接，安装器会拒绝含符号链接的目标路径；验收脚本已使用realpath解析出的 /private/var 路径。公共registry最初返回404，有限重试后全部可用。
+
+## 0.4.0 Skills-first 发布验收
+
+2026-10-21，八个 `@gaaraa/*@0.4.0` 从原始 tarball 发布成功。公共 registry 元数据与下载入口经历传播延迟后，`npm run verify:registry` 全部通过：八包完整性一致、真实 npx 执行成功；七个阶段均安装到独立项目，校验 Skill、协议和交接助手，旧 runtime 包还校验版本与技能路由。
+
+记录保存在 `output/releases/0.4.0/publish-results.json` 和 `registry-verification.json`。根目录及 release 目录的 `skills/` 为额外分发产物，没有修改已经发布的 npm tarball。`npx skills add Jahseh-bot/stagecraft --skill '*' --agent codex --copy --yes` 已从 GitHub 在独立目录实际安装七个阶段。

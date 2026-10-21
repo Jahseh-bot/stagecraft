@@ -34,3 +34,5 @@
 根目录 `skills/` 由构建同步七个完整阶段目录，自动化检查逐文件内容与源目录相同。release 最外层也输出 `skills/`，已发布的 0.4.0 npm tarball 保持原字节不变。
 
 实际执行 `npx skills add <本地仓库> --list` 发现恰好七个 Skill；在独立空目录通过 `--skill '*' --agent codex --copy --yes` 安装全部七个。安装后的主文件、引用资料、模板、许可证、脚本与源文件相同，七个交接脚本均可执行。通用 CLI 自行过滤上游 `metadata.json`，其他运行文件完整；源目录与 release 目录仍保留这些元数据。
+
+公共 npm 验收：八个 0.4.0 包均从 registry 下载并验证原始 integrity；npx 实际运行成功，七个阶段的安装文件和助手通过检查。GitHub 远端的 `npx skills add Jahseh-bot/stagecraft` 安装七个阶段也已成功。官网安装教程已上线，包含固定 npm 版本和通用 Skills CLI 两种方式。

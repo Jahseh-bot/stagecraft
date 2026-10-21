@@ -32,7 +32,12 @@ if(!dry)for(const item of manifest.artifacts){
 const results=[];
 for(const item of manifest.artifacts){
   if(!existing.has(item.name)){
-    const result=spawnSync('npm',['publish',join(directory,item.filename),'--access=public','--loglevel=warn',`--registry=${registry}`,`--tag=${tag}`,...(dry?['--dry-run']:[])],{stdio:'inherit'});
+    // npm publish --dry-run rejects versions that already exist. Validate the
+    // exact tarball locally for CI; real publication retains registry checks.
+    const command=dry
+      ? ['pack',join(directory,item.filename),'--dry-run','--json']
+      : ['publish',join(directory,item.filename),'--access=public','--loglevel=warn',`--registry=${registry}`,`--tag=${tag}`];
+    const result=spawnSync('npm',command,{stdio:dry?['ignore','pipe','inherit']:'inherit'});
     if(result.status!==0){
       results.push({name:item.name,version:manifest.version,status:'failed',exitCode:result.status});
       await writeFile(join(directory,dry?'publish-dry-run.json':'publish-results.json'),JSON.stringify(results,null,2)+'\n');

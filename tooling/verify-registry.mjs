@@ -20,7 +20,7 @@ for(const item of manifest.artifacts){
  const stage=item.name.split('/').at(-1),bin=stage==='runner'?'stagecraft':`stagecraft-${stage}`;
  const invoke=async (...args)=>{
   for(let attempt=0;;attempt++){
-   try{return execFileSync('npx',['--yes','--registry=https://registry.npmjs.org',`--cache=${join(consumer,'cache')}`,`${item.name}@${item.version}`,...args],{cwd:consumer,encoding:'utf8',timeout:120000,stdio:['ignore','pipe','pipe']});}
+   try{return execFileSync('npx',['--yes','--prefer-online','--registry=https://registry.npmjs.org',`--cache=${join(consumer,'cache')}`,`${item.name}@${item.version}`,...args],{cwd:consumer,encoding:'utf8',timeout:120000,stdio:['ignore','pipe','pipe']});}
    catch(error){
     if(attempt>=29||!String(error.stderr).includes('E404'))throw error;
     if(attempt%6===0)console.log(`Waiting for public registry propagation: ${item.name}`);
