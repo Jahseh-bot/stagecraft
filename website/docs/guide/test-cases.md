@@ -9,7 +9,7 @@ description: 先讨论测试方案，再拆解测试点、生成用例、补漏�
 
 ## 不需要额外选装
 
-新版 `stagecraft-test` 内置 `stagecraft-test-case-design`。调用测试阶段时会先使用它，不用自己挑选底层技能。当前 npm 0.4.1 尚未发布，请在目标项目目录从 GitHub 安装：
+新版 `stagecraft-test` 内置 `stagecraft-test-case-design`。调用测试阶段时会先使用它，不用自己挑选底层技能。当前 npm 0.4.1 已发布；以下演示 GitHub 安装，固定版本的 npm 方式见[技能安装](./packages)：
 
 ```sh
 npx skills add Jahseh-bot/stagecraft --skill stagecraft-test

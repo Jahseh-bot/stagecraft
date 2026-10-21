@@ -12,7 +12,7 @@ description: Stagecraft Skills-first 零基础教程：故障排查与平台说�
 | 找不到 node | 安装 Node.js 22.20.0 或更高版本，重新打开终端 |
 | Git 不存在或安装无法获取来源 | 运行 `git --version` 检查 Git；确认能访问 npm 和 GitHub，安装后重开终端 |
 | 找不到 Skill | 检查 --agent 与宿主一致；重载项目；让 agent 直接读取安装后的 SKILL.md |
-| npm 下载 0.4.1 返回 404 | 截至 2026-10-21 该版本尚未发布；改用 `npx skills add Jahseh-bot/stagecraft` 安装当前 GitHub Skills，换镜像不能解决未发布版本 |
+| npm 下载 0.4.1 返回 404 | 本版已发布；核对包名，运行 `npm view @gaaraa/build@0.4.1 version --registry=https://registry.npmjs.org`。镜像可能尚未同步，可在 npx 命令加 `--registry=https://registry.npmjs.org`；刚发布仍有传播延迟时稍后重试 |
 | 安装提示不同内容 | 原有技能可能被修改；先备份和对比，不强制覆盖 |
 | 提示符后输入“是”报错 | 系统终端不是 agent 对话框。新版在 agent 会话直接回答 |
 | workflow locked | 检查占用者与进程是否仍运行；不要自动删除活跃锁 |

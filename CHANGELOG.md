@@ -1,12 +1,17 @@
 # Changelog
 
-## 0.4.1 — Curated method orchestration and user-confirmed decisions
+## 0.4.1 — Curated method orchestration and user-confirmed decisions (published 2026-10-21)
 
 - Present concrete options and recommendation rationale for product scope, modules, flows, visual direction, core architecture and deployment; wait for user selection before dependent work.
 - Reuse explicit choices and scoped delegation, then automatically implement, validate and hand off. Direct entry does not bypass decisions.
 - All seven skills, report templates and beginner prompts share decision records and waiting/resumption rules.
 - Stage-specific method recipes select bundled practices by task, with concrete outputs and evidence; direct build entry fills missing product/design work.
 - Add pinned MIT grill-with-docs and domain-modeling with their complete dependency closure; preserve source licenses and adapt host-specific calls without omitting method outputs.
+
+- Versioned artifact reviews, content snapshots and stale downstream checks in the v2 handoff helper.
+- Built-in test-case design before test execution; expanded stage and cross-domain coverage.
+- Reviewed frontend design, E2E and SQL method upgrades, source integrity auditing and recoverable maintenance commands in the source repository.
+- All eight npm packages rebuilt from the current sources and published as 0.4.1; root release skills catalog included alongside tarballs.
 
 ## 0.4.0 — Skills-first npm release
 

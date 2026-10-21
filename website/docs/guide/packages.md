@@ -63,18 +63,31 @@ npx skills add Jahseh-bot/stagecraft --skill stagecraft-discover stagecraft-spec
 
 Codex 的常见项目路径是 `.agents/skills/stagecraft-build/SKILL.md`。其他宿主以安装器输出为准，不要盲目复制 Codex 的目录。宿主支持的目录适配不等于所有模型和环境都经过完整实机验证。
 
-## npm 阶段包与当前教程的区别
+## npm 安装：固定到 0.4.1
 
-七个阶段也有 `@gaaraa/discover`、`@gaaraa/spec`、`@gaaraa/design`、`@gaaraa/architect`、`@gaaraa/build`、`@gaaraa/test`、`@gaaraa/deploy` npm 包。
-
-截至 2026-10-21，已发布版本为 0.4.0；0.4.1 是源码版本，尚未发布。**要使用本教程的新评审协议和最近的方法升级，请用上面的 GitHub 安装方式。** 不要执行不存在的 `@gaaraa/build@0.4.1` 下载命令。
-
-仅为了复现旧版行为，可以使用已发布的安装器：
+2026-10-21，全部八个 `@gaaraa/*@0.4.1` 已发布。想固定方法版本，可以使用七个阶段包的安装器。以下命令在你的产品项目目录执行，示例使用 Codex；替换为自己的宿主即可。
 
 ```sh
-npx --yes @gaaraa/build@0.4.0 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/discover@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/spec@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/design@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/architect@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/build@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/test@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/deploy@0.4.1 init --agent codex --dir .
 ```
 
-这个旧版安装器的 `--agent claude` 与通用 skills CLI 的 `--agent claude-code` 不是同一组参数。它的 `--dry-run` 可预览，冲突时拒绝静默覆盖；不要把这些规则套到另一个安装工具。
+这里的 `.` 表示当前目录，先确认终端已经进入你的产品文件夹。七条命令分别安装对应阶段，不会自动开始产品开发。已有相同技能时无需重复安装；发生不同内容冲突，先备份原技能与自定义修改，再把旧目录移出宿主扫描位置后重新安装。
 
-只运行 `npm install @gaaraa/build` 会下载包到 node_modules，不等于宿主已经发现技能。新项目无需安装 runner。后续更新见[版本与迁移](./upgrading)。
+| npm 安装器的 --agent | 项目内技能目录 |
+| --- | --- |
+| codex / generic | .agents/skills |
+| claude | .claude/skills |
+| cursor | .cursor/skills |
+| copilot | .github/skills |
+| gemini | .gemini/skills |
+| opencode | .opencode/skills |
+
+注意：npm 阶段安装器用 `--agent claude`，通用 skills CLI 用 `--agent claude-code`，两种工具的参数不同。npm 安装器支持 `--dry-run` 预览，或用 `--skills-dir` 指定自定义目录（与 `--agent` 二选一）。GitHub 与 npm 安装方式选一种即可。
+
+只运行 `npm install @gaaraa/build` 会下载包到 node_modules，不等于宿主已经发现技能。新项目无需安装兼容用的 `@gaaraa/runner`。安装后重新加载 agent，发送[完整提示词](./first-run#prd-to-deploy)。更新方法见[版本与迁移](./upgrading)。

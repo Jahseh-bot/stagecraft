@@ -61,3 +61,13 @@ macOS临时目录的 /var 为符号链接，安装器会拒绝含符号链接的
 2026-10-21，八个 `@gaaraa/*@0.4.0` 从原始 tarball 发布成功。公共 registry 元数据与下载入口经历传播延迟后，`npm run verify:registry` 全部通过：八包完整性一致、真实 npx 执行成功；七个阶段均安装到独立项目，校验 Skill、协议和交接助手，旧 runtime 包还校验版本与技能路由。
 
 记录保存在 `output/releases/0.4.0/publish-results.json` 和 `registry-verification.json`。根目录及 release 目录的 `skills/` 为额外分发产物，没有修改已经发布的 npm tarball。`npx skills add Jahseh-bot/stagecraft --skill '*' --agent codex --copy --yes` 已从 GitHub 在独立目录实际安装七个阶段。
+
+## 0.4.1 重新打包与公共安装验收
+
+2026-10-21，账号 gaaraa 完成 npm 网页安全验证后，八个 @gaaraa/*@0.4.1 包从重新构建的原始 tarball 全部发布成功。包含七阶段评审协议、内置测试用例设计、详细阶段指引和最新复核后的三方方法；兼容 runner 同步版本。发布前 90 项回归通过、414 个入口的 Skills 审计无错误，八包打包预检通过。
+
+发布使用 output/releases/0.4.1，保留了最外层 skills/ 完整目录、manifest.json、publish-results.json。旧未发布构建备份在 output/releases/0.4.1-before-final-npm-release，没有改动先前已经发布的版本。
+
+公共 registry 经历元数据与 tarball 的短暂 404；没有重复发布或修改 tarball。为优先验证已传播的包，以相同清单的重排副本执行 verify:registry，最终八包全部完成完整性核对与真实 npx 执行，七个阶段安装到独立项目并检查协议和交接助手。最终结果归档至 output/releases/0.4.1/registry-verification.json。验证使用仓库外的独立缓存，不是本地 tarball 安装。
+
+这次验证覆盖包分发、CLI 和 Skills 安装，并未额外重复真实产品从 PRD 到云部署的模型任务。README、官网和更新记录同步标明 0.4.1 已发布，提供固定版本安装方式。

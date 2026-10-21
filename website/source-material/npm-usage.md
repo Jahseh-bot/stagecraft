@@ -27,7 +27,7 @@ Stagecraft 把产品探索、需求、设计、架构、开发、测试和部署
 
 ## 当前应该安装哪一版
 
-本教程对应 **GitHub 当前 Skills 源码（0.4.1 开发版本）**，包含阶段评审、用例设计及最近的方法升级。2026-10-21 核对时，npm 已发布版本仍为 **0.4.0**，尚未发布 0.4.1。
+本教程对应 **Stagecraft 0.4.1**，已于 2026-10-21 发布全部八个 npm 包，包含阶段评审、用例设计及最近的方法升级。可以从 GitHub 安装，也可以通过 npm 阶段包固定到 0.4.1。
 
 现在在目标项目目录使用：
 
@@ -35,7 +35,7 @@ Stagecraft 把产品探索、需求、设计、架构、开发、测试和部署
 npx skills add Jahseh-bot/stagecraft
 ```
 
-这是通过 npm 运行通用安装工具，再从 GitHub 获取 Stagecraft Skills。完整操作见[技能安装](./packages)。安装不会提供模型账号、额度或云服务器；执行使用你当前 agent 的账号、工具和权限。
+这是通过 npm 运行通用安装工具，再从 GitHub 获取 Stagecraft Skills。完整操作及 npm 固定版本命令见[技能安装](./packages)。安装不会提供模型账号、额度或云服务器；执行使用你当前 agent 的账号、工具和权限。
 
 ## 准备环境
 
@@ -152,21 +152,34 @@ npx skills add Jahseh-bot/stagecraft --skill stagecraft-discover stagecraft-spec
 
 Codex 的常见项目路径是 `.agents/skills/stagecraft-build/SKILL.md`。其他宿主以安装器输出为准，不要盲目复制 Codex 的目录。宿主支持的目录适配不等于所有模型和环境都经过完整实机验证。
 
-## npm 阶段包与当前教程的区别
+## npm 安装：固定到 0.4.1
 
-七个阶段也有 `@gaaraa/discover`、`@gaaraa/spec`、`@gaaraa/design`、`@gaaraa/architect`、`@gaaraa/build`、`@gaaraa/test`、`@gaaraa/deploy` npm 包。
-
-截至 2026-10-21，已发布版本为 0.4.0；0.4.1 是源码版本，尚未发布。**要使用本教程的新评审协议和最近的方法升级，请用上面的 GitHub 安装方式。** 不要执行不存在的 `@gaaraa/build@0.4.1` 下载命令。
-
-仅为了复现旧版行为，可以使用已发布的安装器：
+2026-10-21，全部八个 `@gaaraa/*@0.4.1` 已发布。想固定方法版本，可以使用七个阶段包的安装器。以下命令在你的产品项目目录执行，示例使用 Codex；替换为自己的宿主即可。
 
 ```sh
-npx --yes @gaaraa/build@0.4.0 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/discover@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/spec@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/design@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/architect@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/build@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/test@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/deploy@0.4.1 init --agent codex --dir .
 ```
 
-这个旧版安装器的 `--agent claude` 与通用 skills CLI 的 `--agent claude-code` 不是同一组参数。它的 `--dry-run` 可预览，冲突时拒绝静默覆盖；不要把这些规则套到另一个安装工具。
+这里的 `.` 表示当前目录，先确认终端已经进入你的产品文件夹。七条命令分别安装对应阶段，不会自动开始产品开发。已有相同技能时无需重复安装；发生不同内容冲突，先备份原技能与自定义修改，再把旧目录移出宿主扫描位置后重新安装。
 
-只运行 `npm install @gaaraa/build` 会下载包到 node_modules，不等于宿主已经发现技能。新项目无需安装 runner。后续更新见[版本与迁移](./upgrading)。
+| npm 安装器的 --agent | 项目内技能目录 |
+| --- | --- |
+| codex / generic | .agents/skills |
+| claude | .claude/skills |
+| cursor | .cursor/skills |
+| copilot | .github/skills |
+| gemini | .gemini/skills |
+| opencode | .opencode/skills |
+
+注意：npm 阶段安装器用 `--agent claude`，通用 skills CLI 用 `--agent claude-code`，两种工具的参数不同。npm 安装器支持 `--dry-run` 预览，或用 `--skills-dir` 指定自定义目录（与 `--agent` 二选一）。GitHub 与 npm 安装方式选一种即可。
+
+只运行 `npm install @gaaraa/build` 会下载包到 node_modules，不等于宿主已经发现技能。新项目无需安装兼容用的 `@gaaraa/runner`。安装后重新加载 agent，发送[完整提示词](./first-run#prd-to-deploy)。更新方法见[版本与迁移](./upgrading)。
 
 ## 创建需求说明
 
@@ -526,7 +539,7 @@ PRD、设计稿、技术方案、开发效果、测试用例和结果、发布�
 
 ## 不需要额外选装
 
-新版 `stagecraft-test` 内置 `stagecraft-test-case-design`。调用测试阶段时会先使用它，不用自己挑选底层技能。当前 npm 0.4.1 尚未发布，请在目标项目目录从 GitHub 安装：
+新版 `stagecraft-test` 内置 `stagecraft-test-case-design`。调用测试阶段时会先使用它，不用自己挑选底层技能。当前 npm 0.4.1 已发布；以下演示 GitHub 安装，固定版本的 npm 方式见[技能安装](./packages)：
 
 ```sh
 npx skills add Jahseh-bot/stagecraft --skill stagecraft-test
@@ -725,13 +738,13 @@ npm 安装器复制的文件不一定登记在通用 skills CLI 的来源记录�
 
 ## 当前版本状态与固定来源
 
-2026-10-21 核对 npm 时，阶段包最新发布版仍为 0.4.0；0.4.1 是当前源码版本。官网新增评审和方法升级教程对应 GitHub 源码，不承诺 0.4.0 具备同样行为。查看注册表版本：
+2026-10-21，全部八个 npm 包已发布 0.4.1。0.4.0 不包含本次完整评审与方法升级；请使用 0.4.1 或当前 GitHub Skills。查看注册表版本：
 
 ```sh
 npm view @gaaraa/build version --registry=https://registry.npmjs.org
 ```
 
-团队需要完全复现时，记录所安装的 Stagecraft 提交、来源与安装输出，并使用经团队核验的固定提交副本；不要把持续变化的 main 当成固定版本。未来 npm 发布新版后，以[更新记录](/changelog/)中的实际发布状态为准。
+团队需要完全复现时，记录所安装的 Stagecraft 提交、来源与安装输出，并使用经团队核验的固定提交副本；不要把持续变化的 main 当成固定版本。固定本次版本可用[七阶段 npm 0.4.1 安装命令](./packages)。npm 安装器不会覆盖不同内容：升级前备份旧技能，将旧目录移出宿主扫描位置后重装；不要删除产品源码和工作流。以后版本以[更新记录](/changelog/)的实际状态为准。
 
 ## 维护者：更新 Stagecraft 内置三方方法
 
@@ -754,7 +767,7 @@ npm view @gaaraa/build version --registry=https://registry.npmjs.org
 | 找不到 node | 安装 Node.js 22.20.0 或更高版本，重新打开终端 |
 | Git 不存在或安装无法获取来源 | 运行 `git --version` 检查 Git；确认能访问 npm 和 GitHub，安装后重开终端 |
 | 找不到 Skill | 检查 --agent 与宿主一致；重载项目；让 agent 直接读取安装后的 SKILL.md |
-| npm 下载 0.4.1 返回 404 | 截至 2026-10-21 该版本尚未发布；改用 `npx skills add Jahseh-bot/stagecraft` 安装当前 GitHub Skills，换镜像不能解决未发布版本 |
+| npm 下载 0.4.1 返回 404 | 本版已发布；核对包名，运行 `npm view @gaaraa/build@0.4.1 version --registry=https://registry.npmjs.org`。镜像可能尚未同步，可在 npx 命令加 `--registry=https://registry.npmjs.org`；刚发布仍有传播延迟时稍后重试 |
 | 安装提示不同内容 | 原有技能可能被修改；先备份和对比，不强制覆盖 |
 | 提示符后输入“是”报错 | 系统终端不是 agent 对话框。新版在 agent 会话直接回答 |
 | workflow locked | 检查占用者与进程是否仍运行；不要自动删除活跃锁 |

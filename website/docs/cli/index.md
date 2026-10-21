@@ -31,10 +31,10 @@ npm run audit:skills
 
 ## npm 阶段安装器
 
-源码提供 `init`，**init 只安装技能，不会执行模型或生成应用**。截至 2026-10-21，npm 发布版为 0.4.0；要使用当前教程功能，请用 GitHub 安装方式。旧版复现示例：
+源码提供 `init`，**init 只安装技能，不会执行模型或生成应用**。2026-10-21 已发布 npm 0.4.1，可固定版本安装当前技能：
 
 ```sh
-npx --yes @gaaraa/build@0.4.0 init --agent codex --dir ./my-project
+npx --yes @gaaraa/build@0.4.1 init --agent codex --dir ./my-project
 ```
 
 该安装器的 `--agent` 支持 codex、claude、cursor、copilot、gemini、opencode、generic；`--skills-dir` 与它二选一，`--dry-run` 只预览，不同内容冲突拒绝覆盖。这不是通用 skills CLI 的参数表。
