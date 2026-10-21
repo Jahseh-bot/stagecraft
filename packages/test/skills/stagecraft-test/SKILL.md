@@ -1,6 +1,6 @@
 ---
 name: stagecraft-test
-description: Validate an existing codebase or running app against requirements, reproduce defects, repair authorized failures and rerun affected checks to closure. Use for testing, QA, regression or test-and-fix requests; respect explicit audit-only/read-only scope.
+description: Design and review traceable test cases first, then validate an existing codebase or running app against requirements, reproduce defects, repair authorized failures and rerun affected checks to closure. Use for testing, QA, regression or test-and-fix requests; respect explicit audit-only/read-only scope.
 compatibility: Any coding agent with file access; terminal/browser/network tools as required by the task. Optional checkpoint helper needs Node.js 22+.
 ---
 
@@ -14,7 +14,7 @@ compatibility: Any coding agent with file access; terminal/browser/network tools
 
 ## 每个阶段与环节的方案讨论
 
-沿用已确认 AC 和业务规则，测试方法与用例细节自主安排。若修复需要改变功能范围、交互、风格、架构或验收规则，先给方案、影响和推荐理由并等待确认；纯缺陷修复无需再次询问。只读审计可以报告待决定项，不替用户接受风险或降低标准。
+沿用已确认 AC 和业务规则，先讨论覆盖方案，再生成和评审用例，确认执行范围后按用例测试。具体设计技术由 agent 选择，不把底层 Skill 选择交给用户。若修复需要改变功能范围、交互、风格、架构或验收规则，先给方案、影响和推荐理由并等待确认；纯缺陷修复无需再次询问。只读审计可以报告待决定项，不替用户接受风险或降低标准。
 
 每个阶段开始时先讨论本阶段方案；每个涉及选择的环节执行前，列出 2–3 个实际可行的选项，第一个始终是 agent 最推荐的方案，并解释推荐理由、适用条件与取舍。最后始终提示“如果都不合适，可以直接输入你的想法、约束或组合方案”。等待用户实际回复后再执行依赖该选择的工作；默认选中、沉默和等待超时都不算确认。已有明确选择直接复用，说明依据；用户明确委托的范围按委托执行。
 
@@ -23,17 +23,17 @@ compatibility: Any coding agent with file access; terminal/browser/network tools
 ## 执行闭环
 
 1. 确定对象、当前版本、环境、可用账号与授权范围。读取 AC、变更记录和既有测试；只有 URL 时明确无法覆盖源码层面。没有上游报告也能从现有需求与用户目标直接建立测试范围。
-2. 建立风险优先的测试矩阵：主要行为、空/非法/边界输入、权限、状态持久性和恢复、与改动相关回归。区分已有行为基线与产品应有行为，不把现状当成正确性标准。
-3. 实际执行现有测试，并补充能揭露遗漏行为的测试。Web流程可用浏览器验证关键路径、手机布局和错误状态。保存命令、预期、实际、环境与复现步骤，失败日志不可省略。
+2. 必须先读取并执行内置 [测试用例设计与评审 Skill](references/test-case-design/SKILL.md)：讨论测试方案 → 拆解测试点 → 展开用例 → 补漏 → 评审。复用已有用例时也检查需求映射和缺口；小任务可以精简为几条具体用例，但不能跳过设计与评审。保存稳定 AC/TP/TC 映射、预期、评审状态与用例版本，待执行状态为 not_run。
+3. 按已确认范围执行 ready 用例，把 TC 映射到实际自动化测试或浏览器/人工步骤；先运行核心风险用例，再执行约定回归。保存每条用例的被测版本、环境、预期、实际、状态与证据。现有测试可复用，但只运行测试套件不能代替未映射用例的验证。没有执行的用例不能标 passed。
 4. 在用户要求完成闭环、测试并修复或已授权实现的范围内，诊断并修复本次缺陷，再运行原失败用例及受影响回归。明确只审计、只读或仅报告时保持该边界，交付可复现缺陷即为该审计目标的闭环，不修改业务实现。
 5. 按协议的有限修复预算处理问题；对偶发失败做有理由的复查，不用无限重跑掩盖不稳定。不能删除或削弱有效测试。修复改变上游构建产物时，刷新 build 的真实验证和交接，再完成受影响测试。
 6. 给出 AC 结果、阻断缺陷、覆盖缺口及发布建议。测试通过仅代表检查范围通过，不保证没有缺陷；关键检查未执行不可给出无条件可发布结论。
 
 ## 本阶段交付与验收
 
-交付：可执行测试、AC/风险覆盖矩阵、运行日志、复现步骤、授权修复及回归证据、剩余缺陷与发布建议。
+交付：评审后的用例集、AC/TP/TC 覆盖矩阵、逐用例执行记录、可执行测试、运行日志、复现步骤、授权修复及回归证据、剩余缺陷与发布建议。
 
-完成条件：约定测试实际执行；发现项可复现或有证据；授权修复已回归；审计模式保持只读范围；关键未执行检查清楚阻止完成声明。
+完成条件：约定用例完成设计与评审、已确认执行范围，约定测试实际执行；发现项可复现或有证据；授权修复已回归；审计模式保持只读范围；关键未执行检查清楚阻止完成声明。
 
 使用 [报告模板](assets/report.md) 保存目标、AC、成果、实际证据及剩余问题。用 [交接助手](scripts/handoff.mjs) 记录阶段；无 Node 时按协议使用 Markdown 交接，明确验证能力限制。不能以“已写报告”代替真实验收，也不能让用户自己填状态文件。
 

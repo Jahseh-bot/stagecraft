@@ -56,3 +56,32 @@ test('stage recipes ship every selected method and composite dependency with pro
     if(ids.includes('grill-with-docs')) for(const dependency of ['grilling','domain-modeling']) assert.ok(ids.includes(dependency));
   }
 });
+
+test('local method recipes have self-contained resources in npm and public skill copies', async () => {
+  const recipes = JSON.parse(await readFile('tooling/stage-methods.json','utf8'));
+  for (const [stage, recipe] of Object.entries(recipes)) {
+    for (const method of recipe.localMethods ?? []) {
+      assert.ok(method.id && method.when && method.action && method.output);
+      assert.ok(!method.path.startsWith('/') && !method.path.split('/').includes('..'));
+      const source = `packages/${stage}/skills/stagecraft-${stage}/references`;
+      const publicRoot = `skills/stagecraft-${stage}/references`;
+      const visited = new Set();
+      async function inspect(path) {
+        if (visited.has(path)) return;
+        visited.add(path);
+        const content = await readFile(join(source,path),'utf8');
+        assert.equal(await readFile(join(publicRoot,path),'utf8'),content);
+        for (const [, link] of content.matchAll(/\]\(([^)]+)\)/g)) {
+          if (link.includes('://') || link.startsWith('#')) continue;
+          const { dirname, normalize } = await import('node:path');
+          const linked = normalize(join(dirname(path),link));
+          assert.ok(!linked.startsWith('..'),`method resource escapes bundle: ${linked}`);
+          await access(join(source,linked));
+          if (linked.endsWith('.md')) await inspect(linked);
+        }
+      }
+      await inspect(method.path);
+      assert.ok(visited.size > 1,'method must include its linked supporting resources');
+    }
+  }
+});
