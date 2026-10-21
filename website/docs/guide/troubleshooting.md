@@ -5,6 +5,9 @@ description: Stagecraft Skills-first 零基础教程：故障排查与平台说�
 
 # 故障排查与平台说明
 
+> 版本说明：下方 npm 0.4.1 命令仅在该版本发布后可用。当前新版 Skills 请通过 `npx skills add Jahseh-bot/stagecraft` 安装；已有安装运行 `npx skills update` 后重新加载。npm 已发布版本仍为 0.4.0，不含本页新版交互规则。
+
+
 ## 常见问题与下一步
 
 | 现象 | 处理 |

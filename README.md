@@ -2,7 +2,7 @@
 
 Stagecraft 为产品开发各阶段筛选并组合成熟方法，让用户不再纠结底层 Skills 的选择。七个阶段入口负责创意、需求、产品与视觉设计、架构、开发、测试和部署；关键产品方向由用户选择，方法编排、执行、验证与交接由当前 coding agent 完成。
 
-**0.4.1 Skills-first 已发布到 npm，可直接安装各阶段技能。** 0.3.0 是已发布的旧 runner 版本；0.3.1 发布中断，仅 architect 已上传，不作为完整推荐版本。
+**0.4.1 Skills-first 源码已更新，npm 发布待完成；新版技能可从本仓库安装。** 0.3.0 是已发布的旧 runner 版本；0.3.1 发布中断，仅 architect 已上传，不作为完整推荐版本。
 
 - [零基础使用指南](docs/npm-usage.md)
 - [Agent 兼容与安装路径](docs/agent-compatibility.md)
@@ -20,7 +20,7 @@ npx --yes @gaaraa/build@0.4.1 init --agent codex --dir /absolute/path/to/my-proj
 
 在目标项目的 coding agent 会话中输入：
 
-> 使用 stagecraft-build，把 PRD.md 实现成可运行的应用。未确认的关键方向先给方案和推荐理由，等我选择确认；确认后自动实现、测试、修复和交接。
+> 使用 stagecraft-build，把 PRD.md 实现成可运行的应用。未确认的关键方向先讨论方案，选项 1 为最推荐并说明理由，列出其他选项，最后允许自由输入补充，等我选择确认；确认后自动实现、测试、修复和交接。
 
 `--agent` 可换成 `claude`、`cursor`、`copilot`、`gemini`、`opencode` 或 `generic`。不支持原生 Skills 的 agent，可让它直接读取安装目录中的 `SKILL.md`。无需安装 Codex CLI；由当前 agent 执行任务。
 
@@ -52,7 +52,7 @@ npx skills add Jahseh-bot/stagecraft
 
 同一项目的交接放在 `.stagecraft/workflows/<id>/`，记录目标、入口/终点、决定、AC、成果路径、真实验证证据与下一步。可选助手校验文件及哈希，发现上游变化会使相关下游结果失效，避免把旧测试当成本次结果。
 
-产品范围、功能模块、核心流程、视觉风格、技术选型和部署方式先给方案与推荐理由，等待用户选择；已确认边界内的实现细节、测试和修复自动完成。真实环境不足时准确记录阻塞，不承诺任何 agent 在没有执行能力时也能完成验证。
+产品范围、功能模块、核心流程、视觉风格、技术选型和部署方式先讨论方案，选项 1 为最推荐并说明理由，列出其他选项，最后允许自由输入补充，等待用户选择；已确认边界内的实现细节、测试和修复自动完成。真实环境不足时准确记录阻塞，不承诺任何 agent 在没有执行能力时也能完成验证。
 
 ## 维护与验证
 
@@ -69,3 +69,5 @@ npm run release:publish -- --dry-run
 每个阶段先读取随包的 `references/methods.md`，按触发条件应用 grilling、grill-with-docs/domain-modeling、frontend-design、codebase-design、tdd、webapp-testing、diagnosing-bugs 等方法及适配技术栈的专项实践。报告必须记录具体产物与证据，不能只列方法名称。用户选择产品方案，不必选择底层 Skill。
 
 [方法编排与来源说明](https://jahseh-bot.github.io/stagecraft/guide/methods.html)
+
+> 版本说明：文中 npm 0.4.1 命令仅在该版本发布后可用。当前新版 Skills 请通过 `npx skills add Jahseh-bot/stagecraft` 安装；已有安装运行 `npx skills update` 后重新加载。npm 已发布版本仍为 0.4.0，不含本页新版交互规则。

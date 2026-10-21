@@ -10,7 +10,7 @@
 npx --yes @gaaraa/design@0.4.1 init --agent codex --dir ./my-project
 ```
 
-然后在 agent 中说：“使用 stagecraft-design 完成本次任务，未确认的关键方向先给方案与推荐理由，等待我选择；确认后自动执行、验证、修复和交接。”
+然后在 agent 中说：“使用 stagecraft-design 完成本次任务，未确认的关键方向先讨论方案，选项 1 为最推荐并说明理由，列出其他选项，最后允许自由输入补充，等待我选择；确认后自动执行、验证、修复和交接。”
 
 支持 --agent codex、claude、cursor、copilot、gemini、opencode、generic；也可用 --skills-dir 指定宿主目录。使用 --dry-run 预览；不同内容拒绝覆盖。没有原生 Skills 的宿主可直接读取安装目录里的 SKILL.md。宿主必须有任务所需的文件、执行及验证能力。
 

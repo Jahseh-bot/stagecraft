@@ -5,6 +5,9 @@ description: Stagecraft Skills-first 零基础教程：阶段包与技能安装�
 
 # 阶段包与技能安装
 
+> 版本说明：下方 npm 0.4.1 命令仅在该版本发布后可用。当前新版 Skills 请通过 `npx skills add Jahseh-bot/stagecraft` 安装；已有安装运行 `npx skills update` 后重新加载。npm 已发布版本仍为 0.4.0，不含本页新版交互规则。
+
+
 ## 七个包各司其职
 
 | npm 包 | Skill | 用途 |

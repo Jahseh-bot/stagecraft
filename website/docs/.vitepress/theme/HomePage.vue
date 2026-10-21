@@ -7,7 +7,7 @@ import StageFlow from './StageFlow.vue'
   <main id="main-content" class="home">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <a class="release" :href="withBase('/changelog/')">Stagecraft 0.4.1 · Skills-first · npm 已发布 <span aria-hidden="true">↗</span></a>
+        <a class="release" :href="withBase('/changelog/')">Stagecraft 0.4.1 · 源码更新 · npm 待发布 <span aria-hidden="true">↗</span></a>
         <h1 id="hero-title">专心做产品，<br>不用纠结选哪套 Skill。</h1>
         <p class="intro">Stagecraft 为各阶段筛选并组合成熟实践。<br class="desktop-break">你选择产品方向，agent 按方法完成设计、实现和验证。</p>
         <div class="actions"><a class="primary" :href="withBase('/guide/')">开始使用</a><a class="secondary" :href="withBase('/workflow/')">了解工作流程</a></div>
@@ -19,7 +19,8 @@ import StageFlow from './StageFlow.vue'
           <pre tabindex="0" aria-label="Stagecraft 启动命令"><code>使用 stagecraft-build 和 stagecraft-test，
 把 PRD.md 实现成可运行应用。
 关键方案先给选项与理由，等我确认。
-确认后自动执行、验证和交接。</code></pre>
+逐环节先讨论：推荐选项在前，也可自由补充。
+确认后执行，再准备下一环节方案。</code></pre>
           <p class="terminal-note">“我想做一个中文温度换算网页。”</p>
         </div>
         <div class="flow-panel"><StageFlow compact /></div>
