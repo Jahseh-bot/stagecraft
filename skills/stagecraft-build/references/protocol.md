@@ -18,7 +18,7 @@ Use the host’s choice UI only if it permits free-text replies; otherwise use n
 
 Record stage plans and substep decisions in the stage report: stable ID, topic, options and tradeoffs, recommendation/reason, status (pending / confirmed / delegated / superseded), selected option, source of the user's choice or delegation, scope and affected ACs/artifacts. Preserve earlier decisions when superseded. Include the report in receipt artifacts; decisions strings in the helper can point to these records. The helper checks evidence integrity, not human consent. While awaiting required input, use `block` with a concrete “awaiting user decision D-...” reason (or equivalent Markdown status); never mark the dependent stage completed. After a reply, update the record, resume the stage and validate the chosen result. Analysis-only deliverables may finish with explicitly unselected recommendations, but must not pass those recommendations downstream as approved implementation inputs.
 
-At the start of EVERY stage, discuss its plan with the user before dependent execution; at EVERY decision-bearing substep, present options and obtain a real choice. Reuse a previously confirmed plan or explicit scoped delegation with its source instead of asking the same question again. Automatic handoff means preparing the next stage’s proposal and evidence, not silently choosing or executing its unresolved plan. Within a confirmed step, execute, validate and repair autonomously; a changed direction requires another discussion. Do not lower acceptance criteria or change product behavior to make tests pass without the relevant user decision.
+At the start of EVERY stage, discuss its plan with the user before dependent execution; at EVERY decision-bearing substep, present options and obtain a real choice. Reuse a previously confirmed plan or explicit scoped delegation with its source instead of asking the same question again. Automatic handoff happens only after a subsequent user reply approves the delivered revision; it transfers context into the next stage discussion. Within a confirmed step, execute, validate and repair autonomously; a changed direction requires another discussion. Do not lower acceptance criteria or change product behavior to make tests pass without the relevant user decision.
 
 A stage closes its own loop: inspect → discuss options and confirm the plan/acceptance conditions → produce work → actually validate → diagnose and repair → revalidate → persist and present artifacts → user review → revise and revalidate as needed → approved baseline and handoff. Attempt up to three targeted repair cycles by default; use a different hypothesis supported by evidence on each attempt. Stop two consecutive identical failures without new evidence. Respect explicit time/repair limits. Do not weaken valid tests, hide failures or claim unexecuted commands passed. Document what failed and the smallest required user/environment action when blocked.
 
@@ -26,11 +26,19 @@ A stage closes its own loop: inspect → discuss options and confirm the plan/ac
 
 Read [artifact delivery, review and change management](artifact-reviews.md) before delivering or revising stage outputs. Every stage persists actual artifacts in the project, presents openable documents or visible previews to the user, records review feedback against an exact submission, revises as requested and obtains explicit approval before completion or dependent downstream execution. Approval of a plan is not approval of unseen results. Preserve revision snapshots, review history and a linked artifact index; changed inputs invalidate affected downstream evidence. Test-case review precedes test execution; release-plan review precedes deployment, followed by review of actual deployment results. Scale document depth to the task, not the integrity of the review gate.
 
+## Mandatory turn boundary
+
+At every unresolved plan choice, end the turn and wait for a real reply. At every artifact delivery, persist and submit the current stage, present its exact revision, then END THE ASSISTANT TURN with a final response. Make no further tool calls and do not load, propose or execute the next stage in that delivery turn. Leave status awaiting_review. Do not batch submit, review and complete in one turn or fabricate feedback.
+
+The final response names the current stage, submission/revision, openable artifacts or actual previews, validation, changes and review points. Offer the recommended review action with reasons, alternatives and free-text revisions. Mention only the next stage's name.
+
+Only a real user response AFTER this revision was presented may approve it. On changes_requested, revise this stage, revalidate, resubmit and end the turn again. “Change it then continue” is not approval of an unseen revised result. On explicit approval, record review/complete and begin the next stage's discussion in the new turn; unresolved choices still require a reply. Clarification answers and plan approval do not approve artifacts. Generic end-to-end requests do not preapprove future deliverables.
+
 ## Scope and direct entry
 
-Stages: discover → spec → design → architect → build → test → deploy. The user can enter any stage with outside documents or an existing project. Missing upstream Stagecraft reports are not a blocker: inspect current inputs and create the minimum local acceptance brief needed for this stage. Do not fabricate upstream completion. Design can document “not applicable” with inspection evidence for non-UI work instead of inventing a UI.
+Stages: discover → spec → design → architect → build → test → deploy. The user can enter any stage with outside documents or an existing project. Existing approved external inputs may replace Stagecraft reports: record actual paths, revisions and approval sources. An idea starts at discover; a draft PRD starts at spec. Missing necessary product, specification, design or architecture baselines route back to their stages, each with its own delivery and later user review. Do not create a build-only workflow to bypass these gates. A scoped fix or test in an existing project need not repeat unrelated stages. Do not fabricate upstream completion. Design can document “not applicable” with inspection evidence for non-UI work instead of inventing a UI.
 
-Identify the delivery target from the user's actual request. For “test this module”, stop after tested findings/fixes within authorized scope. For “take this PRD through a working, tested app”, prepare build and test in sequence, discuss each stage’s plan and unresolved substeps before their execution. Deploy only to the specified, authorized target. If the next skill is installed, read it and continue in the same agent. Discover it in the host's skill catalog or sibling `stagecraft-<stage>/SKILL.md`; do not assume a particular slash-command syntax. If unavailable, hand over a complete report and the next skill name; do not claim that stage ran. No requirement to install seven skills for a one-stage task.
+Identify the delivery target from the user's actual request. For “test this module”, stop after tested findings/fixes within authorized scope. For “take this PRD through a working, tested app”, review the specification, design and architecture baselines before build, then test, with a separate delivery turn and later user approval at each applicable stage. Deploy only to the specified, authorized target. Only after the user approves the presented current revision in a subsequent reply, read the next skill to start its discussion in the same agent. Discover it in the host's skill catalog or sibling `stagecraft-<stage>/SKILL.md`; do not assume a particular slash-command syntax. If unavailable, hand over a complete report and the next skill name; do not claim that stage ran. No requirement to install seven skills for a one-stage task.
 
 ## Durable state and resumption
 
@@ -42,7 +50,12 @@ When Node.js >=22 is available, use the bundled `scripts/handoff.mjs` as a check
 node /path/to/skill/scripts/handoff.mjs init --project /absolute/project --entry build --until test --goal 'Implement and verify the specified feature'
 node /path/to/skill/scripts/handoff.mjs begin --workflow /absolute/project/.stagecraft/workflows/ID --stage build
 node /path/to/skill/scripts/handoff.mjs submit --workflow /absolute/project/.stagecraft/workflows/ID --stage build --receipt /absolute/project/.stagecraft/workflows/ID/build-receipt.json
-# Present the submitted artifacts and wait for actual user feedback before recording review.
+# STOP: present artifacts in the final response and END THIS TURN.
+```
+
+Only in a later turn, after an actual user reply approving this exact revision:
+
+```sh
 node /path/to/skill/scripts/handoff.mjs review --workflow /absolute/project/.stagecraft/workflows/ID --stage build --record /absolute/project/.stagecraft/workflows/ID/build-review.json
 node /path/to/skill/scripts/handoff.mjs complete --workflow /absolute/project/.stagecraft/workflows/ID --stage build
 node /path/to/skill/scripts/handoff.mjs status --workflow /absolute/project/.stagecraft/workflows/ID
@@ -76,7 +89,7 @@ If Node is unavailable but the agent can edit files, maintain equivalent reports
 
 Each handoff gives: objective and scope, accepted requirements (stable AC IDs), authoritative input paths/revisions, decisions and assumptions, deliverables, actual validation results, known limitations, and the exact next stage/action. Reports are durable; chat history alone is not a handoff. A failed/blocked stage can hand over diagnosis for recovery but cannot be presented as a completed upstream dependency.
 
-For authorized continuation, read the next skill and transfer the same workflow directory, requirement IDs, reviewed artifact versions and evidence. Avoid re-interviewing the user about already settled requirements. End at the requested target with concrete results, how to run/use them, evidence and remaining limitations. For a blocked stage, give one actionable next step rather than a generic request to confirm everything.
+After actual user approval in a later turn, read the next skill and transfer the same workflow directory, requirement IDs, reviewed artifact versions and evidence. Avoid re-interviewing the user about already settled requirements. End at the requested target with concrete results, how to run/use them, evidence and remaining limitations. For a blocked stage, give one actionable next step rather than a generic request to confirm everything.
 
 ## Method orchestration and evidence
 

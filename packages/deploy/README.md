@@ -10,7 +10,7 @@ Standalone deployment discovery and local Compose runner
 npx --yes @gaaraa/deploy@0.4.1 init --agent codex --dir ./my-project
 ```
 
-然后在 agent 中说：“使用 stagecraft-deploy 完成本次任务，未确认的关键方向先讨论方案，选项 1 为最推荐并说明理由，列出其他选项，最后允许自由输入补充，等待我选择；确认后执行、验证和修复；每阶段成果保存到项目并展示给我评审，具体版本通过后才交接。”
+然后在 agent 中说：“使用 stagecraft-deploy 完成本次任务，未确认的关键方向先讨论方案，选项 1 为最推荐并说明理由，列出其他选项，最后允许自由输入补充，等待我选择；确认后执行、验证和修复；每阶段成果保存到项目并展示给我评审，展示后必须结束本轮并等待我的后续回复；修改后重新展示并再次等待；具体版本通过后才讨论下一阶段。”
 
 支持 --agent codex、claude、cursor、copilot、gemini、opencode、generic；也可用 --skills-dir 指定宿主目录。使用 --dry-run 预览；不同内容拒绝覆盖。没有原生 Skills 的宿主可直接读取安装目录里的 SKILL.md。宿主必须有任务所需的文件、执行及验证能力。
 

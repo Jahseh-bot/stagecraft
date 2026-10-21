@@ -28,6 +28,30 @@ async function rig(t, entry = 'build', until = 'test') {
   }
   return { project, workflow: state.workflow, receipt, complete, submit, review };
 }
+test('idea-to-release workflow stops at every submission and revised artifacts need fresh approval', async t => {
+  const r = await rig(t, 'discover', 'deploy');
+  const stages = ['discover', 'spec', 'design', 'architect', 'build', 'test', 'deploy'];
+  for (const [index, stage] of stages.entries()) {
+    await handoff('begin', { ...r, stage });
+    const submitted = await r.submit(stage);
+    assert.equal(submitted.stages[stage].status, 'awaiting_review');
+    await assert.rejects(handoff('complete', { ...r, stage }), /review approval/);
+    for (const downstream of stages.slice(index + 1)) {
+      await assert.rejects(handoff('begin', { ...r, stage: downstream }), /Upstream/);
+    }
+    await r.review(stage, 'changes_requested');
+    await assert.rejects(handoff('complete', { ...r, stage }), /review approval/);
+    await handoff('begin', { ...r, stage });
+    const revision = await r.submit(stage);
+    assert.notEqual(revision.stages[stage].currentSubmission, submitted.stages[stage].currentSubmission);
+    await assert.rejects(r.review(stage, 'approved', submitted.stages[stage].currentSubmission), /current submission/);
+    await assert.rejects(handoff('complete', { ...r, stage }), /review approval/);
+    await r.review(stage);
+    await handoff('complete', { ...r, stage });
+  }
+  const result = await handoff('status', r);
+  for (const stage of stages) assert.equal(result.stages[stage].status, 'completed');
+});
 test('direct entry, target boundary and predecessor checks preserve evidence and legacy runs', async t => {
   const r = await rig(t);
   await mkdir(join(r.project, '.stagecraft/runs/legacy'), { recursive: true });

@@ -20,7 +20,8 @@ import StageFlow from './StageFlow.vue'
 先评审 PRD.md，再实现可运行应用。
 关键方案先给选项与理由，等我确认。
 逐环节先讨论：推荐选项在前，也可自由补充。
-成果保存并展示，评审后继续。</code></pre>
+每阶段保存并展示成果，然后结束本轮。
+等我回复通过，再讨论下一阶段；修改后重新评审。</code></pre>
           <p class="terminal-note">“我想做一个中文温度换算网页。”</p>
         </div>
         <div class="flow-panel"><StageFlow compact /></div>

@@ -20,7 +20,7 @@ npx --yes @gaaraa/build@0.4.1 init --agent codex --dir /absolute/path/to/my-proj
 
 在目标项目的 coding agent 会话中输入：
 
-> 使用 stagecraft-build，把 PRD.md 实现成可运行的应用。未确认的关键方向先讨论方案，选项 1 为最推荐并说明理由，列出其他选项，最后允许自由输入补充，等我选择确认；确认后自动实现、测试、修复和交接。
+> 使用 Stagecraft，先用 stagecraft-spec 评审 PRD.md，再逐阶段推进设计、架构、开发、测试和部署。每个阶段先给方案，第一项为推荐并说明理由，允许自由补充。每次展示本阶段成果后必须结束本轮，等我后续回复通过具体版本后才讨论下一阶段；有修改就留在本阶段修订、重新展示并等待。
 
 `--agent` 可换成 `claude`、`cursor`、`copilot`、`gemini`、`opencode` 或 `generic`。不支持原生 Skills 的 agent，可让它直接读取安装目录中的 `SKILL.md`。无需安装 Codex CLI；由当前 agent 执行任务。
 
