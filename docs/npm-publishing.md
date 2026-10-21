@@ -77,3 +77,9 @@ macOS临时目录的 /var 为符号链接，安装器会拒绝含符号链接的
 八个 @gaaraa/*@0.4.2 已从 output/releases/0.4.2 的固定 tarball 发布成功，包含“展示成果后结束本轮，后续真实回复通过后才进入下一阶段”的七阶段协议。最外层 skills/、manifest.json 和逐包 publish-results.json 一并保留；不覆盖 0.4.1 制品。
 
 发布前 91 项回归、414 个入口 Skills 审计、八包打包预检通过。七个阶段 tarball 已逐一确认包含强制阶段停顿规则；官网四项检查和七项浏览器测试通过，Pages 基路径构建通过。公共安装验证另由 verify:registry 执行并记录，不以发布命令成功代替安装验收。
+
+### 0.4.2 最终验收
+
+公共 registry 初期出现 ETARGET/404 缓存传播延迟，未重发或改动 tarball。以相同制品清单调整检查顺序后，八包全部通过元数据 integrity 比对、独立缓存真实 npx 执行；七阶段安装后的 SKILL.md 与共享协议逐字匹配本次修复源码。最终记录归档至 output/releases/0.4.2/registry-verification.json。
+
+官网提交 293b483 的 GitHub Pages 工作流 39584582172 已 completed/success；公网安装页显示 0.4.2，首次任务页同时展示 npm 0.4.2 和“本轮结束，等待你评审”。91 项包级回归、4 项官网检查、7 项浏览器测试均通过；这些检查不等于所有 coding agent 的真实模型行为保证。
