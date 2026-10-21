@@ -1,0 +1,21 @@
+:root {
+  --vp-font-family-base: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+  --vp-font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --vp-c-brand-1: #087f8c; --vp-c-brand-2: #086d78; --vp-c-brand-3: #087f8c;
+  --vp-c-brand-soft: #087f8c12; --vp-c-bg: #ffffff; --vp-c-bg-soft: #f5f7f8;
+  --vp-c-text-1: #20262d; --vp-c-text-2: #525e68;
+  --sc-line: #dae2e5; --sc-mint: #63d9be; --sc-terminal: #20262d;
+  --vp-button-brand-bg: #087f8c; --vp-button-brand-hover-bg: #086d78;
+}
+.dark {
+  --vp-c-bg: #151a20; --vp-c-bg-alt: #1b222a; --vp-c-bg-soft: #202930;
+  --vp-c-text-1: #eef4f5; --vp-c-text-2: #b5c5ce;
+  --vp-c-brand-1: #63d9be; --vp-c-brand-2: #85e5d0; --vp-c-brand-3: #087f8c;
+  --vp-c-brand-soft: #63d9be15; --sc-line: #35454f;
+}
+.vp-doc p, .vp-doc li { line-height: 1.8; }
+.VPDoc.has-aside .content-container { max-width: 672px !important; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--vp-c-brand-1); outline-offset: 4px; }
+.vp-doc table { max-width: 100%; overflow: auto; }
+.vp-doc div[class*='language-'] { max-width: 100%; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

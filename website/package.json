@@ -1,0 +1,21 @@
+{
+  "name": "stagecraft-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "vitepress dev docs --strictPort",
+    "build": "vitepress build docs",
+    "preview": "node scripts/preview.mjs",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2",
+    "typescript": "5.9.3",
+    "vitepress": "1.6.4",
+    "vue": "3.5.44"
+  }
+}

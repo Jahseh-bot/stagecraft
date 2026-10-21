@@ -1,0 +1,40 @@
+---
+title: 更新记录
+description: Stagecraft 0.3.0 公共 npm 发布与 0.2.0 本地 tarball 分发记录，以及版本固定与恢复建议。
+---
+
+# 更新记录
+
+依据项目 CHANGELOG 整理。以下是产品版本，不是官网依赖版本。
+
+## 0.3.0
+
+公共 npm 发布。来源记录日期：2026-10-21。
+
+- 完善公共包元数据、MIT 许可和保留的上游许可声明。
+- 提供自包含的 npx PRD / build、test 和本机 Compose 部署入口。
+- 同步各包版本，支持配置所有者 scope；本次正式 scope 为 `@gaaraa`。
+- 发布已经打包的原始制品，核验哈希，拒绝版本冲突；仅在字节一致时恢复部分发布。
+- 基于 registry 验证仓库外 npx 使用，生成 scope 与版本对应的使用文档。
+
+[从 0.3.0 开始使用](/guide/preparation)
+
+## 0.2.0
+
+本地 tarball 分发。来源未提供发布日期，不能按公共 npm 发布版本理解。
+
+- 八个可独立安装的包；可执行的 build / test / deploy 包内嵌运行器。
+- 来源记录了仓库外 PRD 到部署的演练、两轮自动修复、30 项应用测试和 46 项包回归测试通过。
+
+这些是当时的验证记录，不代表所有用户环境都已验证。
+
+## 固定版本与恢复旧任务
+
+```sh
+npx --yes @gaaraa/runner@0.3.0 --version
+npx --yes @gaaraa/runner@0.3.0 resume --run "$RUN_DIR"
+```
+
+恢复旧任务时使用**创建该任务时的版本**。不要中途换成 `@latest`；0.2.0 本地任务应保留对应 tarball 和原运行环境，不要把上面的 0.3.0 命令直接用于旧任务。保留整个项目和 `.stagecraft` 记录，新项目再考虑新版本。
+
+[固定版本与升级指南](/guide/upgrading) · [GitHub 源码](https://github.com/Jahseh-bot/stagecraft)
