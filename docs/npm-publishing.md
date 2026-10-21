@@ -40,4 +40,16 @@ npm run verify:registry
 - npm CLI 11.19.1，登录账号gaaraa，八个正式包名均无已有包冲突。
 - 48项回归通过；八个0.3.0 tarball完成npm publish --dry-run。
 - 首包@gaaraa/architect实际发布返回E403，明确要求2FA；npm profile确认tfa=false。未发布任何包，尚不能从公共registry运行npx。
-- 启用账号2FA后在交互式终端执行 `npm run release:publish`，按npm提示完成验证；然后执行 `npm run verify:registry`。保持 output/releases/0.3.0 内正式tarball不变。
+- 首次发布时需要启用账号2FA后在交互式终端执行 `npm run release:publish`，按npm提示完成验证；然后执行 `npm run verify:registry`。保持 output/releases/0.3.0 内正式tarball不变。
+
+### 2FA完成后的实际发布
+
+2026-10-21，账号重新登录并完成浏览器发布授权后，八个 @gaaraa/* 0.3.0 均返回发布成功；npm access确认公共访问，dist-tag latest为0.3.0。详见 output/releases/0.3.0/publish-results.json。初始下载查询出现短暂404，验证脚本对registry传播延迟作有限重试，不重新发布或修改已上传tarball。
+
+### 最终公共registry验收通过
+
+八包全部从registry下载，完整性与原始tarball相同；直接运行 `npx @gaaraa/<stage>@0.3.0`，没有使用本地tgz。外部目录：`/private/var/folders/9c/v5n7xq8s7rsbv5c1x6l_j_v00000gn/T/stagecraft-public-f8o8Co`，其中cache为新建独立缓存。architect/design/discover/spec真实安装Codex技能，runner/build/test/deploy检查版本与Vue/Postgres技能路由，全部通过。
+
+原始记录：output/releases/0.3.0/registry-verification.json。此次发布验收没有重新执行完整PRD模型开发与Docker链路；该链路的先前真实验收见docs/package-live-drill.md，本次另有48项包级回归。
+
+macOS临时目录的 /var 为符号链接，安装器会拒绝含符号链接的目标路径；验收脚本已使用realpath解析出的 /private/var 路径。公共registry最初返回404，有限重试后全部可用。

@@ -12,4 +12,4 @@
 - [x] Add publishing script with explicit dry-run, artifact hash checks and registry collision checks.
 - [x] Document npx commands, approvals, prerequisites, release/retry and first-publish authentication.
 - [x] Run regression and dry-run package validation.
-- [ ] Complete npm account 2FA, publish, then verify public registry npx in an external consumer. Owner scope @gaaraa and CLI login confirmed; registry rejected the first publication with E403 because account tfa=false.
+- [x] Completed account 2FA, published all eight @gaaraa/* packages at 0.3.0, and verified integrity plus actual npx skill installation/routing from a fresh external consumer. Initial E403 resolved by user account setup and interactive browser authorization.

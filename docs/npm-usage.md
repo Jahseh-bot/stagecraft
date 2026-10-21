@@ -1,6 +1,6 @@
 # Stagecraft npm 使用指南
 
-当前候选版本：0.3.0；scope：@gaaraa。这些命令必须在该版本成功发布后使用；以 registry-verification.json 为上线验证结果。
+当前版本：0.3.0；scope：@gaaraa。0.3.0已正式发布，八包公共registry与仓库外npx验收全部通过。
 
 需要 Node.js >=22、已安装且登录的 Codex CLI。部署还需要可运行的 Docker/Compose；只支持本机 Compose 部署，是否运行业务应用需要的额外环境由项目决定。Codex 调用使用你的账户与额度。
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 — release candidate, not yet published
+## 0.3.0 — 2026-10-21, public npm release
 
 - Public package metadata, MIT license and preserved upstream license notices.
 - Self-contained npx PRD/build, test and local Compose deployment entrypoints.

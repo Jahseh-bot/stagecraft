@@ -1,6 +1,6 @@
 # Stagecraft
 
-正式 npm 发布候选版为 0.3.0。发布工具、统一版本和 npx 入口已就绪；正式 scope 为 @gaaraa；48项回归及八包发布预演通过，实际发布仍被 npm 账号未启用2FA阻塞，尚未上线。
+0.3.0 已发布到公共 npm registry，正式 scope 为 @gaaraa。48项回归通过，8个包的仓库外 npx 下载与功能验收全部通过。
 
 - [用户使用指南（npx）](docs/npm-usage.md)
 - [维护者发布流程](docs/npm-publishing.md)
@@ -12,7 +12,7 @@
 
 ## 当前实现
 
-新增 `@stagecraft-draft/runner`，包含状态机、Codex CLI 适配器、真实命令验收、HTTP 启动烟测、修复预算、人工答案接入和运行日志。build/test/deploy 包也内置独立执行运行器；其余四个阶段包提供技能安装。
+新增 `@gaaraa/runner`，包含状态机、Codex CLI 适配器、真实命令验收、HTTP 启动烟测、修复预算、人工答案接入和运行日志。build/test/deploy 包也内置独立执行运行器；其余四个阶段包提供技能安装。
 
 支持 PRD 起步，以及已有项目直接进入测试或本机 Compose 部署。没有通用 DAG 调度、远端生产发布或 Web 操作界面；未公开发布 npm。
 
@@ -90,7 +90,7 @@ CLI 中 `init` 只安装技能；`stagecraft start/test/deploy` 和 `stagecraft-
 
 ```sh
 npm test
-npm pack --workspace @stagecraft-draft/runner
+npm pack --workspace @gaaraa/runner
 ```
 
 scope 为 @gaaraa；公共包 metadata 已配置，根 workspace 保持 private。独立 tarball 包含运行器与上游方法资源，不依赖其他阶段包或仓库外路径。
