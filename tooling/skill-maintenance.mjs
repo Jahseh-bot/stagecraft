@@ -91,7 +91,16 @@ export class GitHub {
     if(this.cache.has(url)) return this.cache.get(url);
     const promise=(async()=>{
       const headers=api?{Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28',...(this.token?{Authorization:`Bearer ${this.token}`}:{})}:{};
-      const response=await this.fetcher(url,{headers,signal:AbortSignal.timeout(30000),redirect:'error'});
+      let target=url,response;
+      for(let redirects=0;redirects<=3;redirects++) {
+        response=await this.fetcher(target,{headers,signal:AbortSignal.timeout(30000),redirect:'manual'});
+        if(![301,302,303,307,308].includes(response.status))break;
+        const location=response.headers.get('location');await response.body?.cancel();
+        assert(location&&redirects<3,'Invalid or excessive GitHub redirects');
+        const next=new URL(location,target);
+        assert(next.origin===new URL(url).origin&&!next.username&&!next.password,'Refusing cross-origin GitHub redirect');
+        target=next.href;
+      }
       if(!response.ok) throw new Error(`GitHub HTTP ${response.status} at ${new URL(url).pathname}; check network, source availability or GITHUB_TOKEN rate limit`);
       const chunks=[];let size=0;const reader=response.body.getReader();
       try { while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;this.downloadedBytes+=value.length;assert(size<=32*1024*1024&&this.downloadedBytes<=256*1024*1024,'Remote download budget exceeded');chunks.push(value);} } finally {await reader.cancel();}
@@ -103,6 +112,8 @@ export class GitHub {
     assert(/^[\w.-]+\/[\w.-]+$/.test(repo),'Invalid GitHub repository');
     const info=await this.request(`https://api.github.com/repos/${repo}`);
     assert(!info.archived&&!info.disabled&&!info.private,`Repository unavailable or archived: ${repo}`);
+    repo=info.full_name??repo;
+    assert(/^[\w.-]+\/[\w.-]+$/.test(repo),'Invalid canonical GitHub repository');
     const commit=await this.request(`https://api.github.com/repos/${repo}/commits/${encodeURIComponent(info.default_branch)}`);
     assert(/^[a-f0-9]{40}$/.test(commit.sha),'Invalid commit');
     const tree=await this.request(`https://api.github.com/repos/${repo}/git/trees/${commit.sha}?recursive=1`);

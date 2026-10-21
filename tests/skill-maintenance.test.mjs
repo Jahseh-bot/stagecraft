@@ -103,3 +103,17 @@ test('GitHub client authenticates only API requests and resolves default branch 
  const repo=await client.repository('example/skills');assert.equal(repo.revision,latest);assert.ok(calls.some(c=>c.url.endsWith('/commits/trunk')));
  await client.raw(repo,'SKILL.md');assert.equal(calls.at(-1).headers.Authorization,undefined);assert.equal(calls[0].headers.Authorization,'Bearer test-secret');
 });
+
+test('GitHub repository renames follow bounded same-origin redirects and pin canonical source',async()=>{
+ const calls=[];
+ const client=new GitHub({fetcher:async(url)=>{
+   calls.push(url);
+   if(url.endsWith('/repos/old/skills'))return new Response(null,{status:301,headers:{location:'https://api.github.com/repositories/42'}});
+   return new Response(JSON.stringify(url.includes('/commits/')?{sha:latest}:url.includes('/git/trees/')?{tree:[],truncated:false}:{full_name:'new/skills',default_branch:'main'}));
+ }});
+ const repo=await client.repository('old/skills');assert.equal(repo.repo,'new/skills');assert.ok(calls.some(u=>u.includes('/repos/new/skills/commits/')));
+ const unsafe=new GitHub({token:'secret',fetcher:async()=>new Response(null,{status:302,headers:{location:'https://other.example/steal'}})});
+ await assert.rejects(unsafe.repository('old/skills'),/cross-origin/);
+ const loop=new GitHub({fetcher:async()=>new Response(null,{status:301,headers:{location:'/loop'}})});
+ await assert.rejects(loop.repository('old/skills'),/excessive/);
+});
