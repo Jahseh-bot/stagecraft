@@ -71,3 +71,9 @@ macOS临时目录的 /var 为符号链接，安装器会拒绝含符号链接的
 公共 registry 经历元数据与 tarball 的短暂 404；没有重复发布或修改 tarball。为优先验证已传播的包，以相同清单的重排副本执行 verify:registry，最终八包全部完成完整性核对与真实 npx 执行，七个阶段安装到独立项目并检查协议和交接助手。最终结果归档至 output/releases/0.4.1/registry-verification.json。验证使用仓库外的独立缓存，不是本地 tarball 安装。
 
 这次验证覆盖包分发、CLI 和 Skills 安装，并未额外重复真实产品从 PRD 到云部署的模型任务。README、官网和更新记录同步标明 0.4.1 已发布，提供固定版本安装方式。
+
+## 0.4.2 阶段停顿修复发布
+
+八个 @gaaraa/*@0.4.2 已从 output/releases/0.4.2 的固定 tarball 发布成功，包含“展示成果后结束本轮，后续真实回复通过后才进入下一阶段”的七阶段协议。最外层 skills/、manifest.json 和逐包 publish-results.json 一并保留；不覆盖 0.4.1 制品。
+
+发布前 91 项回归、414 个入口 Skills 审计、八包打包预检通过。七个阶段 tarball 已逐一确认包含强制阶段停顿规则；官网四项检查和七项浏览器测试通过，Pages 基路径构建通过。公共安装验证另由 verify:registry 执行并记录，不以发布命令成功代替安装验收。

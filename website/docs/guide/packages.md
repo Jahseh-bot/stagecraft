@@ -63,18 +63,18 @@ npx skills add Jahseh-bot/stagecraft --skill stagecraft-discover stagecraft-spec
 
 Codex 的常见项目路径是 `.agents/skills/stagecraft-build/SKILL.md`。其他宿主以安装器输出为准，不要盲目复制 Codex 的目录。宿主支持的目录适配不等于所有模型和环境都经过完整实机验证。
 
-## npm 安装：固定到 0.4.1
+## npm 安装：固定到 0.4.2
 
-2026-10-21，全部八个 `@gaaraa/*@0.4.1` 已发布。想固定方法版本，可以使用七个阶段包的安装器。以下命令在你的产品项目目录执行，示例使用 Codex；替换为自己的宿主即可。
+2026-10-21，全部八个 `@gaaraa/*@0.4.2` 已发布。想固定方法版本，可以使用七个阶段包的安装器。以下命令在你的产品项目目录执行，示例使用 Codex；替换为自己的宿主即可。
 
 ```sh
-npx --yes @gaaraa/discover@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/spec@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/design@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/architect@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/build@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/test@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/deploy@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/discover@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/spec@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/design@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/architect@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/build@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/test@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/deploy@0.4.2 init --agent codex --dir .
 ```
 
 这里的 `.` 表示当前目录，先确认终端已经进入你的产品文件夹。七条命令分别安装对应阶段，不会自动开始产品开发。已有相同技能时无需重复安装；发生不同内容冲突，先备份原技能与自定义修改，再把旧目录移出宿主扫描位置后重新安装。

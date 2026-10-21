@@ -2,12 +2,12 @@
 
 Standalone existing-project test and repair runner
 
-版本 0.4.1。npm 命令以该版本已实际发布为前提；未发布时从仓库执行 node packages/test/bin/cli.mjs。
+版本 0.4.2。npm 命令以该版本已实际发布为前提；未发布时从仓库执行 node packages/test/bin/cli.mjs。
 
 在当前 coding agent 中完成 test 阶段的执行、验证、修复与交接，无需安装其他阶段包。Stagecraft 按任务选择内置方法；请读取 references/methods.md 并实际应用，阶段报告记录具体产物和验证证据。
 
 ```sh
-npx --yes @gaaraa/test@0.4.1 init --agent codex --dir ./my-project
+npx --yes @gaaraa/test@0.4.2 init --agent codex --dir ./my-project
 ```
 
 然后在 agent 中说：“使用 stagecraft-test 完成本次任务，未确认的关键方向先讨论方案，选项 1 为最推荐并说明理由，列出其他选项，最后允许自由输入补充，等待我选择；确认后执行、验证和修复；每阶段成果保存到项目并展示给我评审，展示后必须结束本轮并等待我的后续回复；修改后重新展示并再次等待；具体版本通过后才讨论下一阶段。”

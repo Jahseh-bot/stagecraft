@@ -7,7 +7,7 @@ import StageFlow from './StageFlow.vue'
   <main id="main-content" class="home">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <a class="release" :href="withBase('/changelog/')">Stagecraft 0.4.1 · npm 已发布 <span aria-hidden="true">↗</span></a>
+        <a class="release" :href="withBase('/changelog/')">Stagecraft 0.4.2 · npm 已发布 <span aria-hidden="true">↗</span></a>
         <h1 id="hero-title">专心做产品，<br>不用纠结选哪套 Skill。</h1>
         <p class="intro">Stagecraft 为各阶段筛选并组合成熟实践。<br class="desktop-break">你选择产品方向，agent 按方法完成设计、实现和验证。</p>
         <div class="actions"><a class="primary" :href="withBase('/guide/')">开始使用</a><a class="secondary" :href="withBase('/workflow/')">了解工作流程</a></div>

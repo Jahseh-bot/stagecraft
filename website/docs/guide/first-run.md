@@ -15,7 +15,7 @@ description: 从零安装七阶段 Skills，复制提示词，将 PRD 逐步做�
 npx skills add Jahseh-bot/stagecraft
 ```
 
-本次阶段停顿修复先通过 GitHub Skills 提供，已发布的 npm 0.4.1 不包含此修复。已安装的用户先运行 `npx skills update`，然后重新加载 Skills 或开启新会话。
+本次阶段停顿修复包含在 npm 0.4.2 和 GitHub 当前版本中。GitHub Skills 安装可运行 `npx skills update`；通过 npm 阶段包安装的用户，按[升级步骤](./upgrading)备份旧技能并安装 0.4.2。更新后重新加载 Skills 或开启新会话。
 
 选择七个 `stagecraft-*` 入口以及你正在使用的 agent。完成后重新加载 Skills 或打开新项目会话。完整流程安装七个入口，避免到了设计或架构阶段才发现技能缺失；[安装详解](./packages)提供非交互指定方式。
 

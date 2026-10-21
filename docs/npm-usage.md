@@ -152,18 +152,18 @@ npx skills add Jahseh-bot/stagecraft --skill stagecraft-discover stagecraft-spec
 
 Codex 的常见项目路径是 `.agents/skills/stagecraft-build/SKILL.md`。其他宿主以安装器输出为准，不要盲目复制 Codex 的目录。宿主支持的目录适配不等于所有模型和环境都经过完整实机验证。
 
-## npm 安装：固定到 0.4.1
+## npm 安装：固定到 0.4.2
 
-2026-10-21，全部八个 `@gaaraa/*@0.4.1` 已发布。想固定方法版本，可以使用七个阶段包的安装器。以下命令在你的产品项目目录执行，示例使用 Codex；替换为自己的宿主即可。
+2026-10-21，全部八个 `@gaaraa/*@0.4.2` 已发布。想固定方法版本，可以使用七个阶段包的安装器。以下命令在你的产品项目目录执行，示例使用 Codex；替换为自己的宿主即可。
 
 ```sh
-npx --yes @gaaraa/discover@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/spec@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/design@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/architect@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/build@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/test@0.4.1 init --agent codex --dir .
-npx --yes @gaaraa/deploy@0.4.1 init --agent codex --dir .
+npx --yes @gaaraa/discover@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/spec@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/design@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/architect@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/build@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/test@0.4.2 init --agent codex --dir .
+npx --yes @gaaraa/deploy@0.4.2 init --agent codex --dir .
 ```
 
 这里的 `.` 表示当前目录，先确认终端已经进入你的产品文件夹。七条命令分别安装对应阶段，不会自动开始产品开发。已有相同技能时无需重复安装；发生不同内容冲突，先备份原技能与自定义修改，再把旧目录移出宿主扫描位置后重新安装。
@@ -231,7 +231,7 @@ PRD 评审通过后，使用[完整交付提示词](./first-run#prd-to-deploy)�
 npx skills add Jahseh-bot/stagecraft
 ```
 
-本次阶段停顿修复先通过 GitHub Skills 提供，已发布的 npm 0.4.1 不包含此修复。已安装的用户先运行 `npx skills update`，然后重新加载 Skills 或开启新会话。
+本次阶段停顿修复包含在 npm 0.4.2 和 GitHub 当前版本中。GitHub Skills 安装可运行 `npx skills update`；通过 npm 阶段包安装的用户，按[升级步骤](./upgrading)备份旧技能并安装 0.4.2。更新后重新加载 Skills 或开启新会话。
 
 选择七个 `stagecraft-*` 入口以及你正在使用的 agent。完成后重新加载 Skills 或打开新项目会话。完整流程安装七个入口，避免到了设计或架构阶段才发现技能缺失；[安装详解](./packages)提供非交互指定方式。
 
@@ -740,20 +740,20 @@ npm 安装器复制的文件不一定登记在通用 skills CLI 的来源记录�
 
 1. 记下旧 Skill 目录，备份自己的改动。
 2. 把旧的七个 Stagecraft 技能目录移出宿主扫描位置，保留备份；不要删除产品源码或 `.stagecraft`。
-3. 在产品项目目录运行 `npx skills add Jahseh-bot/stagecraft`，选择需要的阶段和宿主。
+3. 在产品项目目录执行[七阶段 npm 0.4.2 安装命令](./packages)，或运行 `npx skills add Jahseh-bot/stagecraft` 选择所需阶段和宿主。
 4. 重新加载后核对实际读取路径，避免同时加载项目版与全局旧版。
 
 安装冲突时先比较文件，不盲目强制覆盖。
 
 ## 当前版本状态与固定来源
 
-2026-10-21，全部八个 npm 包已发布 0.4.1。0.4.0 不包含本次完整评审与方法升级；请使用 0.4.1 或当前 GitHub Skills。查看注册表版本：
+2026-10-21，全部八个 npm 包已发布 0.4.2。0.4.1 及更早版本不包含本次“展示成果后结束本轮、等待后续回复评审”的修复；请使用 0.4.2 或当前 GitHub Skills。查看注册表版本：
 
 ```sh
 npm view @gaaraa/build version --registry=https://registry.npmjs.org
 ```
 
-团队需要完全复现时，记录所安装的 Stagecraft 提交、来源与安装输出，并使用经团队核验的固定提交副本；不要把持续变化的 main 当成固定版本。固定本次版本可用[七阶段 npm 0.4.1 安装命令](./packages)。npm 安装器不会覆盖不同内容：升级前备份旧技能，将旧目录移出宿主扫描位置后重装；不要删除产品源码和工作流。以后版本以[更新记录](/changelog/)的实际状态为准。
+团队需要完全复现时，记录所安装的 Stagecraft 提交、来源与安装输出，并使用经团队核验的固定提交副本；不要把持续变化的 main 当成固定版本。固定本次版本可用[七阶段 npm 0.4.2 安装命令](./packages)。npm 安装器不会覆盖不同内容：升级前备份旧技能，将旧目录移出宿主扫描位置后重装；不要删除产品源码和工作流。以后版本以[更新记录](/changelog/)的实际状态为准。
 
 ## 维护者：更新 Stagecraft 内置三方方法
 

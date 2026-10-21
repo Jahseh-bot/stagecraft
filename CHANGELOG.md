@@ -1,11 +1,11 @@
 # Changelog
 
-## Unreleased — Stage-by-stage conversation gates
+## 0.4.2 — Stage-by-stage conversation gates
 
 - End each artifact delivery turn and wait for a later user review; revised artifacts require a fresh review.
 - Route ideas and draft PRDs through their missing upstream stages instead of jumping to build.
 - Update all seven entrypoints, shared protocols, report templates and website prompts; preserve third-party skills.
-- Available through the GitHub skills catalog; published npm 0.4.1 does not include this fix.
+- Released in all eight npm packages at 0.4.2 and the GitHub skills catalog; npm 0.4.1 does not include this fix.
 
 ## 0.4.1 — Curated method orchestration and user-confirmed decisions (published 2026-10-21)
 

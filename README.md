@@ -2,7 +2,7 @@
 
 Stagecraft 为产品开发各阶段筛选并组合成熟方法，让用户不再纠结底层 Skills 的选择。七个阶段入口负责创意、需求、产品与视觉设计、架构、开发、测试和部署；关键产品方向由用户选择，方法编排、执行、验证与交接由当前 coding agent 完成。
 
-**0.4.1 Skills-first 已发布到 npm，八个包版本一致；也可从本仓库安装。** 0.3.0 是已发布的旧 runner 版本；0.3.1 发布中断，仅 architect 已上传，不作为完整推荐版本。
+**0.4.2 Skills-first 已发布到 npm，八个包版本一致；也可从本仓库安装。** 0.3.0 是已发布的旧 runner 版本；0.3.1 发布中断，仅 architect 已上传，不作为完整推荐版本。
 
 - [零基础使用指南](docs/npm-usage.md)
 - [Agent 兼容与安装路径](docs/agent-compatibility.md)
@@ -15,7 +15,7 @@ Stagecraft 为产品开发各阶段筛选并组合成熟方法，让用户不再
 直接通过 npm 安装（需要 Node.js 22+，无需克隆源码或登录 npm）：
 
 ```sh
-npx --yes @gaaraa/build@0.4.1 init --agent codex --dir /absolute/path/to/my-project
+npx --yes @gaaraa/build@0.4.2 init --agent codex --dir /absolute/path/to/my-project
 ```
 
 在目标项目的 coding agent 会话中输入：
@@ -70,7 +70,7 @@ npm run release:publish -- --dry-run
 
 [方法编排与来源说明](https://jahseh-bot.github.io/stagecraft/guide/methods.html)
 
-> 版本说明：npm 0.4.1 已正式发布，可用文中的固定版本命令安装。也可以运行 `npx skills add Jahseh-bot/stagecraft` 安装 GitHub 当前版本；通用 CLI 的已有安装用 `npx skills update` 更新后重新加载。
+> 版本说明：npm 0.4.2 已正式发布，可用文中的固定版本命令安装。也可以运行 `npx skills add Jahseh-bot/stagecraft` 安装 GitHub 当前版本；通用 CLI 的已有安装用 `npx skills update` 更新后重新加载。
 
 每个阶段将成果存入项目并展示给用户评审，确认具体版本后再交接；修改保留快照、意见和下游影响。详见 [产物评审与追溯](https://jahseh-bot.github.io/stagecraft/guide/artifact-reviews.html)。
 
