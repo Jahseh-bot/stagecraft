@@ -4,26 +4,26 @@
     {
       "id": "grilling",
       "path": "vendor/mattpocock/grilling",
-      "sha256": "21571fb2b60e88d625905fc944ddbcf5069160542b814521e5ec2cb2ba2755ef",
-      "files": 2
+      "sha256": "e43e6b8c014a53b36a2111d51b5c79fe8f5f407348b747ada237ecc0f660d0b9",
+      "files": 3
     },
     {
       "id": "codebase-design",
       "path": "vendor/mattpocock/codebase-design",
-      "sha256": "855f80059b2c4fbb47e97e96c2ebd5166e835efbbcae7a9b51cfacb34532c1a8",
-      "files": 4
+      "sha256": "b6066c27b4b07bd8e447010327f177056c7fefa8d2c3c615283d65f3ff430a64",
+      "files": 5
     },
     {
       "id": "tdd",
       "path": "vendor/mattpocock/tdd",
-      "sha256": "09207778457604cc26b57047a3bb31378f8318085a5fb4e8b6eb38657898e04d",
-      "files": 4
+      "sha256": "6503f2a3fba6bf77671720a0e7d157d90dc6382e24b855e9be013ece25aa7e83",
+      "files": 5
     },
     {
       "id": "diagnosing-bugs",
       "path": "vendor/mattpocock/diagnosing-bugs",
-      "sha256": "3314cd62e50cf688d13abdc4eb4cedcbcfdfe6f053fe3331f4a79928a0fe3c7f",
-      "files": 3
+      "sha256": "b199d4be982b31dcbab00cefb2b277f5288e190e8ec31c3262f1359199cda7b4",
+      "files": 4
     },
     {
       "id": "frontend-design",
