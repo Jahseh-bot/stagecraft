@@ -8,3 +8,5 @@ node_modules/
 output/
 output-start.json
 .stagecraft/
+
+.stagecraft-skills-maintenance.lock

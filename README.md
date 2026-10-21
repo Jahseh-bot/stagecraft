@@ -75,3 +75,5 @@ npm run release:publish -- --dry-run
 每个阶段将成果存入项目并展示给用户评审，确认具体版本后再交接；修改保留快照、意见和下游影响。详见 [产物评审与追溯](https://jahseh-bot.github.io/stagecraft/guide/artifact-reviews.html)。
 
 各阶段附详细工作指引与覆盖矩阵，按项目规模和风险裁剪。三方方法保持只读；运行 `npm run build && npm run audit:skills` 检查入口、引用、来源和原始内容完整性。
+
+仓库维护者可运行 `npm run update-skills` 同步现有三方方法的上游最新提交，或 `npm run upgrade-skills` 搜索并替换合格候选。支持 `--dry-run`、`--only` 和按记录恢复；正式应用要求干净工作区，失败回退，命令不自动提交或发布。见 [维护教程](https://jahseh-bot.github.io/stagecraft/guide/skill-maintenance.html)。

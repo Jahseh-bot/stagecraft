@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "searchQueries": ["agent skills in:name,description archived:false fork:false", "claude skills testing in:name,description archived:false fork:false", "agent skills design in:name,description archived:false fork:false", "agent skills architecture in:name,description archived:false fork:false"],
+  "searchResultsPerQuery": 8,
+  "maxRepositories": 20,
+  "maxCandidatesPerSkill": 4,
+  "minimumScoreGain": 15,
+  "allowedLicenses": ["MIT", "Apache-2.0", "BSD-3-Clause", "BSD-2-Clause", "ISC"],
+  "limits": {"files": 2000, "fileBytes": 5242880, "totalBytes": 31457280},
+  "roles": {
+    "grilling": ["clarify", "questions", "requirements"],
+    "grill-with-docs": ["grilling", "domain-modeling"],
+    "domain-modeling": ["domain", "glossary"],
+    "codebase-design": ["architecture", "modules", "testability"],
+    "tdd": ["test", "driven", "red", "green"],
+    "diagnosing-bugs": ["debug", "reproduce", "root cause"],
+    "frontend-design": ["frontend", "design", "visual"],
+    "webapp-testing": ["web", "testing", "browser"]
+  }
+}

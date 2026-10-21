@@ -19,6 +19,8 @@
     "release:version": "node tooling/version.mjs version",
     "release:publish": "node tooling/publish.mjs",
     "verify:registry": "node tooling/verify-registry.mjs",
-    "audit:skills": "node tooling/audit-skills.mjs"
+    "audit:skills": "node tooling/audit-skills.mjs",
+    "update-skills": "node tooling/skill-maintenance.mjs update",
+    "upgrade-skills": "node tooling/skill-maintenance.mjs upgrade"
   }
 }

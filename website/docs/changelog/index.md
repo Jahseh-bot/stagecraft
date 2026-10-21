@@ -22,6 +22,8 @@ description: Stagecraft 0.4.0 Skills-first npm 发布记录，以及版本固定
 
 - 全阶段增加详细执行指引、跨阶段适用性矩阵和三方只读适配说明；新增可重复 Skills 扫描与三方源完整性校验，不修改或删除现有三方内容。
 
+- 新增仓库维护命令 update-skills / upgrade-skills：核验上游更新、联网候选筛选、版本与哈希同步、测试失败回退，以及预检与备份恢复。
+
 ## 0.4.0 · npm 已发布
 
 - 七阶段改为当前 coding agent 原生执行的 Skills，职责内自主验证、修复和交接。

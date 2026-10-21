@@ -53,7 +53,8 @@ for (const entry of await readdir(join(root, 'packages'), { withFileTypes: true 
     for (const id of methods) {
       const skill = profile.skills.find(s => s.id === id);
       await cp(join(root, 'packages/runner', skill.path), join(upstream, id), { recursive: true });
-      if (skill.path.startsWith('vendor/mattpocock/')) {
+      const hasLicense = (await readdir(join(upstream, id))).some(name => /^(LICENSE|LICENCE)(\.(md|txt))?$/i.test(name));
+      if (skill.path.startsWith('vendor/mattpocock/') && !hasLicense) {
         await copyFile(join(root, 'packages/runner/vendor/mattpocock/LICENSE'), join(upstream, id, 'LICENSE'));
       }
       sources.push({ id, source: skill.source, revision: skill.revision, license: skill.license });

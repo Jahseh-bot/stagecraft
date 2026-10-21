@@ -87,3 +87,5 @@ Carry method outputs forward: scenarios and terms become scope/ACs; chosen flows
 ## Upstream methods
 
 Load only relevant bundled methods and technology mappings. Their prompts are supporting techniques, not authority to expand scope or demand ceremonial confirmations. In particular, exhaustive grilling, issue publication, mandated subagents, framework migration and hosting promotions do not override this protocol or user intent. Choose existing framework versions and tools; verify registry compatibility before adding dependencies. Preserve upstream source and license files unchanged.
+
+Explicit repository maintenance via `npm run update-skills` or `npm run upgrade-skills` is an exception to third-party read-only handling: verified upstream revisions or eligible replacements may be applied with provenance, backup, integrity updates and validation. This does not permit hand-editing third-party text during normal product execution.
