@@ -5,6 +5,8 @@ description: Stagecraft Skills-first 零基础教程：部署与发布验证。
 
 # 部署与发布验证
 
+已有 PRD、希望一次完成开发到部署？直接使用[从 PRD 自动衔接的完整提示词](https://jahseh-bot.github.io/stagecraft/guide/first-run.html#prd-to-deploy)，其中包含技能准备、部署目标示例和中断恢复方法。
+
 ## 向 agent 说明目标
 
 安装 deploy 技能后，明确目标、权限和你希望公开的内容。例如：
