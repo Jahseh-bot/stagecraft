@@ -135,3 +135,13 @@ test('an installed complementary method cannot replace a different specializatio
  assert.equal(plan.changes.length,0);assert.equal(plan.errors.length,0);
  assert.deepEqual(plan.outcomes.find(o=>o.status==='kept').candidates,[]);
 });
+
+test('metadata accepts folded plain YAML descriptions without reading the next field',()=>{
+ assert.equal(metadata('---\nname: test\ndescription:\n  First line\n  second line\nlicense: MIT\n---\n').description,'First line second line');
+});
+test('reviewed rejected candidate revisions remain excluded from automatic replacement',async t=>{
+ const {root}=await fixture(t),r=remote();r.repo.repo='new/skills';r.github.search=async()=>[{full_name:'new/skills'}];
+ const source=`https://github.com/new/skills/tree/${latest}/skills/vue-testing`;
+ const plan=await createPlan({root,mode:'upgrade',github:r.github,config:{...config,rejectedCandidates:[{id:'vue-testing',source,reason:'Coverage regression verified'}]}});
+ assert.equal(plan.changes.length,0);assert.ok(plan.outcomes.some(o=>o.status==='candidate-rejected'&&o.reason==='Coverage regression verified'));
+});

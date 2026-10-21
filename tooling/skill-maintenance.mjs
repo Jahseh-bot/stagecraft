@@ -27,7 +27,7 @@ export function metadata(body) {
   const field = key => {
     const match=new RegExp(`^${key}:[ \t]*(.*)$`,'m').exec(front);
     if(!match)return undefined;
-    if(/^[|>][+-]?$/.test(match[1].trim())) {
+    if(!match[1].trim()||/^[|>][+-]?$/.test(match[1].trim())) {
       const rest=front.slice(match.index+match[0].length).split(/\r?\n/).slice(1),lines=[];
       for(const line of rest){if(line.trim()&&!/^\s/.test(line))break;lines.push(line.trim());}
       return lines.join(' ').trim();
@@ -218,7 +218,12 @@ export async function createPlan({root=ROOT,mode,only=[],github=new GitHub(),con
         }
         opportunities.sort((a,b)=>b.rank-a.rank||`${a.repo.repo}/${a.directory}`.localeCompare(`${b.repo.repo}/${b.directory}`));
         for(const {repo,directory} of opportunities.slice(0,config.maxCandidatesPerSkill)) {
-          try{candidates.push(await downloadSkill(github,repo,directory,config));}
+          try{
+            const sourceUrl=`https://github.com/${repo.repo}/tree/${repo.revision}/${directory}`;
+            const rejected=config.rejectedCandidates?.find(entry=>entry.id===skill.id&&entry.source===sourceUrl);
+            assert(!rejected,rejected?.reason);
+            candidates.push(await downloadSkill(github,repo,directory,config));
+          }
           catch(e){outcomes.push({id:skill.id,status:'candidate-rejected',source:`${repo.repo}/${directory}`,reason:e.message});}
         }
         candidate=chooseUpgrade(skill.id,current,candidates,config);

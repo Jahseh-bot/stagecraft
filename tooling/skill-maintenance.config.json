@@ -1,20 +1,98 @@
 {
   "version": 1,
-  "searchQueries": ["agent skills in:name,description archived:false fork:false", "claude skills testing in:name,description archived:false fork:false", "agent skills design in:name,description archived:false fork:false", "agent skills architecture in:name,description archived:false fork:false"],
+  "searchQueries": [
+    "agent skills in:name,description archived:false fork:false",
+    "claude skills testing in:name,description archived:false fork:false",
+    "agent skills design in:name,description archived:false fork:false",
+    "agent skills architecture in:name,description archived:false fork:false"
+  ],
   "searchResultsPerQuery": 8,
   "maxRepositories": 20,
   "maxCandidatesPerSkill": 4,
   "minimumScoreGain": 15,
-  "allowedLicenses": ["MIT", "Apache-2.0", "BSD-3-Clause", "BSD-2-Clause", "ISC"],
-  "limits": {"files": 2000, "fileBytes": 5242880, "totalBytes": 31457280},
+  "allowedLicenses": [
+    "MIT",
+    "Apache-2.0",
+    "BSD-3-Clause",
+    "BSD-2-Clause",
+    "ISC"
+  ],
+  "limits": {
+    "files": 2000,
+    "fileBytes": 5242880,
+    "totalBytes": 31457280
+  },
   "roles": {
-    "grilling": ["clarify", "questions", "requirements"],
-    "grill-with-docs": ["grilling", "domain-modeling"],
-    "domain-modeling": ["domain", "glossary"],
-    "codebase-design": ["architecture", "modules", "testability"],
-    "tdd": ["test", "driven", "red", "green"],
-    "diagnosing-bugs": ["debug", "reproduce", "root cause"],
-    "frontend-design": ["frontend", "design", "visual"],
-    "webapp-testing": ["web", "testing", "browser"]
-  }
+    "grilling": [
+      "clarify",
+      "questions",
+      "requirements"
+    ],
+    "grill-with-docs": [
+      "grilling",
+      "domain-modeling"
+    ],
+    "domain-modeling": [
+      "domain",
+      "glossary"
+    ],
+    "codebase-design": [
+      "architecture",
+      "modules",
+      "testability"
+    ],
+    "tdd": [
+      "test",
+      "driven",
+      "red",
+      "green"
+    ],
+    "diagnosing-bugs": [
+      "debug",
+      "reproduce",
+      "root cause"
+    ],
+    "frontend-design": [
+      "frontend",
+      "design",
+      "visual"
+    ],
+    "webapp-testing": [
+      "web",
+      "testing",
+      "browser"
+    ]
+  },
+  "rejectedCandidates": [
+    {
+      "id": "grilling",
+      "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/plugins/agentic-awesome-skills-claude/skills/ask-questions-if-underspecified",
+      "reason": "Only clarifies underspecified requests; loses the existing exhaustive decision-tree stress-test interview."
+    },
+    {
+      "id": "webapp-testing",
+      "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/plugins/agentic-awesome-skills-claude/skills/webapp-testing",
+      "reason": "References examples/ and three example files absent from candidate payload."
+    },
+    {
+      "id": "vue-best-practices",
+      "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/plugins/agentic-awesome-skills-claude/skills/markstream-vue",
+      "reason": "Markstream package integration is narrower than general Vue development practices."
+    },
+    {
+      "id": "react-best-practices",
+      "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/plugins/agentic-awesome-skills-claude/skills/markstream-react",
+      "reason": "Markstream beta integration is narrower than React/Next performance practices."
+    },
+    {
+      "id": "nodejs-backend-patterns",
+      "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/plugins/agentic-awesome-skills-claude/skills/nodejs-backend-patterns",
+      "reason": "Candidate removes existing dependency-injection coverage; structural score is not a net improvement."
+    },
+    {
+      "id": "fastapi-templates",
+      "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/plugins/agentic-awesome-skills-claude/skills/fastapi-templates",
+      "reason": "Candidate omits existing dependency setup and async-test guidance; coverage regression not justified."
+    }
+  ]
 }
