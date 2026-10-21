@@ -18,6 +18,11 @@ const stagePhases = { architect: ['plan'], build: ['implement'], test: ['test_pl
   deploy: ['deploy_discover', 'deploy_plan'] };
 for (const entry of await readdir(join(root, 'packages'), { withFileTypes: true })) {
   if (!entry.isDirectory() || entry.name === 'runner') continue;
+  const skillRoot = join(root, 'packages', entry.name, 'skills', `stagecraft-${entry.name}`);
+  await mkdir(join(skillRoot, 'scripts'), { recursive: true });
+  await mkdir(join(skillRoot, 'references'), { recursive: true });
+  await copyFile(join(root, 'tooling/skill-shared/protocol.md'), join(skillRoot, 'references/protocol.md'));
+  await copyFile(join(root, 'tooling/skill-shared/handoff.mjs'), join(skillRoot, 'scripts/handoff.mjs'));
   const bin = join(root, 'packages', entry.name, 'bin');
   await mkdir(bin, { recursive: true });
   const target = join(bin, 'cli.mjs');

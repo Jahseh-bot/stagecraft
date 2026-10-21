@@ -1,24 +1,37 @@
 ---
 title: 阶段包与技能安装
-description: Stagecraft 0.3.0 零基础教程：阶段包与技能安装，包含操作步骤、预期结果与注意事项。
+description: Stagecraft Skills-first 零基础教程：阶段包与技能安装。
 ---
 
 # 阶段包与技能安装
 
-## 进阶 其他阶段包有什么用
+## 七个包各司其职
 
-| 包 | 什么时候使用 |
+| 包目录 | Skill | 用途 |
+| --- | --- | --- |
+| discover | stagecraft-discover | 创意、证据和验证实验 |
+| spec | stagecraft-spec | 需求与可验证规格 |
+| design | stagecraft-design | 体验、界面和交互 |
+| architect | stagecraft-architect | 架构与技术可行性 |
+| build | stagecraft-build | 实现、自测和修复 |
+| test | stagecraft-test | 测试、审计或授权修复 |
+| deploy | stagecraft-deploy | 发布、验证和回滚 |
+
+源码安装统一使用 `node packages/包目录/bin/cli.mjs init --agent 宿主 --dir "目标项目路径"`。只装你需要的阶段即可；多阶段连续交付需安装目标范围里的技能。
+
+## 宿主目录
+
+| --agent | 项目内目录 |
 | --- | --- |
-| `runner` | 从需求开始，完成开发、测试，按需继续部署；新手从这里开始 |
-| `build` | 单独从需求进入开发，`run --prd ./PRD.md --dir ./my-app` |
-| `test` | 对已有项目测试或修复 |
-| `deploy` | 对已有项目进行本机 Compose 部署 |
-| `discover`、`spec`、`design`、`architect` | 安装对应阶段的技能文件，供支持这些技能的工具使用 |
+| codex / generic | .agents/skills |
+| claude | .claude/skills |
+| cursor | .cursor/skills |
+| copilot | .github/skills |
+| gemini | .gemini/skills |
+| opencode | .opencode/skills |
 
-例如安装设计技能：
+其他宿主可用 `--skills-dir "自定义技能目录"`，它与 `--agent` 二选一。通用兜底是让 agent 直接读取 SKILL.md。目录适配经过自动化安装测试，不表示所有宿主和模型都已实机跑过完整任务。
 
-```sh
-npx --yes @gaaraa/design@0.3.0 init --agent codex --dir ./my-app
-```
+## 预览与冲突
 
-`init` 只安装技能，不会单独生成完整应用。`runner/build/test/deploy` 已包含所需运行器和方法资源，不用把所有阶段包安装一遍。
+命令末尾加 `--dry-run` 只预览，不写文件。重复安装相同内容安全；发现已有不同内容会拒绝覆盖，先备份自定义修改再决定替换。安装器不会修改你的 AGENTS.md、CLAUDE.md 或全局 agent 配置。

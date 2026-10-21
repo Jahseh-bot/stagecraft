@@ -1,17 +1,13 @@
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
-const root=fileURLToPath(new URL('../',import.meta.url));
-const runner=JSON.parse(await readFile(join(root,'packages/runner/package.json')));
-const scope=runner.name.split('/')[0], version=runner.version;
-const stages=(await readdir(join(root,'packages'),{withFileTypes:true})).filter(x=>x.isDirectory()).map(x=>x.name);
-const heading=`# Stagecraft npm 使用指南\n\n当前版本：${version}；scope：${scope}。${scope==='@stagecraft-draft'?'正式 owner scope 尚未配置，以下 registry 命令仅在完成改名和发布后可用。':'这些命令必须在该版本成功发布后使用；以 registry-verification.json 为上线验证结果。'}\n\n需要 Node.js >=22、已安装且登录的 Codex CLI。部署还需要可运行的 Docker/Compose；只支持本机 Compose 部署，是否运行业务应用需要的额外环境由项目决定。Codex 调用使用你的账户与额度。\n\n`;
-const commands=`## 从任意入口开始\n\n\`\`\`sh\n# PRD → 方案确认 → 编码 → 测试修复 → 部署配置确认 → 本机部署\nnpx --yes ${scope}/runner@${version} start --prd ./PRD.md --dir ./my-app --until deploy\n\n# 已有项目：只测试并修复，不需要 PRD\nnpx --yes ${scope}/test@${version} run --dir ./my-app --mode repair\n\n# 已有项目：识别栈、生成缺失配置、确认后部署\nnpx --yes ${scope}/deploy@${version} run --dir ./my-app\n\n# 单独从开发阶段启动\nnpx --yes ${scope}/build@${version} run --prd ./PRD.md --dir ./my-app\n\`\`\`\n\n\`--yes\` 只跳过 npm 下载确认，不跳过运行器的方案/部署确认。每个可执行阶段包都内置运行器，不需要安装 runner 包。其余 discover/spec/design/architect 目前提供 skills 安装入口：\n\n\`\`\`sh\nnpx --yes ${scope}/design@${version} init --agent codex --dir ./my-app\n\`\`\`\n\n## 确认、人工介入与恢复\n\n运行器输出 runDir、pending.questions 和计划。根据实际问题 ID 创建 answers.json，例如方案确认是 \`{"approve_plan":"yes"}\`；部署配置通常为 \`approve_setup\`，应以实际输出为准。\n\n\`\`\`sh\nnpx --yes ${scope}/runner@${version} status --run /absolute/path/to/run\nnpx --yes ${scope}/runner@${version} answer --run /absolute/path/to/run --file ./answers.json\nnpx --yes ${scope}/runner@${version} resume --run /absolute/path/to/run\n\`\`\`\n\nanswer 保存回答并自动继续。Ctrl-C 暂停后可 resume；执行错误需要按 pending 的恢复问题回答，不能假定 resume 会自动解决错误。修复有次数上限，达到上限会请求人工介入。test/deploy 包也提供 answer/status/resume，可接续同版本记录。退出码：0成功，2待输入，3审计发现失败，130暂停，1命令错误。\n\n技能随包固定版本分发，按阶段及技术栈匹配；可使用 \`--stack vue,postgres\` 显式选择。不会在执行中悄悄更新上游 skills。\n\n## 升级与排障\n\n建议固定版本以复现运行；新项目可使用 @latest。继续旧 run 时保留原版本，不保证跨版本检查点迁移。若 npm 返回404，先确认正式scope、版本和发布结果；若Codex认证失败，先在终端运行 codex 完成登录。若Docker不可用，先启动Docker并确认上下文。包安装不提供模型凭据、云服务器或数据库账户。\n`;
-// The beginner guide is maintained by hand; builds must not replace its walkthrough.
-const beginnerGuide='https://github.com/Jahseh-bot/stagecraft/blob/main/docs/npm-usage.md';
-for(const stage of stages){
- const m=JSON.parse(await readFile(join(root,'packages',stage,'package.json')));
- const command=stage==='runner'?'start --prd ./PRD.md --dir ./my-app --until deploy':stage==='build'?'run --prd ./PRD.md --dir ./my-app':stage==='test'?'run --dir ./my-app --mode repair':stage==='deploy'?'run --dir ./my-app':'init --agent codex --dir ./my-app';
- await writeFile(join(root,'packages',stage,'README.md'),`# ${m.name}\n\n${m.description}\n\n第一次使用请先阅读 [零基础使用指南](${beginnerGuide})，从安装工具、编写需求到打开网页逐步操作。\n\n${heading.split('\n\n').slice(1).join('\n\n')}\n\`\`\`sh\nnpx --yes ${m.name}@${version} ${command}\n\`\`\`\n\n${['runner','build','test','deploy'].includes(stage)?commands:'此包只安装该阶段 skills；不会自动运行编码模型。使用 --dry-run 预览安装；支持 --agent codex 或 claude。不同内容不会被静默覆盖。'}\n\nMIT；第三方技能保留自己的许可证，见 NOTICE.md。\n`);
+const root = fileURLToPath(new URL('../', import.meta.url));
+const guide = 'https://github.com/Jahseh-bot/stagecraft/blob/main/docs/npm-usage.md';
+for (const directory of await readdir(join(root, 'packages'), { withFileTypes: true })) {
+  if (!directory.isDirectory()) continue;
+  const stage = directory.name;
+  const metadata = JSON.parse(await readFile(join(root, 'packages', stage, 'package.json')));
+  const body = stage === 'runner' ? `兼容入口：保留旧 Codex runner 和 .stagecraft/runs 检查点。新项目推荐在当前 coding agent 中直接调用各阶段 Skill，无需 runner、嵌套模型或 answers.json。\n\n\`\`\`sh\nnpx --yes ${metadata.name}@${metadata.version} resume --run /absolute/path/to/run\n\`\`\`\n\n终端支持直接回答；--json 保留自动化协议。旧 runner 仍需已登录的 Codex CLI，部署范围仍为本机 Compose。` : `在当前 coding agent 中完成 ${stage} 阶段的执行、验证、修复与交接，无需安装其他阶段包。\n\n\`\`\`sh\nnpx --yes ${metadata.name}@${metadata.version} init --agent codex --dir ./my-project\n\`\`\`\n\n然后在 agent 中说：“使用 stagecraft-${stage} 完成本次任务，自行完成职责内的验证和修复，只在关键阻塞时询问我。”\n\n支持 --agent codex、claude、cursor、copilot、gemini、opencode、generic；也可用 --skills-dir 指定宿主目录。使用 --dry-run 预览；不同内容拒绝覆盖。没有原生 Skills 的宿主可直接读取安装目录里的 SKILL.md。宿主必须有任务所需的文件、执行及验证能力。\n\n统一协议、报告模板和可选 Node.js 22+ 交接脚本随包提供；检查点写到目标项目 .stagecraft/workflows。${['build','test','deploy'].includes(stage) ? ' run/status/resume 等旧命令仅作为兼容入口保留。' : ''}`;
+  await writeFile(join(root, 'packages', stage, 'README.md'), `# ${metadata.name}\n\n${metadata.description}\n\n版本 ${metadata.version}。npm 命令以该版本已实际发布为前提；未发布时从仓库执行 node packages/${stage}/bin/cli.mjs。\n\n${body}\n\n[完整零基础指南](${guide}) · [宿主兼容说明](https://github.com/Jahseh-bot/stagecraft/blob/main/docs/agent-compatibility.md)\n\nMIT；第三方方法保留原许可证，见 NOTICE.md。\n`);
 }
-console.log('Updated package READMEs; preserved the hand-maintained beginner guide.');
+console.log('Updated Skills-first package READMEs; preserved hand-maintained guides.');

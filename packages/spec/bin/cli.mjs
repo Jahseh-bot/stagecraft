@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { cp, lstat, mkdir, mkdtemp, readFile, readdir, rename, rm } from 'node:fs/promises';
-import { dirname, join, parse, resolve } from 'node:path';
+import { dirname, join, parse, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -9,7 +9,7 @@ async function assertNoLinks(path) {
   const absolute = resolve(path);
   const { root } = parse(absolute);
   let current = root;
-  for (const part of absolute.slice(root.length).split('/').filter(Boolean)) {
+  for (const part of absolute.slice(root.length).split(sep).filter(Boolean)) {
     current = join(current, part);
     try {
       if ((await lstat(current)).isSymbolicLink()) throw new Error(`拒绝符号链接路径：${current}`);
@@ -34,14 +34,14 @@ async function files(path, prefix = '') {
 async function main() {
   const args = process.argv.slice(2);
   if (!args.length || (args.length === 1 && ['--help', 'help'].includes(args[0]))) {
-    console.log('init --agent codex|claude [--dir <project>] [--dry-run]\n仅安装本包技能；不会运行模型、部署应用或覆盖不同内容。');
+    console.log('init [--agent codex|claude|cursor|copilot|gemini|opencode|generic] [--skills-dir <directory>] [--dir <project>] [--dry-run]\n仅安装本包技能；不会运行模型、部署应用或覆盖不同内容。');
     return;
   }
   if (args.shift() !== 'init') throw new Error('仅支持 init，使用 --help 查看用法。');
   const options = {};
   while (args.length) {
     const flag = args.shift();
-    if (!['--agent', '--dir', '--dry-run'].includes(flag) || flag in options) {
+    if (!['--agent', '--dir', '--skills-dir', '--dry-run'].includes(flag) || flag in options) {
       throw new Error(`未知或重复参数：${flag}`);
     }
     if (flag === '--dry-run') options[flag] = true;
@@ -51,13 +51,14 @@ async function main() {
       options[flag] = value;
     }
   }
-  const hostDirectory = { codex: '.agents', claude: '.claude' }[options['--agent']];
-  if (!hostDirectory) throw new Error('--agent 必须为 codex 或 claude。');
+  const hostDirectory = { codex: '.agents', claude: '.claude', cursor: '.cursor', copilot: '.github', gemini: '.gemini', opencode: '.opencode', generic: '.agents' }[options['--agent'] ?? 'generic'];
+  if (!hostDirectory) throw new Error('--agent 必须为 codex、claude、cursor、copilot、gemini、opencode 或 generic。');
+  if (options['--agent'] && options['--skills-dir']) throw new Error('--agent 与 --skills-dir 二选一。');
   const manifest = JSON.parse(await readFile(join(packageRoot, 'package.json'), 'utf8'));
   const stage = manifest.name.split('/').at(-1);
   const skillName = `stagecraft-${stage}`;
   const source = join(packageRoot, 'skills', skillName);
-  const destination = resolve(options['--dir'] ?? process.cwd(), hostDirectory, 'skills', skillName);
+  const destination = options['--skills-dir'] ? resolve(options['--dir'] ?? process.cwd(), options['--skills-dir'], skillName) : resolve(options['--dir'] ?? process.cwd(), hostDirectory, 'skills', skillName);
   await assertNoLinks(destination);
   const expected = await files(source);
   let installed;
@@ -88,7 +89,7 @@ async function main() {
   } finally {
     await rm(temporary, { recursive: true, force: true });
   }
-  console.log(`已安装：${destination}\n在宿主中重新加载技能并调用 ${skillName}；安装不代表阶段任务完成。`);
+  console.log(`已安装：${destination}\n在 coding agent 中重新加载技能并调用 ${skillName}；也可以让 agent 直接读取 ${destination}/SKILL.md。安装不运行模型。`);
 }
 
 main().catch(error => {

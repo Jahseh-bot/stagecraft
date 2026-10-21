@@ -13,7 +13,7 @@ const stages = ['discover', 'spec', 'design', 'architect', 'build', 'test', 'dep
 const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
 for (const stage of stages) {
-  test(`${stage}: isolated tarball, two hosts, dry-run, repeat, conflicts and links`, async () => {
+  test(`${stage}: isolated tarball, seven host profiles, dry-run, repeat, conflicts and links`, async () => {
     const temporary = await realpath(await mkdtemp(join(tmpdir(), 'stagecraft-test-')));
     try {
       const packed = JSON.parse(execFileSync(npm, [
@@ -30,7 +30,7 @@ for (const stage of stages) {
       const installedManifest = JSON.parse(await readFile(join(consumer, 'node_modules', releaseScope, stage, 'package.json')));
       assert.equal(installedManifest.dependencies, undefined);
       const invoke = (...args) => spawnSync(process.execPath, [cli, ...args], { encoding: 'utf8' });
-      for (const [agent, directory] of [['codex', '.agents'], ['claude', '.claude']]) {
+      for (const [agent, directory] of [['codex', '.agents'], ['claude', '.claude'], ['cursor', '.cursor'], ['copilot', '.github'], ['gemini', '.gemini'], ['opencode', '.opencode'], ['generic', '.agents']]) {
         const project = join(temporary, agent);
         const args = ['init', '--agent', agent, '--dir', project];
         assert.equal(invoke(...args, '--dry-run').status, 0);
@@ -41,6 +41,9 @@ for (const stage of stages) {
         const entry = join(skill, 'SKILL.md');
         const original = await readFile(entry, 'utf8');
         await access(join(skill, 'assets', 'report.md'));
+        await access(join(skill, 'references', 'protocol.md'));
+        const helper = spawnSync(process.execPath, [join(skill, 'scripts', 'handoff.mjs'), '--help'], { encoding: 'utf8' });
+        assert.equal(helper.status, 0, helper.stderr);
         if (stage === 'deploy') await access(join(skill, 'references', 'compose.md'));
         assert.equal(invoke(...args).status, 0);
         await writeFile(entry, `${original}\nUser customization\n`);
@@ -49,6 +52,9 @@ for (const stage of stages) {
         assert.match(conflicting.stderr, /不同内容/);
         assert.equal(await readFile(entry, 'utf8'), `${original}\nUser customization\n`);
       }
+      const custom = join(temporary, 'custom');
+      assert.equal(invoke('init', '--dir', custom, '--skills-dir', 'my-skills').status, 0);
+      await access(join(custom, 'my-skills', `stagecraft-${stage}`, 'SKILL.md'));
       assert.notEqual(invoke('init', '--agent', 'unsupported').status, 0);
       assert.notEqual(invoke('init', '--agent', 'codex', '--force').status, 0);
       const target = join(temporary, 'link-project');

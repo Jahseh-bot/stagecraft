@@ -1,34 +1,31 @@
 ---
-title: 启动第一次任务
-description: Stagecraft 0.3.0 零基础教程：启动第一次任务，包含操作步骤、预期结果与注意事项。
+title: 开始第一个任务
+description: Stagecraft Skills-first 零基础教程：开始第一个任务。
 ---
 
-# 启动第一次任务
+# 开始第一个任务
 
-## 第六步 启动第一次开发任务
+## 安装需要的技能
 
-仍在 `stagecraft-practice` 文件夹中执行：
+先在电脑上创建一个空文件夹作为目标项目，例如桌面的 `my-app`。复制它的完整路径，将以下命令中的路径替换掉。路径有空格时保留双引号。
+
+在 stagecraft 源码目录执行：
 
 ```sh
-npx --yes @gaaraa/runner@0.3.0 start --prd ./PRD.md --dir ./my-app
+node packages/build/bin/cli.mjs init --agent codex --dir "/你的项目完整路径/my-app"
+node packages/test/bin/cli.mjs init --agent codex --dir "/你的项目完整路径/my-app"
 ```
 
-这条命令的意思是：
+使用 Claude Code 将 `codex` 换成 `claude`，Cursor 换成 `cursor`，其他选项见“阶段包与技能安装”。看到“已安装”表示技能文件已放到目标项目。
 
-| 部分 | 作用 |
-| --- | --- |
-| `start` | 开始一次新的需求开发任务 |
-| `--prd ./PRD.md` | 读取当前文件夹中的需求说明 |
-| `--dir ./my-app` | 将应用代码放到当前文件夹下的 my-app 中，缺少该目录时自动创建 |
+## 在 agent 中开始工作
 
-`./` 表示“当前文件夹”。第一次练习请使用一个新的 `my-app` 目录；如果同名目录已有重要文件，换成 `./my-app-2`，后面的项目路径也要对应修改。
-
-终端会输出类似内容：
+在 coding agent 中打开 `my-app`，重新加载技能或重开这个项目会话，然后输入：
 
 ```text
-Run directory: /Users/你的用户名/stagecraft-practice/my-app/.stagecraft/runs/一串任务编号
+使用 stagecraft-build 和 stagecraft-test，按照 PRD.md 做出可运行的温度换算网页并测试。
+常规可逆技术选择自行决定，执行测试并修复，不要让我手写 JSON。
+把阶段交接记录保存在项目中，完成后告诉我怎样启动和打开网页。
 ```
 
-**复制并保存这条完整路径。** 每个人的用户名和任务编号都不同，后面查询和回答问题必须使用自己的路径。下文将它称为“运行目录”。
-
-运行时可能暂时没有新输出，因为 Codex 正在处理当前阶段。不要连续再次执行 `start`；每执行一次都会创建新的任务。需要暂停时按一次 `Ctrl + C`，等待程序结束并保存状态。
+如果宿主没有发现技能，明确让它读取安装输出中的 `stagecraft-build/SKILL.md`，并按文件指示工作。不要在系统终端里输入这段自然语言，它是发给 coding agent 的消息。

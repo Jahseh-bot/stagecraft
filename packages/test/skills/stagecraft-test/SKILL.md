@@ -1,33 +1,40 @@
 ---
 name: stagecraft-test
-description: Test an existing repository or running application, produce executable tests where feasible, and report evidence-backed defects.
+description: Validate an existing codebase or running app against requirements, reproduce defects, repair authorized failures and rerun affected checks to closure. Use for testing, QA, regression or test-and-fix requests; respect explicit audit-only/read-only scope.
+compatibility: Any coding agent with file access; terminal/browser/network tools as required by the task. Optional checkpoint helper needs Node.js 22+.
 ---
 
-# 产品测试
+# 测试与修复
 
-优先复用随包方法：[Matt Pocock TDD](references/upstream/tdd/SKILL.md) 用于行为与测试边界；有浏览器覆盖需求时使用 [Anthropic webapp-testing](references/upstream/webapp-testing/SKILL.md)；用户要求修复时使用 [diagnosing-bugs](references/upstream/diagnosing-bugs/SKILL.md)。复用项目现有测试框架，不因示例而强制引入 Python 或 Playwright。来源与许可见 `references/upstream/sources.json` 和各目录许可证。
+在当前 coding agent 中直接完成本阶段，不启动嵌套模型或要求用户操作 runner。先阅读本技能内的 [统一执行与交接协议](references/protocol.md)，它定义自主决策、有限修复、授权边界与跨阶段恢复。用户目标与项目约定优先；不要求安装其他阶段技能。
 
-## 接入与独立性
+## 接手与恢复
 
-不要求安装或先执行其他 Stagecraft 包。接受用户已有文档、仓库或产品；只补当前任务必需的信息。保留已有权威来源，区分事实、假设和待确认事项。遵守目标项目的说明和用户授权范围。
+识别用户的目标、当前项目、入口与终点。已有匹配工作流时读取交接记录、真实成果和验证证据，复用已确认决定；输入改变则重新检查相关结论。没有上游成果时补足本阶段必需输入即可开始，不为凑齐七阶段而要求重复采访。
 
-## 成果记录
+## 执行闭环
 
-用 [报告模板](assets/report.md) 记录结果，建议保存到 `.stagecraft/runs/<stage>-<unique-id>/report.md`；用户指定位置优先。重用上次记录需确认对象与版本仍一致，不覆盖其他运行成果。`completed` 表示本阶段约定交付完成，不表示产品无缺陷；无法执行关键验证时用 `partial` 或 `blocked`。明确失败使用 `failed`。保留实际命令或来源和结果，不把计划写成已执行证据。
+1. 确定对象、当前版本、环境、可用账号与授权范围。读取 AC、变更记录和既有测试；只有 URL 时明确无法覆盖源码层面。没有上游报告也能从现有需求与用户目标直接建立测试范围。
+2. 建立风险优先的测试矩阵：主要行为、空/非法/边界输入、权限、状态持久性和恢复、与改动相关回归。区分已有行为基线与产品应有行为，不把现状当成正确性标准。
+3. 实际执行现有测试，并补充能揭露遗漏行为的测试。Web流程可用浏览器验证关键路径、手机布局和错误状态。保存命令、预期、实际、环境与复现步骤，失败日志不可省略。
+4. 在用户要求完成闭环、测试并修复或已授权实现的范围内，诊断并修复本次缺陷，再运行原失败用例及受影响回归。明确只审计、只读或仅报告时保持该边界，交付可复现缺陷即为该审计目标的闭环，不修改业务实现。
+5. 按协议的有限修复预算处理问题；对偶发失败做有理由的复查，不用无限重跑掩盖不稳定。不能删除或削弱有效测试。修复改变上游构建产物时，刷新 build 的真实验证和交接，再完成受影响测试。
+6. 给出 AC 结果、阻断缺陷、覆盖缺口及发布建议。测试通过仅代表检查范围通过，不保证没有缺陷；关键检查未执行不可给出无条件可发布结论。
 
-## 工作流程
+## 本阶段交付与验收
 
-1. 确定测试对象、版本或提交、地址、访问条件和可用测试环境。只有 URL 时说明不能覆盖的源码层面检查。
-2. 从外部需求和用户目标建立预期结果。缺少需求时分开记录行为基线与待确认业务正确性，不能把现状当作唯一标准。
-3. 依据影响和风险选择关键路径、负向输入、权限和状态测试，优先复用现有工具。需要新增测试依赖时按项目约定处理。
-4. 生成并实际运行适当测试，记录环境、命令、预期与实际、复现步骤；对疑似不稳定失败做有限复查并说明原因。
-5. 默认交付测试和缺陷，不自动改业务代码；用户明确要求修复时才扩展到修复与回归。不得删除有效断言来掩盖缺陷。
-6. 区分测试通过、覆盖缺口和未执行检查，不用测试数量代替质量结论。
+交付：可执行测试、AC/风险覆盖矩阵、运行日志、复现步骤、授权修复及回归证据、剩余缺陷与发布建议。
 
-## 阶段交付
+完成条件：约定测试实际执行；发现项可复现或有证据；授权修复已回归；审计模式保持只读范围；关键未执行检查清楚阻止完成声明。
 
-测试范围与用例、实际运行结果、缺陷复现证据、覆盖缺口。
+使用 [报告模板](assets/report.md) 保存目标、AC、成果、实际证据及剩余问题。用 [交接助手](scripts/handoff.mjs) 记录阶段；无 Node 时按协议使用 Markdown 交接，明确验证能力限制。不能以“已写报告”代替真实验收，也不能让用户自己填状态文件。
 
-## 技术栈方法选择
+## 平滑交接
 
-从项目清单或已确认选型识别技术栈，读取 [技术栈映射](references/upstream/technology-skills.json)，只加载匹配条目对应目录中的 SKILL.md 及其必读引用。不要把候选技术当成已选技术；保留现有框架版本和状态管理方案。无匹配项时明确报告覆盖缺口，不声称已经使用该技术栈的专门方法。来源、版本与许可证见 [来源记录](references/upstream/sources.json)。
+deploy：传递测试修订版本、可发布判断、已知限制与必要部署后验证；阻断缺陷不能作为已通过交接。
+
+用户授权继续且下一技能可用时，在同一 agent 中直接读取下一阶段 SKILL.md，沿用同一工作流、AC 标识与已确认决定。只请求本阶段新发现且不可自行解决的关键决定。阶段未完成时先修复或准确记录 blocker，不能把阻塞状态包装成完成后传下去。
+
+## 按需加载的方法
+
+检查 [技术栈映射](references/upstream/technology-skills.json) 与 [来源和许可](references/upstream/sources.json)，只读取与当前任务相关的上游方法目录。维持现有框架、版本和测试工具。上游的全面 grilling、人工确认、子代理或发布建议均受统一协议和用户实际授权约束，不构成额外强制步骤。没有专门方法匹配时使用通用工程能力并说明覆盖范围，不宣称已经过专门方法验证。

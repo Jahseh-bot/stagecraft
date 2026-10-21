@@ -7,30 +7,31 @@ import StageFlow from './StageFlow.vue'
   <main id="main-content" class="home">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <a class="release" :href="withBase('/changelog/')">Stagecraft 0.3.0 已发布到 npm <span aria-hidden="true">↗</span></a>
+        <a class="release" :href="withBase('/changelog/')">Stagecraft 0.4.0 · Skills-first 源码版 <span aria-hidden="true">↗</span></a>
         <h1 id="hero-title">从你的需求，<br>到能运行的应用。</h1>
-        <p class="intro">用中文写下想法，把实现交给 Stagecraft。<br class="desktop-break">从澄清、编写到测试，每个关键决定都由你确认。</p>
+        <p class="intro">在你熟悉的 coding agent 里，调用 Stagecraft Skills。<br class="desktop-break">各阶段自主执行、验证和修复，沿用同一份交接记录。</p>
         <div class="actions"><a class="primary" :href="withBase('/guide/')">开始使用</a><a class="secondary" :href="withBase('/workflow/')">了解工作流程</a></div>
-        <p class="prerequisites">从一个小网页开始。需要 Node.js 22+ 和已登录的 Codex CLI。</p>
+        <p class="prerequisites">从一个阶段开始。适配多种 coding agent，无需单独运行 Codex CLI。</p>
       </div>
       <div class="workbench" aria-label="终端命令与开发流程示意">
         <div class="terminal">
-          <div class="terminal-bar"><span class="terminal-mark" aria-hidden="true">›_</span><span>从一份 PRD.md 开始</span><span class="terminal-label">终端示例</span></div>
-          <pre tabindex="0" aria-label="Stagecraft 启动命令"><code>npx --yes @gaaraa/runner@0.3.0 start \
-  --prd ./PRD.md --dir ./my-app</code></pre>
+          <div class="terminal-bar"><span class="terminal-mark" aria-hidden="true">›_</span><span>在 agent 会话中直接使用</span><span class="terminal-label">对话示例</span></div>
+          <pre tabindex="0" aria-label="Stagecraft 启动命令"><code>使用 stagecraft-build 和 stagecraft-test，
+把 PRD.md 实现成可运行应用。
+自主验证和修复，保留阶段交接记录。</code></pre>
           <p class="terminal-note">“我想做一个中文温度换算网页。”</p>
         </div>
         <div class="flow-panel"><StageFlow compact /></div>
-        <div class="workbench-foot"><span class="status-dot" aria-hidden="true"></span>自动推进，也为你的决定留出位置。</div>
+        <div class="workbench-foot"><span class="status-dot" aria-hidden="true"></span>常规选择自主完成，关键阻塞才请求你介入。</div>
       </div>
     </section>
 
     <section class="capabilities" aria-labelledby="capabilities-title">
       <div class="section-lead"><h2 id="capabilities-title">不只生成代码，<br>还要把结果跑起来。</h2><p>把重复的执行交给工具，把重要的判断留给你。</p></div>
       <dl class="capability-list">
-        <div><dt>先说清楚，再开始</dt><dd>需求有歧义时会提出问题。你可以接受建议，也可以要求修改方案；确认后才开始实现。</dd></div>
-        <div><dt>用真实检查检验结果</dt><dd>执行批准的测试和本机 HTTP 检查，保留失败日志，在预算内尝试修复。交付说明告诉你怎样启动。</dd></div>
-        <div><dt>随时暂停，接着完成</dt><dd>保存任务状态和已确认的决定。保留运行目录，用同一版本恢复，不必重新描述整个项目。</dd></div>
+        <div><dt>直接接手，补足关键输入</dt><dd>从需求、代码或已有产品任意切入。复用已确认决定，只询问真正影响业务含义或授权范围的问题。</dd></div>
+        <div><dt>用真实检查检验结果</dt><dd>每个阶段实际检查成果，诊断问题、修复并复验。测试与部署保留真实证据，未验证的部分明确说明。</dd></div>
+        <div><dt>随时暂停，接着完成</dt><dd>统一记录目标、决定、成果与验证证据。换会话或换 agent 后接着做；上游变化时重新核验下游结果。</dd></div>
       </dl>
     </section>
 
@@ -38,17 +39,17 @@ import StageFlow from './StageFlow.vue'
       <h2 id="entry-title">从你现在的位置开始</h2>
       <p class="section-description">新想法、已有项目，或准备在本机持续运行的应用。</p>
       <div class="entry-list">
-        <a class="entry" :href="withBase('/guide/requirements.html')"><span class="entry-symbol" aria-hidden="true">＋</span><div><h3>我有一个想法</h3><p>写下需求，让 runner 带你完成开发和测试。</p></div><span class="entry-link">从需求开始</span></a>
+        <a class="entry" :href="withBase('/guide/requirements.html')"><span class="entry-symbol" aria-hidden="true">＋</span><div><h3>我有一个想法</h3><p>写下需求，在 agent 内调用开发和测试技能。</p></div><span class="entry-link">从需求开始</span></a>
         <a class="entry" :href="withBase('/guide/existing-project.html')"><span class="entry-symbol" aria-hidden="true">✓</span><div><h3>我有一个项目</h3><p>检查现有应用，选择只审计或允许修复。</p></div><span class="entry-link">进入测试</span></a>
-        <a class="entry" :href="withBase('/guide/deployment.html')"><span class="entry-symbol" aria-hidden="true">▣</span><div><h3>我想保持应用运行</h3><p>确认配置和方案后，使用本机 Docker Compose。</p></div><span class="entry-link">了解本机部署</span></a>
+        <a class="entry" :href="withBase('/guide/deployment.html')"><span class="entry-symbol" aria-hidden="true">▣</span><div><h3>我想保持应用运行</h3><p>在已授权目标发布，验证实际版本与访问地址。</p></div><span class="entry-link">了解部署验证</span></a>
       </div>
     </section>
 
     <section class="getting-started" aria-labelledby="getting-started-title">
-      <div><h2 id="getting-started-title">第一次打开终端？<br>我们从这里一起开始。</h2><p>跟着完整教程做一个温度换算网页。每一步都有命令、预期结果和遇到问题时的处理方法。</p><a class="primary" :href="withBase('/guide/preparation.html')">准备运行环境</a></div>
-      <ol class="reading-path"><li><a :href="withBase('/guide/preparation.html')">安装工具，检查连接</a><span>Node.js、Codex 和 Stagecraft</span></li><li><a :href="withBase('/guide/first-run.html')">启动任务，确认方案</a><span>保存运行目录，提交答案文件</span></li><li><a :href="withBase('/guide/delivery.html')">找到结果，打开网页</a><span>阅读交付说明，亲手试一试</span></li></ol>
+      <div><h2 id="getting-started-title">第一次打开终端？<br>我们从这里一起开始。</h2><p>跟着完整教程做一个温度换算网页。从安装技能到在 agent 中提出任务，每一步都有操作说明。</p><a class="primary" :href="withBase('/guide/preparation.html')">准备运行环境</a></div>
+      <ol class="reading-path"><li><a :href="withBase('/guide/preparation.html')">安装工具，检查连接</a><span>安装器、coding agent 和阶段技能</span></li><li><a :href="withBase('/guide/first-run.html')">在 agent 中开始任务</a><span>自主执行与统一交接</span></li><li><a :href="withBase('/guide/delivery.html')">找到结果，打开网页</a><span>阅读交付说明，亲手试一试</span></li></ol>
     </section>
-    <p class="scope-note">Stagecraft 使用你的 Codex 账号及额度。当前提供本机交付与 Compose 部署，不提供云托管。<a :href="withBase('/guide/troubleshooting.html')">查看平台支持与常见问题</a></p>
+    <p class="scope-note">Stagecraft 使用当前 agent 的账号、工具和权限。能力取决于宿主与环境；安装技能不提供模型或托管服务。<a :href="withBase('/guide/troubleshooting.html')">查看平台支持与常见问题</a></p>
   </main>
 </template>
 

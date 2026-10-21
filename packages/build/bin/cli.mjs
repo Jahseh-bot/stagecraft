@@ -12,10 +12,10 @@ run ${stage === 'build' ? '--prd <file> ' : ''}--dir <project> [runner options]
 answer --run <run-directory> --file <answers.json>
 status|resume --run <run-directory>
 skills --dir <project> [--phase <phase>]
-init --agent codex|claude [--dir <project>] [--dry-run]
+init --agent codex|claude|cursor|copilot|gemini|opencode|generic [--dir <project>] [--dry-run]
 
-run uses the runtime included in this package; no sibling package is required.
-Use runner-help for all runtime flags. init only installs skills.`);
+Recommended: init installs the skill; invoke it directly in your coding agent.
+Legacy: run uses the embedded Codex runtime. runner-help lists legacy runtime flags.`);
 } else if (command === 'init') {
   await import('./installer.mjs');
 } else if (['run', entry, 'answer', 'status', 'resume', 'skills', 'runner-help'].includes(command)) {

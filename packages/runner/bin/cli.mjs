@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { createRun, readState } from '../src/store.mjs';
 import { answerRun, drive } from '../src/engine.mjs';
+import { createTerminal } from '../src/terminal.mjs';
 import { createCodexAdapter } from '../src/codex.mjs';
 import { defaultProfile } from '../src/skills.mjs';
 import { detectTechnologies, selectSkillIds } from '../src/stack-skills.mjs';
@@ -15,6 +16,8 @@ stagecraft answer --run <run-directory> --file <answers.json>
 stagecraft resume --run <run-directory>
 stagecraft skills --dir <project> [--stack vue,flutter] [--phase implement] [--skills <profile.json>]
 
+Interactive terminals prompt for answers and continue automatically.
+Use --json for automation; --interactive forces prompts (requires a terminal).
 answer saves decisions and automatically continues. SIGINT pauses. Status is JSON.
 start accepts --until deploy to continue automatically from verified build into deployment.
 start/test/deploy accept --stack vue,flutter,... to explicitly select technology skills.
@@ -23,6 +26,7 @@ Execution uses the local authenticated Codex CLI. No npm publishing or productio
 Exit codes: 0 passed/status, 2 waiting for input, 3 audit found failures, 130 paused, 1 invalid command/error.`;
 
 async function main() {
+  const metadata = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
   const args = process.argv.slice(2);
   const command = args.shift();
   if (command === '--version' && !args.length) {
@@ -37,15 +41,21 @@ async function main() {
     skills: ['--dir', '--stack', '--phase', '--skills'],
     status: ['--run'], resume: ['--run'], answer: ['--run', '--file'],
   }[command];
+  if (allowed && ['start', 'test', 'deploy', 'resume', 'answer'].includes(command)) allowed.push('--json', '--interactive');
   if (!allowed) throw new Error(`Unknown command: ${command}`);
   const options = {};
   while (args.length) {
     const key = args.shift();
     if (!allowed.includes(key) || key in options) throw new Error(`Unknown or duplicate option: ${key}`);
+    if (['--json', '--interactive'].includes(key)) { options[key] = true; continue; }
     const value = args.shift();
     if (!value || value.startsWith('--')) throw new Error(`Missing value: ${key}`);
     options[key] = value;
   }
+  if (options['--json'] && options['--interactive']) throw new Error('--json and --interactive cannot be combined');
+  const hasTerminal = Boolean(process.stdin.isTTY && process.stdout.isTTY);
+  if (options['--interactive'] && !hasTerminal) throw new Error('--interactive requires a terminal');
+  const interactive = hasTerminal && !options['--json'];
   let runDir;
   if (command === 'skills') {
     if (!options['--dir']) throw new Error('--dir is required');
@@ -87,13 +97,23 @@ async function main() {
   process.on('SIGINT', interrupt);
   process.on('SIGTERM', interrupt);
   try {
-    const state = await drive(runDir, {
-      agent: createCodexAdapter(), signal: controller.signal,
-      onEvent: event => console.error(`${event.type}: ${event.phase} (${event.status})`),
-    });
-    console.log(JSON.stringify({ runDir, status: state.status, outcome: state.outcome ?? null, phase: state.phase,
+    const terminal = interactive ? createTerminal({ signal: controller.signal, resumeCommand: `npx --yes ${metadata.name}@${metadata.version} resume` }) : null;
+    const agent = createCodexAdapter();
+    let state, paused = false;
+    do {
+      state = await drive(runDir, {
+        agent, signal: controller.signal,
+        onEvent: event => terminal ? terminal.event(event) : console.error(`${event.type}: ${event.phase} (${event.status})`),
+      });
+      if (!terminal || state.status !== 'waiting_input') break;
+      const answers = await terminal.prompt(state);
+      if (!answers || controller.signal.aborted) { paused = true; break; }
+      await answerRun(runDir, answers);
+    } while (true);
+    if (terminal) terminal.finish(state, runDir, paused);
+    else console.log(JSON.stringify({ runDir, status: state.status, outcome: state.outcome ?? null, phase: state.phase,
       pending: state.pending, plan: state.plan, setup: state.setup ?? null, target: state.target ?? null, deployment: state.deployment ?? null }, null, 2));
-    process.exitCode = state.status === 'waiting_input' ? 2 : state.status === 'paused' ? 130 : state.outcome === 'failed' ? 3 : 0;
+    process.exitCode = paused || state.status === 'paused' ? 130 : state.status === 'waiting_input' ? 2 : state.outcome === 'failed' ? 3 : 0;
   } finally {
     process.off('SIGINT', interrupt);
     process.off('SIGTERM', interrupt);

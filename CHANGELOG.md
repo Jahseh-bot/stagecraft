@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.4.0 — Skills-first source release (npm pending)
+
+- Seven agent-native closed-loop skills with common durable handoffs and bounded repair.
+- Six host directory adapters plus generic/custom skill locations.
+- Self-contained checkpoint helper with evidence hashes, stale-stage invalidation and locks.
+- Legacy runner retained only for compatibility.
+
+## 0.3.1 — partial publication, 2026-10-21
+
+Only architect was published before the Skills-first direction replaced this release.
+
+- Interactive terminal questions, explicit plan/setup approval, and retry/cancel menus.
+- Resume pending 0.3.0 runs directly in the terminal; Ctrl+C/EOF preserves unanswered questions.
+- Preserve JSON automation with --json and automatic non-TTY detection.
+
 ## 0.3.0 — 2026-10-21, public npm release
 
 - Public package metadata, MIT license and preserved upstream license notices.

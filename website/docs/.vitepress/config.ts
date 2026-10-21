@@ -4,14 +4,14 @@ const guide = [
     { text: '什么是 Stagecraft', link: '/guide/' },
     { text: '准备环境', link: '/guide/preparation' },
     { text: '创建需求说明', link: '/guide/requirements' },
-    { text: '启动第一次任务', link: '/guide/first-run' },
-    { text: '回答问题与确认方案', link: '/guide/confirmation' },
+    { text: '开始第一个任务', link: '/guide/first-run' },
+    { text: '自主执行与必要确认', link: '/guide/confirmation' },
     { text: '查看成果与启动网页', link: '/guide/delivery' }
   ] },
   { text: '继续使用', items: [
     { text: '暂停、恢复与处理失败', link: '/guide/resume' },
     { text: '检查和修复已有项目', link: '/guide/existing-project' },
-    { text: '本机部署', link: '/guide/deployment' },
+    { text: '部署与发布验证', link: '/guide/deployment' },
     { text: '阶段包与技能安装', link: '/guide/packages' },
     { text: '故障排查与平台说明', link: '/guide/troubleshooting' },
     { text: '固定版本与升级', link: '/guide/upgrading' }
@@ -48,6 +48,6 @@ export default defineConfig({
       locales: { root: { translations: { button: { buttonText: '搜索文档', buttonAriaLabel: '搜索文档' }, modal: { displayDetails: '显示详细结果', resetButtonTitle: '清空搜索', backButtonTitle: '关闭搜索', noResultsText: '没有找到相关内容', footer: { selectText: '选择', selectKeyAriaLabel: '回车', navigateText: '切换', navigateUpKeyAriaLabel: '向上', navigateDownKeyAriaLabel: '向下', closeText: '关闭', closeKeyAriaLabel: '退出' } } } } },
       miniSearch: { options: { tokenize: (text: string) => text.toLowerCase().match(/[a-z0-9_@./-]+|[\u3400-\u9fff]/g) || [] }, searchOptions: { prefix: true, fuzzy: false } }
     } },
-    footer: { message: '在关键决定处停下来，让你确认下一步。', copyright: 'Stagecraft · 面向本机交付的开发工具' }
+    footer: { message: '在当前 agent 中完成闭环，让每个阶段平滑衔接。', copyright: 'Stagecraft · 面向本机交付的开发工具' }
   }
 })

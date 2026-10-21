@@ -1,20 +1,21 @@
 <script setup lang="ts">
 withDefaults(defineProps<{ compact?: boolean }>(), { compact: false })
 const stages = [
-  { title: '写下需求', detail: '用中文说明给谁用、做什么、怎样算完成。', action: '你来描述' },
-  { title: '澄清问题', detail: '回答当前问题，补齐影响开发的关键决定。', action: '你来回答' },
-  { title: '确认方案', detail: '审阅功能、技术选择和验收命令，再批准实现。', action: '你来确认' },
-  { title: '实现应用', detail: 'Codex 按已确认的方案编写项目文件。' },
-  { title: '测试与修复', detail: '执行真实检查，在修复预算内处理失败。' },
-  { title: '交付成果', detail: '阅读交付说明，启动应用；按需另行确认本机部署。', action: '你来验收' }
+  { title: '创意判断', detail: '研究证据、挑战假设、形成可验证的方向。' },
+  { title: '需求规格', detail: '补齐关键规则，形成可观察的验收条件。' },
+  { title: '体验设计', detail: '完成流程、状态与响应式设计并检查。' },
+  { title: '技术架构', detail: '验证技术约束，确定实现与测试路径。' },
+  { title: '开发实现', detail: '实现、自测、诊断和修复。' },
+  { title: '测试回归', detail: '执行测试，在授权范围内修复并复验。' },
+  { title: '部署验证', detail: '向授权目标发布，验证实际版本与地址。' }
 ]
 </script>
 
 <template>
-  <ol class="stage-flow" :class="{ compact }" aria-label="从需求到交付的六个阶段">
+  <ol class="stage-flow" :class="{ compact }" aria-label="从需求到交付的七个阶段">
     <li v-for="(stage, index) in stages" :key="stage.title" class="stage">
       <span class="step-number" aria-hidden="true">{{ index + 1 }}</span>
-      <div class="stage-body"><div class="stage-heading"><strong>{{ stage.title }}</strong><span v-if="stage.action" class="human">{{ stage.action }}</span></div><p v-if="!compact" class="detail">{{ stage.detail }}</p></div>
+      <div class="stage-body"><div class="stage-heading"><strong>{{ stage.title }}</strong></div><p v-if="!compact" class="detail">{{ stage.detail }}</p></div>
     </li>
   </ol>
 </template>

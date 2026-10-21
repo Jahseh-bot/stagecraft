@@ -1,6 +1,6 @@
 {
   "name": "@gaaraa/deploy",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Standalone deployment discovery and local Compose runner",
   "files": [
     "README.md",

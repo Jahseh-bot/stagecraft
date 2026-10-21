@@ -1,11 +1,28 @@
 ---
 title: CLI 参考
-description: Stagecraft 0.3.0 的公开命令、参数、阶段包、答案文件、运行目录与退出码。
+description: Skills 安装器与可选交接助手；旧 runner 兼容入口。
 ---
 
 # CLI 参考
 
-本页面向已经跟过[零基础教程](/guide/)的用户。所有示例固定使用公开 npm 版本 `0.3.0`，需要 Node.js 22+ 与已登录的 Codex CLI。`npx --yes` 只同意下载包，不代表批准开发或部署。
+## Skills 安装器
+
+新版默认在 coding agent 会话中使用技能。CLI 负责复制技能，不运行模型。
+
+```sh
+node packages/build/bin/cli.mjs init --agent codex --dir ./my-project
+node packages/test/bin/cli.mjs init --skills-dir .custom/skills --dir ./my-project --dry-run
+```
+
+`--agent` 支持 codex、claude、cursor、copilot、gemini、opencode、generic。`--skills-dir` 与 `--agent` 二选一；`--dry-run` 只预览。不同内容冲突拒绝覆盖。
+
+## 可选交接助手
+
+由 agent 调用技能内的 `scripts/handoff.mjs`，支持 init、status、begin、complete、block，维护 `.stagecraft/workflows`。用户不需要填写状态文件或答案 JSON。
+
+## 旧 runner 兼容参考
+
+以下 start、answer、resume 等命令供旧任务使用，要求已登录的 Codex CLI。新版 Skills 不依赖这些执行入口；旧运行器 init 只安装技能，不等于 agent 已完成任务。旧 JSON 协议仍接受 answers.json。0.4.0 源码兼容入口额外支持终端交互与 --json。
 
 ## 包与用途
 

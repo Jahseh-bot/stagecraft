@@ -1,6 +1,6 @@
 {
   "name": "@gaaraa/runner",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "description": "Persistent PRD-to-running-app delivery orchestrator",
   "engines": {

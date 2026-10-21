@@ -1,33 +1,40 @@
 ---
 name: stagecraft-deploy
-description: Prepare and execute an authorized single-host Docker Compose deployment, verify health, and produce release and recovery records.
+description: Prepare, execute and verify deployment to the user-authorized local or remote target, including configuration, health checks, rollback planning and failure diagnosis. Use for deployment/release/go-live requests; work with the current agent capabilities rather than requiring Docker or a specific provider.
+compatibility: Any coding agent with file access; terminal/browser/network tools as required by the task. Optional checkpoint helper needs Node.js 22+.
 ---
 
 # 部署与发布验证
 
-容器部署前先阅读随包固定版本的社区 [docker-expert](references/upstream/docker-expert/SKILL.md)，用于 Dockerfile、构建上下文、健康检查与 Compose 配置审查。按现有项目和当前 Compose CLI 调整示例；上游的云发布、镜像推送和破坏性清理示例不构成本次授权。来源与 MIT 许可见 `references/upstream/sources.json` 和对应目录许可证。
+在当前 coding agent 中直接完成本阶段，不启动嵌套模型或要求用户操作 runner。先阅读本技能内的 [统一执行与交接协议](references/protocol.md)，它定义自主决策、有限修复、授权边界与跨阶段恢复。用户目标与项目约定优先；不要求安装其他阶段技能。
 
-## 接入与独立性
+## 接手与恢复
 
-不要求安装或先执行其他 Stagecraft 包。接受用户已有文档、仓库或产品；只补当前任务必需的信息。保留已有权威来源，区分事实、假设和待确认事项。遵守目标项目的说明和用户授权范围。
+识别用户的目标、当前项目、入口与终点。已有匹配工作流时读取交接记录、真实成果和验证证据，复用已确认决定；输入改变则重新检查相关结论。没有上游成果时补足本阶段必需输入即可开始，不为凑齐七阶段而要求重复采访。
 
-## 成果记录
+## 执行闭环
 
-用 [报告模板](assets/report.md) 记录结果，建议保存到 `.stagecraft/runs/<stage>-<unique-id>/report.md`；用户指定位置优先。重用上次记录需确认对象与版本仍一致，不覆盖其他运行成果。`completed` 表示本阶段约定交付完成，不表示产品无缺陷；无法执行关键验证时用 `partial` 或 `blocked`。明确失败使用 `failed`。保留实际命令或来源和结果，不把计划写成已执行证据。
+1. 确认用户指定的目标、环境、版本/构建产物、权限和发布范围。读取测试证据与项目配置；没有前序报告时自行完成必要发布前检查。目标不明或发布权限缺失才提问，不能把本机目标擅自改成公网。
+2. 使用现有托管平台、CI/CD、容器、静态托管或进程管理方案；按实际项目选型，不强制 Docker。查验平台当前官方配置。复用既有凭据机制，密钥不写入报告、源码或聊天。
+3. 生成必要部署配置、健康检查、环境变量名称说明和回滚步骤。在授权环境先验证构建、配置和关键前置条件；数据迁移、付费资源或不可逆操作只在所需授权明确时执行。
+4. 执行实际发布，记录目标、修订版本、时间和可观察部署结果。构建成功、推送成功或进程启动不是发布成功；等待平台报告结果，并检查实际目标地址与关键用户路径。
+5. 发布失败先诊断日志，做范围内可逆修复后重试。存在旧实例时核对正在运行的版本，不能以旧服务健康冒充本次上线。检查失败且继续会扩大影响时按已授权回滚计划回滚，验证回滚结果并如实报告本次失败。
+6. 在外部凭据、账单、DNS或平台故障阻塞时保存具体状态、已完成动作和恢复路径，不重复执行可能已成功的发布。成功时交付实际访问地址、版本证据、健康结果、回滚与后续更新方法。
 
-## 工作流程
+## 本阶段交付与验收
 
-1. 识别项目构建方式、目标主机、环境、服务依赖与访问条件；接手已有项目，无须 build 或 test 包。
-2. 第一版标准路线为 Docker Compose 单机部署，读取 references/compose.md。其他平台可交付适配建议，但不能声称已经过平台验证。
-3. 检查配置、镜像、存储、网络、密钥来源和必要构建条件；敏感值不写入报告。记录当前版本和可恢复状态。
-4. 在目标环境和发布操作已获用户授权后执行；仅要求准备方案时交付配置与运行手册。缺少权限时报告阻塞，不宣称完成部署。
-5. 发布后执行容器健康和应用关键路径检查。启动命令成功不等于服务可用。
-6. 健康检查失败时交付诊断；仅在恢复路径明确且已授权时执行回滚。代码回滚不等于数据恢复，不自动撤销不可逆迁移。
+交付：可重用部署配置、发布记录、实际地址与修订版本、健康/关键路径证据、回滚和更新说明。
 
-## 阶段交付
+完成条件：目标与授权一致；实际发布版本已确认；目标健康与关键路径已验证；没有仅凭构建/推送宣称上线；失败或回滚结果准确记录。
 
-目标环境、配置、发布版本、健康证据、失败诊断和恢复方案。
+使用 [报告模板](assets/report.md) 保存目标、AC、成果、实际证据及剩余问题。用 [交接助手](scripts/handoff.mjs) 记录阶段；无 Node 时按协议使用 Markdown 交接，明确验证能力限制。不能以“已写报告”代替真实验收，也不能让用户自己填状态文件。
 
-## 技术栈方法选择
+## 平滑交接
 
-从项目清单或已确认选型识别技术栈，读取 [技术栈映射](references/upstream/technology-skills.json)，只加载匹配条目对应目录中的 SKILL.md 及其必读引用。不要把候选技术当成已选技术；保留现有框架版本和状态管理方案。无匹配项时明确报告覆盖缺口，不声称已经使用该技术栈的专门方法。来源、版本与许可证见 [来源记录](references/upstream/sources.json)。
+到已授权发布目标为止；交付维护、回滚和再次发布入口，不擅自创建持续后台任务。
+
+用户授权继续且下一技能可用时，在同一 agent 中直接读取下一阶段 SKILL.md，沿用同一工作流、AC 标识与已确认决定。只请求本阶段新发现且不可自行解决的关键决定。阶段未完成时先修复或准确记录 blocker，不能把阻塞状态包装成完成后传下去。
+
+## 按需加载的方法
+
+检查 [技术栈映射](references/upstream/technology-skills.json) 与 [来源和许可](references/upstream/sources.json)，只读取与当前任务相关的上游方法目录。维持现有框架、版本和测试工具。上游的全面 grilling、人工确认、子代理或发布建议均受统一协议和用户实际授权约束，不构成额外强制步骤。没有专门方法匹配时使用通用工程能力并说明覆盖范围，不宣称已经过专门方法验证。
