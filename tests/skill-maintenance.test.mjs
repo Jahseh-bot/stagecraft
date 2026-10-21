@@ -117,3 +117,21 @@ test('GitHub repository renames follow bounded same-origin redirects and pin can
  const loop=new GitHub({fetcher:async()=>new Response(null,{status:301,headers:{location:'/loop'}})});
  await assert.rejects(loop.repository('old/skills'),/excessive/);
 });
+
+test('replacement intent must match the entry metadata, not incidental body keywords',()=>{
+ const candidate={repo:'other/skills',directory:'worker-visualizer',body:'---\nname: worker-visualizer\ndescription: |\n  A particle simulator that runs in a Web Worker.\n  Use for real-time compute.\nlicense: MIT\n---\nFrontend design visual workflow validate recover example output constraints.\n',missingLinks:[],score:{score:80}};
+ assert.match(metadata(candidate.body).description,/real-time compute/);
+ assert.equal(chooseUpgrade('frontend-design',{score:{score:0}},[candidate],{...config,roles:{'frontend-design':['frontend','design','visual']}}),null);
+ const general={...candidate,body:body('vue-best-practices','Vue pinia store examples and router debugging'),score:{score:80}};
+ assert.equal(chooseUpgrade('vue-pinia-best-practices',{score:{score:0}},[general],config),null);
+});
+test('an installed complementary method cannot replace a different specialization',async t=>{
+ const {root,skill}=await fixture(t),r=remote();
+ const profile={skills:[skill,{...skill,id:'vue-debug',source:`https://github.com/example/skills/tree/${sha}/skills/vue-debug`}]};
+ await put(join(root,'packages/runner/skills.profile.json'),JSON.stringify(profile));
+ r.repo.tree=r.repo.tree.map(e=>({...e,path:e.path.replace('vue-testing','vue-debug')}));
+ r.github.raw=async()=>{throw new Error('Complementary installed method must not be downloaded as a replacement');};
+ const plan=await createPlan({root,mode:'upgrade',only:[skill.id],github:r.github,config});
+ assert.equal(plan.changes.length,0);assert.equal(plan.errors.length,0);
+ assert.deepEqual(plan.outcomes.find(o=>o.status==='kept').candidates,[]);
+});

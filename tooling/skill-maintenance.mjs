@@ -24,7 +24,16 @@ export function parseSource(source) {
 export function metadata(body) {
   const front = /^---\r?\n([\s\S]*?)\r?\n---/.exec(body)?.[1];
   assert(front,'Missing SKILL.md frontmatter');
-  const field = key => front.match(new RegExp(`^${key}:\\s*(.+)$`,'m'))?.[1]?.replace(/^['"]|['"]$/g,'').trim();
+  const field = key => {
+    const match=new RegExp(`^${key}:[ \t]*(.*)$`,'m').exec(front);
+    if(!match)return undefined;
+    if(/^[|>][+-]?$/.test(match[1].trim())) {
+      const rest=front.slice(match.index+match[0].length).split(/\r?\n/).slice(1),lines=[];
+      for(const line of rest){if(line.trim()&&!/^\s/.test(line))break;lines.push(line.trim());}
+      return lines.join(' ').trim();
+    }
+    return match[1].replace(/^['"]|['"]$/g,'').trim();
+  };
   const name=field('name'), description=field('description');
   assert(name && /^[\w-]+$/.test(name) && description,'Missing or invalid skill name/description');
   return {name,description,license:field('license')};
@@ -151,7 +160,7 @@ export async function downloadSkill(github,repo,directory,config) {
   return {files,body,meta,license,licensePath,directory,repo:repo.repo,revision:repo.revision,score:scoreSkill(body),missingLinks:missingLinks(files),executable:entries.filter(e=>e.mode==='100755').map(e=>e.path.slice(directory.length+1))};
 }
 export function chooseUpgrade(id,current,candidates,config) {
-  return candidates.filter(c=>roleMatch(id,c.body,config)&&c.missingLinks.length===0&&c.score.score>=current.score.score+config.minimumScoreGain)
+  return candidates.filter(c=>{const m=metadata(c.body);return roleMatch(id,m.name+' '+m.description,config)&&roleMatch(id,c.body,config)&&c.missingLinks.length===0&&c.score.score>=current.score.score+config.minimumScoreGain;})
     .sort((a,b)=>b.score.score-a.score.score||`${a.repo}/${a.directory}`.localeCompare(`${b.repo}/${b.directory}`))[0]??null;
 }
 export async function createPlan({root=ROOT,mode,only=[],github=new GitHub(),config,onProgress=()=>{}}) {
@@ -202,6 +211,8 @@ export async function createPlan({root=ROOT,mode,only=[],github=new GitHub(),con
           for(const entry of possible) {
             const directory=posix.dirname(entry.path);
             if(name===source.repo&&directory===source.directory)continue;
+            // Another installed specialization is complementary, not an upgrade of this slot.
+            if(profile.skills.some(other=>{const origin=parseSource(other.source);return other.id!==skill.id&&origin.repo===name&&origin.directory===directory;}))continue;
             opportunities.push({repo,directory,rank:pathScore(entry)});
           }
         }
