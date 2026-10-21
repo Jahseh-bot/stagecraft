@@ -32,8 +32,8 @@
     {
       "id": "frontend-design",
       "path": "vendor/anthropic/frontend-design",
-      "source": "https://github.com/anthropics/skills/tree/dbd4588f9e1033efb41dad4bef2f7947c8993d44/skills/frontend-design",
-      "revision": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+      "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/plugins/agentic-awesome-skills-claude/skills/frontend-design",
+      "revision": "2984de11956e413008c6f98121cd141c499e47a3",
       "license": "Apache-2.0"
     },
     {
@@ -46,8 +46,8 @@
     {
       "id": "docker-expert",
       "path": "vendor/antigravity/docker-expert",
-      "source": "https://github.com/sickn33/antigravity-awesome-skills/tree/c808e6e480696d243e0668ebbc3499bb8e7e10a4/skills/docker-expert",
-      "revision": "c808e6e480696d243e0668ebbc3499bb8e7e10a4",
+      "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/skills/docker-expert",
+      "revision": "2984de11956e413008c6f98121cd141c499e47a3",
       "license": "MIT"
     },
     {
@@ -186,15 +186,15 @@
     {
       "id": "e2e-testing-patterns",
       "path": "vendor/wshobson/e2e-testing-patterns",
-      "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/developer-essentials/skills/e2e-testing-patterns",
-      "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/plugins/agentic-awesome-skills-claude/skills/e2e-testing-patterns",
+      "revision": "2984de11956e413008c6f98121cd141c499e47a3",
       "license": "MIT"
     },
     {
       "id": "sql-optimization-patterns",
       "path": "vendor/wshobson/sql-optimization-patterns",
-      "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/developer-essentials/skills/sql-optimization-patterns",
-      "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/plugins/agentic-awesome-skills-claude/skills/sql-optimization-patterns",
+      "revision": "2984de11956e413008c6f98121cd141c499e47a3",
       "license": "MIT"
     },
     {

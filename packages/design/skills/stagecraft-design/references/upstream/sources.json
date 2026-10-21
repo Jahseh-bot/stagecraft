@@ -19,8 +19,8 @@
   },
   {
     "id": "frontend-design",
-    "source": "https://github.com/anthropics/skills/tree/dbd4588f9e1033efb41dad4bef2f7947c8993d44/skills/frontend-design",
-    "revision": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+    "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/plugins/agentic-awesome-skills-claude/skills/frontend-design",
+    "revision": "2984de11956e413008c6f98121cd141c499e47a3",
     "license": "Apache-2.0"
   },
   {

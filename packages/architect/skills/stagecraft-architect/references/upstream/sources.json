@@ -115,8 +115,8 @@
   },
   {
     "id": "e2e-testing-patterns",
-    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/developer-essentials/skills/e2e-testing-patterns",
-    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "source": "https://github.com/sickn33/agentic-awesome-skills/tree/2984de11956e413008c6f98121cd141c499e47a3/plugins/agentic-awesome-skills-claude/skills/e2e-testing-patterns",
+    "revision": "2984de11956e413008c6f98121cd141c499e47a3",
     "license": "MIT"
   },
   {

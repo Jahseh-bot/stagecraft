@@ -28,7 +28,7 @@
     {
       "id": "frontend-design",
       "path": "vendor/anthropic/frontend-design",
-      "sha256": "89a6e59de80320a32e8b4c597a329ef3c503f624a2e68874bb0475dfb66dbf4b",
+      "sha256": "a0d0ec6b15a1938d2dc486d7a5f977eba72bb371554bf7de41befb0821710786",
       "files": 2
     },
     {
@@ -160,13 +160,13 @@
     {
       "id": "e2e-testing-patterns",
       "path": "vendor/wshobson/e2e-testing-patterns",
-      "sha256": "660755a4ec1e6c857f3691dbe51eb9497f0711c463a6a59ed76b28caaed1d970",
+      "sha256": "e641799873eec0e37ee06f3cbd0c1370b4df0f756284cb358bd719a3fa8fe617",
       "files": 3
     },
     {
       "id": "sql-optimization-patterns",
       "path": "vendor/wshobson/sql-optimization-patterns",
-      "sha256": "b423bc7f47db8eeb3ca6b91c038fd8259f7fa342e3a0c099c722735b11033684",
+      "sha256": "7965e3697cd599d15d62ab384d3d311daa4ce31d0cfa7b0e723ae25564210143",
       "files": 3
     },
     {
