@@ -1,0 +1,245 @@
+{
+  "version": 1,
+  "skills": [
+    {
+      "id": "grilling",
+      "path": "vendor/mattpocock/grilling",
+      "sha256": "21571fb2b60e88d625905fc944ddbcf5069160542b814521e5ec2cb2ba2755ef",
+      "files": 2
+    },
+    {
+      "id": "codebase-design",
+      "path": "vendor/mattpocock/codebase-design",
+      "sha256": "855f80059b2c4fbb47e97e96c2ebd5166e835efbbcae7a9b51cfacb34532c1a8",
+      "files": 4
+    },
+    {
+      "id": "tdd",
+      "path": "vendor/mattpocock/tdd",
+      "sha256": "09207778457604cc26b57047a3bb31378f8318085a5fb4e8b6eb38657898e04d",
+      "files": 4
+    },
+    {
+      "id": "diagnosing-bugs",
+      "path": "vendor/mattpocock/diagnosing-bugs",
+      "sha256": "3314cd62e50cf688d13abdc4eb4cedcbcfdfe6f053fe3331f4a79928a0fe3c7f",
+      "files": 3
+    },
+    {
+      "id": "frontend-design",
+      "path": "vendor/anthropic/frontend-design",
+      "sha256": "89a6e59de80320a32e8b4c597a329ef3c503f624a2e68874bb0475dfb66dbf4b",
+      "files": 2
+    },
+    {
+      "id": "webapp-testing",
+      "path": "vendor/anthropic/webapp-testing",
+      "sha256": "7dd9eedc497fbf8b5634a293190b11f93cf4b80f7cd6c1a775def12deadeebb9",
+      "files": 6
+    },
+    {
+      "id": "docker-expert",
+      "path": "vendor/antigravity/docker-expert",
+      "sha256": "41f512552695cc953498bc3b6b42680a68317bb2102d2b7228059b60dc4dbc62",
+      "files": 2
+    },
+    {
+      "id": "vue-best-practices",
+      "path": "vendor/vuejs-ai/vue-best-practices",
+      "sha256": "c64d52ac615e0a44683e64c19c61bc56e35f1d8554142db9a8bcedfbc6ee862f",
+      "files": 24
+    },
+    {
+      "id": "vue-debug-guides",
+      "path": "vendor/vuejs-ai/vue-debug-guides",
+      "sha256": "f364fafec7c6fa5ef54045745c7e04b691d193a3680d5aa133822765e91f1963",
+      "files": 141
+    },
+    {
+      "id": "vue-testing-best-practices",
+      "path": "vendor/vuejs-ai/vue-testing-best-practices",
+      "sha256": "e8dbd147f9a0c1b4c14c9b778ab5a7ad8c244f9143d3b8f7bada8ef65b9b629d",
+      "files": 13
+    },
+    {
+      "id": "vue-options-api-best-practices",
+      "path": "vendor/vuejs-ai/vue-options-api-best-practices",
+      "sha256": "7acd82f5538617f74ec308fb147092a025ad9f4e70c7aa4ffed64609e65280bb",
+      "files": 12
+    },
+    {
+      "id": "vue-jsx-best-practices",
+      "path": "vendor/vuejs-ai/vue-jsx-best-practices",
+      "sha256": "b6a4a69f81f69fcba4b6385a0b5a42e54e1c94da46557f237f100c0d439331ee",
+      "files": 3
+    },
+    {
+      "id": "vue-pinia-best-practices",
+      "path": "vendor/vuejs-ai/vue-pinia-best-practices",
+      "sha256": "0f77a6feb0373ee74b6cf628dc9fe939cce2bc5bddef36ae6927c2c37ccbeb71",
+      "files": 8
+    },
+    {
+      "id": "vue-router-best-practices",
+      "path": "vendor/vuejs-ai/vue-router-best-practices",
+      "sha256": "52cfeee9f1bb8ca11f410a0aa408ba4b8387eb5a540b287add29fb5cbdf0da62",
+      "files": 10
+    },
+    {
+      "id": "flutter-apply-architecture-best-practices",
+      "path": "vendor/flutter/flutter-apply-architecture-best-practices",
+      "sha256": "3b933ad7ad860af02d0e7477420885abf0748a736472e9098a981c4d926a861c",
+      "files": 2
+    },
+    {
+      "id": "flutter-build-responsive-layout",
+      "path": "vendor/flutter/flutter-build-responsive-layout",
+      "sha256": "27da192266d5fe9163568bb730221593ce0a8b188ed53c640e87da732ad6a06f",
+      "files": 2
+    },
+    {
+      "id": "flutter-add-widget-test",
+      "path": "vendor/flutter/flutter-add-widget-test",
+      "sha256": "c5618bc58b6df299d80008e92df716807a2f2d966ceac62ffb70ca7a9690c524",
+      "files": 2
+    },
+    {
+      "id": "flutter-add-integration-test",
+      "path": "vendor/flutter/flutter-add-integration-test",
+      "sha256": "ff45ba6fd9001383378652d2c69fdbcd229a377308b1c550f237de4c1b7e8d4d",
+      "files": 2
+    },
+    {
+      "id": "dart-fix-runtime-errors",
+      "path": "vendor/flutter/dart-fix-runtime-errors",
+      "sha256": "a24c47d8b073a3998976e4356e5f7b8188d0a38e396585dcdc1a1972041c9ad3",
+      "files": 2
+    },
+    {
+      "id": "dart-run-static-analysis",
+      "path": "vendor/flutter/dart-run-static-analysis",
+      "sha256": "a12897dd72aa39471a6db0cf4c92155ffa66cd0b6963517f5ef308f3873efdbf",
+      "files": 2
+    },
+    {
+      "id": "react-best-practices",
+      "path": "vendor/vercel/react-best-practices",
+      "sha256": "beb2c9c501fc766a7075b114feafc0fd54aeca079f459e905e96d660e1e42867",
+      "files": 77
+    },
+    {
+      "id": "react-native-skills",
+      "path": "vendor/vercel/react-native-skills",
+      "sha256": "c99375af4761ef628cf9dd84408ba55a2e36fc9ab4b1d414c990ca24a12dff11",
+      "files": 43
+    },
+    {
+      "id": "nodejs-backend-patterns",
+      "path": "vendor/wshobson/nodejs-backend-patterns",
+      "sha256": "c43413dc7a178b6907d02185887feb6752533ec7663914f57d211e141d33de04",
+      "files": 4
+    },
+    {
+      "id": "fastapi-templates",
+      "path": "vendor/wshobson/fastapi-templates",
+      "sha256": "4501734e8f6e098829bb47c340279b5ed0768a747f2a70b04fb9a15ff10df15a",
+      "files": 3
+    },
+    {
+      "id": "python-testing-patterns",
+      "path": "vendor/wshobson/python-testing-patterns",
+      "sha256": "41157031ac79ecf098a13b58790eed73f8ed8af941daa68dd2f16d074b7c70b9",
+      "files": 4
+    },
+    {
+      "id": "javascript-testing-patterns",
+      "path": "vendor/wshobson/javascript-testing-patterns",
+      "sha256": "0da3637e5151865a1f08cf918eec99a45492ec8f86231113b7bdc04699248622",
+      "files": 3
+    },
+    {
+      "id": "e2e-testing-patterns",
+      "path": "vendor/wshobson/e2e-testing-patterns",
+      "sha256": "660755a4ec1e6c857f3691dbe51eb9497f0711c463a6a59ed76b28caaed1d970",
+      "files": 3
+    },
+    {
+      "id": "sql-optimization-patterns",
+      "path": "vendor/wshobson/sql-optimization-patterns",
+      "sha256": "b423bc7f47db8eeb3ca6b91c038fd8259f7fa342e3a0c099c722735b11033684",
+      "files": 3
+    },
+    {
+      "id": "supabase-postgres-best-practices",
+      "path": "vendor/supabase/supabase-postgres-best-practices",
+      "sha256": "d3873dffb4dd813c71ce1f552287bed598598d68ef05c1b18bbf461ec16d5f9f",
+      "files": 37
+    },
+    {
+      "id": "vitest",
+      "path": "vendor/antfu/vitest",
+      "sha256": "6df9efb9f6e28a790d3c81001402d587718f1094c36b4f98c5d16be0cf4890b0",
+      "files": 22
+    },
+    {
+      "id": "redis-core",
+      "path": "vendor/redis/redis-core",
+      "sha256": "5f5408fce8bb0242e609287ff770d4c93ee83963cf4ed396a4067671b5a4aa36",
+      "files": 4
+    },
+    {
+      "id": "redis-connections",
+      "path": "vendor/redis/redis-connections",
+      "sha256": "63fdc7369934d197bd91495e65a53e06a6aa0d0bd56423feade541f5d0a971f7",
+      "files": 7
+    },
+    {
+      "id": "mongodb-schema-design",
+      "path": "vendor/mongodb/mongodb-schema-design",
+      "sha256": "9bd5f8db402ec450a8cf399ed07df5e88935111b7337afc3539ed55bbf29d697",
+      "files": 22
+    },
+    {
+      "id": "mongodb-query-optimizer",
+      "path": "vendor/mongodb/mongodb-query-optimizer",
+      "sha256": "f1622fe3642ca459a91984391b8930223d1a21568bd742e3e72a9f0ebfcbcd62",
+      "files": 6
+    },
+    {
+      "id": "python-design-patterns",
+      "path": "vendor/wshobson/python-design-patterns",
+      "sha256": "415eefe9e6f256eaf32d95b8b1c5622c7806cd0906d0b8c5f1465e8b80417486",
+      "files": 3
+    },
+    {
+      "id": "mysql",
+      "path": "vendor/planetscale/mysql",
+      "sha256": "ef65d3a76388ac277743217c4c917510f9d1028ca0cb91d6a6a7228ef7c781b2",
+      "files": 20
+    },
+    {
+      "id": "golang-pro",
+      "path": "vendor/jeffallan/golang-pro",
+      "sha256": "00c77f172b040c166e52d57f70b9fd04f322884bb85500a96840b76f89c85470",
+      "files": 7
+    },
+    {
+      "id": "java-architect",
+      "path": "vendor/jeffallan/java-architect",
+      "sha256": "e858b48ef6f7a31e5c81b437899ab0102352b42e4d36b933977938832d910e1c",
+      "files": 7
+    },
+    {
+      "id": "grill-with-docs",
+      "path": "vendor/mattpocock/grill-with-docs",
+      "sha256": "93651d020170a2d28cfd69f910d7b5003630cd53f56960ebb735450e9698c94b",
+      "files": 3
+    },
+    {
+      "id": "domain-modeling",
+      "path": "vendor/mattpocock/domain-modeling",
+      "sha256": "a173418210ad5696ec8767bf2fc6355860a6d77b8ee65302ce6cc70d53ed3c85",
+      "files": 5
+    }
+  ]
+}

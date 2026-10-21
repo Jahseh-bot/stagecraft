@@ -71,3 +71,7 @@ npm run release:publish -- --dry-run
 [方法编排与来源说明](https://jahseh-bot.github.io/stagecraft/guide/methods.html)
 
 > 版本说明：文中 npm 0.4.1 命令仅在该版本发布后可用。当前新版 Skills 请通过 `npx skills add Jahseh-bot/stagecraft` 安装；已有安装运行 `npx skills update` 后重新加载。npm 已发布版本仍为 0.4.0，不含本页新版交互规则。
+
+每个阶段将成果存入项目并展示给用户评审，确认具体版本后再交接；修改保留快照、意见和下游影响。详见 [产物评审与追溯](https://jahseh-bot.github.io/stagecraft/guide/artifact-reviews.html)。
+
+各阶段附详细工作指引与覆盖矩阵，按项目规模和风险裁剪。三方方法保持只读；运行 `npm run build && npm run audit:skills` 检查入口、引用、来源和原始内容完整性。

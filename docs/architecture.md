@@ -14,17 +14,19 @@
 
 ## 状态与失效
 
-新流程写 `.stagecraft/workflows/<id>/workflow.json`，schema 为 `stagecraft-handoff/v1`。旧 `.stagecraft/runs` 完整保留，不能把两种记录混写。
+新流程写 `.stagecraft/workflows/<id>/workflow.json`，schema 为 `stagecraft-handoff/v2`。旧 `.stagecraft/runs` 完整保留，不能把两种记录混写。
 
-每次流程明确 objective/goal、entry 和 until。阶段序列来自该范围，不存在的上游不作为直接进入的前置条件。状态为 pending、in_progress、completed、blocked 或 stale；Markdown 报告还可细分 failed/partial。完成记录包含真实成果路径、校验方法、证据文件、SHA-256 及下一步。
+每次流程明确 objective/goal、entry 和 until。阶段序列来自该范围，不存在的上游不作为直接进入的前置条件。状态为 pending、in_progress、awaiting_review、changes_requested、approved、completed、blocked 或 stale；Markdown 报告还可细分 failed/partial。完成记录包含真实成果路径、校验方法、证据文件、SHA-256 及下一步。
 
-助手在读取和变更前重新检查已完成阶段的文件。发现变化或缺失就将本阶段与下游标记 stale。测试阶段修复了构建产物时，必须先重新验证/记录 build，再完成受影响测试。检查点用独占锁及原子替换写入；并发写入拒绝执行，不自动删除未知锁。
+submit 保存成果/证据的实际内容快照，review 记录针对当前提交的真实用户意见，complete 仅允许已批准且内容未变的提交。用户要求修改后重新 begin/submit，不覆盖旧提交和评审。旧 v1 首次读取时备份状态，保守失效已有阶段后重新检查评审。
+
+助手在读取和变更前重新检查待评审、已批准和已完成阶段的文件、快照及评审记录。发现变化或缺失就将本阶段与下游标记 stale。测试阶段修复了构建产物时，必须先重新验证/记录 build，再完成受影响测试。检查点用独占锁及原子替换写入；并发写入拒绝执行，不自动删除未知锁。
 
 助手验证的是结构、存在性和内容一致性，不是对模型声明真实性的证明。实际执行日志和可独立检查的结果仍是验收依据。无 Node 的宿主按统一协议维护等价 Markdown 记录并如实说明缺少哈希验证。
 
 ## 阶段衔接
 
-当前 Skill 达到验收条件后，若用户授权目标包含后续阶段，则读取已安装的下一个 Skill，复用同一目录、AC 标识和决定；自动准备下一阶段方案，讨论本阶段计划与各决策环节；已有选择说明依据后复用。下一 Skill 缺失则交付完整交接和具体安装/读取入口，不伪造后续完成。
+当前 Skill 达到验收条件、成果展示并获得用户对具体版本的评审通过后，若用户授权目标包含后续阶段，则读取已安装的下一个 Skill，复用同一目录、AC 标识和决定；自动准备下一阶段方案，讨论本阶段计划与各决策环节；已有选择说明依据后复用。下一 Skill 缺失则交付完整交接和具体安装/读取入口，不伪造后续完成。
 
 ## 兼容层
 

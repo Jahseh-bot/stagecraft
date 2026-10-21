@@ -18,6 +18,7 @@
     "release:scope": "node tooling/version.mjs scope",
     "release:version": "node tooling/version.mjs version",
     "release:publish": "node tooling/publish.mjs",
-    "verify:registry": "node tooling/verify-registry.mjs"
+    "verify:registry": "node tooling/verify-registry.mjs",
+    "audit:skills": "node tooling/audit-skills.mjs"
   }
 }

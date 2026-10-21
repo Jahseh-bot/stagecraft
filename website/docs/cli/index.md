@@ -18,7 +18,7 @@ npx --yes @gaaraa/test@0.4.1 init --skills-dir .custom/skills --dir ./my-project
 
 ## 可选交接助手
 
-由 agent 调用技能内的 `scripts/handoff.mjs`，支持 init、status、begin、complete、block，维护 `.stagecraft/workflows`。用户不需要填写状态文件或答案 JSON。
+由 agent 调用技能内的 `scripts/handoff.mjs`，支持 init、status、begin、submit、review、complete、block，维护 `.stagecraft/workflows`。v2 在 submit 后保存产物快照并等待用户评审，review 记录实际意见，complete 仅接受已批准且未变化的提交。用户不需要填写状态文件或答案 JSON。
 
 ## 旧 runner 兼容参考
 

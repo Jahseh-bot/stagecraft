@@ -6,8 +6,10 @@ const guide = [
     { text: '创建需求说明', link: '/guide/requirements' },
     { text: '开始第一个任务', link: '/guide/first-run' },
     { text: '不再纠结选哪套 Skill', link: '/guide/methods' },
+    { text: 'Skills 覆盖范围与维护', link: '/guide/skill-coverage' },
     { text: '关键方案确认与自动执行', link: '/guide/confirmation' },
     { text: '测试用例与执行', link: '/guide/test-cases' },
+    { text: '产物评审与全过程追溯', link: '/guide/artifact-reviews' },
     { text: '查看成果与启动网页', link: '/guide/delivery' }
   ] },
   { text: '继续使用', items: [

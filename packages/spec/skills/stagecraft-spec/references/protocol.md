@@ -1,4 +1,4 @@
-# Stagecraft agent-native protocol v1
+# Stagecraft agent-native protocol v2
 
 ## Execution owner and autonomy
 
@@ -20,7 +20,11 @@ Record stage plans and substep decisions in the stage report: stable ID, topic, 
 
 At the start of EVERY stage, discuss its plan with the user before dependent execution; at EVERY decision-bearing substep, present options and obtain a real choice. Reuse a previously confirmed plan or explicit scoped delegation with its source instead of asking the same question again. Automatic handoff means preparing the next stage’s proposal and evidence, not silently choosing or executing its unresolved plan. Within a confirmed step, execute, validate and repair autonomously; a changed direction requires another discussion. Do not lower acceptance criteria or change product behavior to make tests pass without the relevant user decision.
 
-A stage closes its own loop: inspect → discuss options and confirm the plan/acceptance conditions → produce work → actually validate → diagnose and repair → revalidate → persist evidence and handoff. Attempt up to three targeted repair cycles by default; use a different hypothesis supported by evidence on each attempt. Stop two consecutive identical failures without new evidence. Respect explicit time/repair limits. Do not weaken valid tests, hide failures or claim unexecuted commands passed. Document what failed and the smallest required user/environment action when blocked.
+A stage closes its own loop: inspect → discuss options and confirm the plan/acceptance conditions → produce work → actually validate → diagnose and repair → revalidate → persist and present artifacts → user review → revise and revalidate as needed → approved baseline and handoff. Attempt up to three targeted repair cycles by default; use a different hypothesis supported by evidence on each attempt. Stop two consecutive identical failures without new evidence. Respect explicit time/repair limits. Do not weaken valid tests, hide failures or claim unexecuted commands passed. Document what failed and the smallest required user/environment action when blocked.
+
+## Artifact presentation and review gates
+
+Read [artifact delivery, review and change management](artifact-reviews.md) before delivering or revising stage outputs. Every stage persists actual artifacts in the project, presents openable documents or visible previews to the user, records review feedback against an exact submission, revises as requested and obtains explicit approval before completion or dependent downstream execution. Approval of a plan is not approval of unseen results. Preserve revision snapshots, review history and a linked artifact index; changed inputs invalidate affected downstream evidence. Test-case review precedes test execution; release-plan review precedes deployment, followed by review of actual deployment results. Scale document depth to the task, not the integrity of the review gate.
 
 ## Scope and direct entry
 
@@ -37,7 +41,10 @@ When Node.js >=22 is available, use the bundled `scripts/handoff.mjs` as a check
 ```sh
 node /path/to/skill/scripts/handoff.mjs init --project /absolute/project --entry build --until test --goal 'Implement and verify the specified feature'
 node /path/to/skill/scripts/handoff.mjs begin --workflow /absolute/project/.stagecraft/workflows/ID --stage build
-node /path/to/skill/scripts/handoff.mjs complete --workflow /absolute/project/.stagecraft/workflows/ID --stage build --receipt /absolute/project/.stagecraft/workflows/ID/build-receipt.json
+node /path/to/skill/scripts/handoff.mjs submit --workflow /absolute/project/.stagecraft/workflows/ID --stage build --receipt /absolute/project/.stagecraft/workflows/ID/build-receipt.json
+# Present the submitted artifacts and wait for actual user feedback before recording review.
+node /path/to/skill/scripts/handoff.mjs review --workflow /absolute/project/.stagecraft/workflows/ID --stage build --record /absolute/project/.stagecraft/workflows/ID/build-review.json
+node /path/to/skill/scripts/handoff.mjs complete --workflow /absolute/project/.stagecraft/workflows/ID --stage build
 node /path/to/skill/scripts/handoff.mjs status --workflow /absolute/project/.stagecraft/workflows/ID
 ```
 
@@ -61,7 +68,7 @@ Use the actual path returned by init. Each stage writes its report from `assets/
 
 All artifact/evidence paths are relative to the project; files must exist. Include report, key implementation/configuration and tests so future stages can detect changes. Never list workflow.json, receipt.json or volatile lockfiles as immutable evidence. Methods for non-code stages can be source inspection, requirement consistency checks or rendered design review; preserve the actual findings and sources. The helper validates structure/existence/hashes, not whether an agent truthfully ran a command: the actual logs, source observations and independent checks remain essential.
 
-`begin` ensures previous stages in this workflow are complete; direct-entry workflows have no invented prerequisites. `complete` requires evidence, and `block --reason 'specific cause and next action'` records a real blocker. `status` detects changed/missing artifacts and marks that stage and completed downstream stages stale. If later testing fixes build output, return to build, record and revalidate the new revision, then repeat affected test checks before completing test. Do not silently update old hashes to hide changed evidence. If interrupted with `in_progress`, inspect current files and commands, then finish that stage or record a blocker before restarting. Lock errors require checking the owner process; never automatically delete an active lock.
+`begin` ensures previous stages in this workflow are complete; direct-entry workflows have no invented prerequisites. `submit` requires evidence and creates revision snapshots; `review` records actual feedback for that exact submission; `complete` requires an approved, unchanged submission, and `block --reason 'specific cause and next action'` records a real blocker. `status` detects changed/missing submitted or approved artifacts and marks that stage and completed downstream stages stale. If later testing fixes build output, return to build, record and revalidate the new revision, then repeat affected test checks and present the updated results for review before completing test. Do not silently update old hashes to hide changed evidence. If interrupted with `in_progress`, inspect current files and commands, then finish that stage or record a blocker before restarting. Lock errors require checking the owner process; never automatically delete an active lock.
 
 If Node is unavailable but the agent can edit files, maintain equivalent reports and a Markdown handoff index instead. Record objective, entry/target, status per stage, decisions, exact input revisions, evidence paths, blockers and next action. Compare current files before reusing evidence. State explicitly that deterministic helper validation was unavailable; do not claim hashes were checked. If the host cannot execute required verification, mark partial/blocked rather than pretending to complete a code stage.
 
@@ -69,7 +76,7 @@ If Node is unavailable but the agent can edit files, maintain equivalent reports
 
 Each handoff gives: objective and scope, accepted requirements (stable AC IDs), authoritative input paths/revisions, decisions and assumptions, deliverables, actual validation results, known limitations, and the exact next stage/action. Reports are durable; chat history alone is not a handoff. A failed/blocked stage can hand over diagnosis for recovery but cannot be presented as a completed upstream dependency.
 
-For authorized continuation, read the next skill and transfer the same workflow directory, requirement IDs and evidence. Avoid re-interviewing the user about already settled requirements. End at the requested target with concrete results, how to run/use them, evidence and remaining limitations. For a blocked stage, give one actionable next step rather than a generic request to confirm everything.
+For authorized continuation, read the next skill and transfer the same workflow directory, requirement IDs, reviewed artifact versions and evidence. Avoid re-interviewing the user about already settled requirements. End at the requested target with concrete results, how to run/use them, evidence and remaining limitations. For a blocked stage, give one actionable next step rather than a generic request to confirm everything.
 
 ## Method orchestration and evidence
 

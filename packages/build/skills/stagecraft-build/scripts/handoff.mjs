@@ -36,8 +36,10 @@ function invalidate(state, from, reason) {
 async function refresh(state) {
   for (const [index, stage] of state.sequence.entries()) {
     const item = state.stages[stage];
-    if (item.status !== 'completed') continue;
-    for (const file of [...item.artifacts, ...item.evidence]) {
+    if (!['completed', 'awaiting_review', 'approved'].includes(item.status)) continue;
+    const submission = item.submissions?.find(s => s.id === item.currentSubmission);
+    if (!submission) { invalidate(state, index, 'Missing artifact review; submit current deliverables for review'); return; }
+    for (const file of [...item.artifacts, ...item.evidence, ...submission.snapshots, ...(submission.review ? [submission.review.record] : [])]) {
       let same = false;
       try { same = (await record(state.project, file.path)).sha256 === file.sha256; } catch { /* missing or unsafe inputs invalidate the handoff */ }
       if (!same) { invalidate(state, index, `Changed or missing evidence: ${file.path}`); return; }
@@ -55,7 +57,7 @@ export async function handoff(command, options) {
     await noLinks(directory);
     await mkdir(directory, { recursive: true });
     const sequence = stages.slice(stages.indexOf(entry), stages.indexOf(until) + 1);
-    const state = { schema: 'stagecraft-handoff/v1', id: directory.split(/[\\/]/).at(-1), project,
+    const state = { schema: 'stagecraft-handoff/v2', id: directory.split(/[\\/]/).at(-1), project,
       goal: options.goal, entry, until, sequence, decisions: [], createdAt: new Date().toISOString(),
       stages: Object.fromEntries(sequence.map(s => [s, { status: 'pending', artifacts: [], evidence: [] }])) };
     await atomic(join(directory, 'workflow.json'), state);
@@ -73,10 +75,17 @@ export async function handoff(command, options) {
     const file = join(directory, 'workflow.json');
     await noLinks(file);
     const state = JSON.parse(await readFile(file, 'utf8'));
-    ensure(state.schema === 'stagecraft-handoff/v1' && Array.isArray(state.sequence), 'Unsupported handoff schema');
+    ensure(['stagecraft-handoff/v1', 'stagecraft-handoff/v2'].includes(state.schema) && Array.isArray(state.sequence), 'Unsupported handoff schema');
     ensure(state.sequence.length && state.sequence.every(s => stages.includes(s) && state.stages?.[s]), 'Invalid stage sequence');
     ensure(directory === join(state.project, '.stagecraft', 'workflows', state.id), 'Workflow location does not match project');
+    if (state.schema === 'stagecraft-handoff/v1') {
+      await atomic(join(directory, 'legacy-v1-' + randomUUID() + '.json'), state);
+      state.schema = 'stagecraft-handoff/v2';
+      invalidate(state, 0, 'Legacy workflow requires artifact presentation and review; old evidence retained');
+    }
     await refresh(state);
+    // Persist invalidation even when the requested transition is subsequently refused.
+    await atomic(file, state);
     if (command !== 'status') {
       const stage = options.stage, index = state.sequence.indexOf(stage);
       ensure(index >= 0, 'Stage is outside the authorized entry/until range');
@@ -90,8 +99,8 @@ export async function handoff(command, options) {
         ensure(text(options.reason), 'A concrete blocker is required');
         invalidate(state, index + 1, `Upstream stage blocked: ${stage}`);
         item.status = 'blocked'; item.reason = options.reason;
-      } else if (command === 'complete') {
-        ensure(item.status === 'in_progress', 'Begin this stage before completing it');
+      } else if (command === 'submit') {
+        ensure(item.status === 'in_progress', 'Begin this stage before submitting it');
         ensure(state.sequence.slice(0, index).every(s => state.stages[s].status === 'completed'), 'Upstream stages became stale');
         ensure(text(options.receipt), 'receipt is required');
         const receipt = JSON.parse(await readFile(resolve(options.receipt), 'utf8'));
@@ -104,10 +113,46 @@ export async function handoff(command, options) {
           return { ...await record(state.project, e.path), check: e.check, method: e.method, result: e.result };
         }));
         ensure(receipt.decisions === undefined || (Array.isArray(receipt.decisions) && receipt.decisions.every(text)), 'decisions must be strings');
-        item.status = 'completed'; item.summary = receipt.summary; item.next = receipt.next;
-        item.artifacts = artifacts; item.evidence = evidence; item.completedAt = new Date().toISOString();
-        delete item.reason;
-        state.decisions.push(...(receipt.decisions ?? []).map(value => ({ stage, value })));
+        const submission = { id: randomUUID(), submittedAt: new Date().toISOString(), summary: receipt.summary,
+          next: receipt.next, artifacts, evidence, decisions: receipt.decisions ?? [], snapshots: [] };
+        // Preserve the exact reviewed bytes, not only a hash of a mutable working file.
+        for (const original of [...new Map([...artifacts, ...evidence].map(f => [f.path, f])).values()]) {
+          ensure(!original.path.startsWith(relative(state.project, join(directory, 'reviews')) + '/'), 'Cannot submit review snapshots as new source artifacts');
+          ensure(!['workflow.json', '.handoff.lock'].includes(original.path.split('/').at(-1)), 'Cannot submit mutable workflow state');
+          const bytes = await readFile(join(state.project, original.path));
+          ensure(createHash('sha256').update(bytes).digest('hex') === original.sha256, 'Artifact changed during submission; retry');
+          const snapshot = join(directory, 'reviews', stage, submission.id, 'files', original.path);
+          await noLinks(snapshot);
+          await mkdir(dirname(snapshot), { recursive: true });
+          await writeFile(snapshot, bytes, { flag: 'wx', mode: 0o600 });
+          submission.snapshots.push({ ...await record(state.project, relative(state.project, snapshot)), original: original.path });
+        }
+        item.submissions ??= []; item.submissions.push(submission); item.currentSubmission = submission.id;
+        item.status = 'awaiting_review'; item.summary = receipt.summary; item.next = receipt.next;
+        item.artifacts = artifacts; item.evidence = evidence; delete item.reason;
+        delete item.completedAt;
+      } else if (command === 'review') {
+        ensure(item.status === 'awaiting_review', 'Stage must be awaiting review of unchanged artifacts');
+        ensure(text(options.record), 'A user review record is required');
+        const feedback = JSON.parse(await readFile(resolve(options.record), 'utf8'));
+        const submission = item.submissions.find(s => s.id === item.currentSubmission);
+        ensure(feedback.submission === submission.id, 'Review must name the current submission');
+        ensure(['approved', 'changes_requested'].includes(feedback.decision), 'Review decision must be approved or changes_requested');
+        ensure(feedback.reviewer === 'user' && text(feedback.source) && text(feedback.comment), 'Review must record the user response and its source');
+        ensure(Array.isArray(feedback.presented) && feedback.presented.length > 0 && feedback.presented.every(text), 'Record how the deliverables were presented to the user');
+        const snapshot = join(directory, 'reviews', stage, submission.id, 'review.json');
+        await noLinks(snapshot);
+        await writeFile(snapshot, JSON.stringify(feedback, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+        submission.review = { decision: feedback.decision, at: new Date().toISOString(), record: await record(state.project, relative(state.project, snapshot)) };
+        item.status = feedback.decision === 'approved' ? 'approved' : 'changes_requested';
+        if (item.status === 'changes_requested') invalidate(state, index + 1, `Changes requested for ${stage}`);
+      } else if (command === 'complete') {
+        ensure(item.status === 'approved', 'Submit artifacts, present them and obtain user review approval before completion');
+        ensure(state.sequence.slice(0, index).every(s => state.stages[s].status === 'completed'), 'Upstream stages became stale');
+        const submission = item.submissions.find(s => s.id === item.currentSubmission);
+        ensure(submission.review?.decision === 'approved', 'Current submission must be approved');
+        item.status = 'completed'; item.completedAt = new Date().toISOString(); delete item.reason;
+        state.decisions.push(...submission.decisions.map(value => ({ stage, submission: submission.id, value })));
       } else throw new Error(`Unknown command: ${command}`);
     }
     state.updatedAt = new Date().toISOString();
@@ -118,9 +163,9 @@ export async function handoff(command, options) {
 async function main() {
   const [command, ...args] = process.argv.slice(2);
   if (!command || ['--help', 'help'].includes(command)) {
-    console.log('init --project PATH --entry STAGE [--until STAGE] --goal TEXT\nstatus --workflow PATH\nbegin --workflow PATH --stage STAGE\ncomplete --workflow PATH --stage STAGE --receipt FILE\nblock --workflow PATH --stage STAGE --reason TEXT'); return;
+    console.log('init --project PATH --entry STAGE [--until STAGE] --goal TEXT\nstatus --workflow PATH\nbegin --workflow PATH --stage STAGE\nsubmit --workflow PATH --stage STAGE --receipt FILE\nreview --workflow PATH --stage STAGE --record FILE\ncomplete --workflow PATH --stage STAGE\nblock --workflow PATH --stage STAGE --reason TEXT'); return;
   }
-  const allowed = { init: ['project','entry','until','goal'], status: ['workflow'], begin: ['workflow','stage'], complete: ['workflow','stage','receipt'], block: ['workflow','stage','reason'] }[command];
+  const allowed = { init: ['project','entry','until','goal'], status: ['workflow'], begin: ['workflow','stage'], submit: ['workflow','stage','receipt'], review: ['workflow','stage','record'], complete: ['workflow','stage'], block: ['workflow','stage','reason'] }[command];
   ensure(allowed, 'Unknown command');
   const options = {};
   while (args.length) {

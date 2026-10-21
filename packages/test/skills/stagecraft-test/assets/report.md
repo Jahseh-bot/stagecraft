@@ -1,7 +1,7 @@
 # 测试与修复交接报告
 
 - 阶段：test
-- 状态：completed / partial / blocked / failed（根据实际结果选择）
+- 状态：in_progress / awaiting_review / changes_requested / approved / completed / partial / blocked / stale / failed（根据实际结果选择）
 - 工作流目录、对象与修订版本：
 - 用户目标、入口与授权终点：
 - 记录时间：
@@ -18,6 +18,13 @@
 | --- | --- | --- | --- | --- | --- |
 
 状态：pending / confirmed / delegated / superseded。未决项记录具体阻塞；确认后执行当前环节，完成后准备下一环节方案；不重复询问已确认选择。新决定替代旧决定时保留变更原因。
+
+## 适用性与覆盖
+
+| 维度 / 检查 ID | 适用 / 不适用 / 未知与依据 | 具体成果 / 证据 | 未覆盖风险 / 下一责任阶段 |
+| --- | --- | --- | --- |
+
+参考 coverage.md 与 stage-guide.md；未知项不能默认不适用，不为凑表格虚构功能。
 
 ## 验收映射
 
@@ -36,6 +43,20 @@
 记录用例集版本与路径、AC → TP → TC → 实际测试映射、评审记录和用户选择来源。逐用例记录执行状态、被测版本、环境、证据和缺陷；设计 ready 不等于执行 passed。详见 [用例模板](../references/test-case-design/assets/casebook.md)。
 
 分别统计 ready / needs_revision / excluded，以及 passed / failed / blocked / not_run / skipped；提供范围内 AC 和约定用例总数作为分母，保留失败与回归历史。关键用例未就绪或未执行，明确阻断交付或发布判断。
+
+## 产物版本与评审
+
+| 产物 ID / 路径与预览 | 当前修订 / 提交 ID | 上游 AC / 产物版本 | 自检证据 | 评审记录路径 / 状态 |
+| --- | --- | --- | --- | --- |
+
+记录展示的实际内容、相对上版变化、评审要点和已知限制。实际用户回复及来源放在独立评审记录，不在批准后修改已提交报告导致哈希失效。评审前状态 awaiting_review；要求修改为 changes_requested；未批准不能 completed。
+
+## 变更与影响
+
+| 变更 ID / 用户意见来源 | 旧提交 → 新提交 | 受影响 AC / 产物 / 阶段 | 修订与复验 | 新评审记录 |
+| --- | --- | --- | --- | --- |
+
+旧快照、失败证据与意见保留。跨阶段修改先标明影响，不把旧版批准复用到变更后的成果。
 
 ## 阶段成果
 
