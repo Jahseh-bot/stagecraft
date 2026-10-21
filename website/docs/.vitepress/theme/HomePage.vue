@@ -7,9 +7,9 @@ import StageFlow from './StageFlow.vue'
   <main id="main-content" class="home">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <a class="release" :href="withBase('/changelog/')">Stagecraft 0.4.0 · Skills-first · npm 已发布 <span aria-hidden="true">↗</span></a>
-        <h1 id="hero-title">从你的需求，<br>到能运行的应用。</h1>
-        <p class="intro">在你熟悉的 coding agent 里，调用 Stagecraft Skills。<br class="desktop-break">各阶段自主执行、验证和修复，沿用同一份交接记录。</p>
+        <a class="release" :href="withBase('/changelog/')">Stagecraft 0.4.1 · Skills-first · npm 已发布 <span aria-hidden="true">↗</span></a>
+        <h1 id="hero-title">专心做产品，<br>不用纠结选哪套 Skill。</h1>
+        <p class="intro">Stagecraft 为各阶段筛选并组合成熟实践。<br class="desktop-break">你选择产品方向，agent 按方法完成设计、实现和验证。</p>
         <div class="actions"><a class="primary" :href="withBase('/guide/')">开始使用</a><a class="secondary" :href="withBase('/workflow/')">了解工作流程</a></div>
         <p class="prerequisites">从一个阶段开始。适配多种 coding agent，无需单独运行 Codex CLI。</p>
       </div>
@@ -18,19 +18,20 @@ import StageFlow from './StageFlow.vue'
           <div class="terminal-bar"><span class="terminal-mark" aria-hidden="true">›_</span><span>在 agent 会话中直接使用</span><span class="terminal-label">对话示例</span></div>
           <pre tabindex="0" aria-label="Stagecraft 启动命令"><code>使用 stagecraft-build 和 stagecraft-test，
 把 PRD.md 实现成可运行应用。
-自主验证和修复，保留阶段交接记录。</code></pre>
+关键方案先给选项与理由，等我确认。
+确认后自动执行、验证和交接。</code></pre>
           <p class="terminal-note">“我想做一个中文温度换算网页。”</p>
         </div>
         <div class="flow-panel"><StageFlow compact /></div>
-        <div class="workbench-foot"><span class="status-dot" aria-hidden="true"></span>常规选择自主完成，关键阻塞才请求你介入。</div>
+        <div class="workbench-foot"><span class="status-dot" aria-hidden="true"></span>关键方向先选方案，确认后自动推进。</div>
       </div>
     </section>
 
     <section class="capabilities" aria-labelledby="capabilities-title">
-      <div class="section-lead"><h2 id="capabilities-title">不只生成代码，<br>还要把结果跑起来。</h2><p>把重复的执行交给工具，把重要的判断留给你。</p></div>
+      <div class="section-lead"><h2 id="capabilities-title">把分散的方法，<br>组织成产品交付流程。</h2><p>方法由 Stagecraft 编排，产品方向由你决定。</p></div>
       <dl class="capability-list">
-        <div><dt>直接接手，补足关键输入</dt><dd>从需求、代码或已有产品任意切入。复用已确认决定，只询问真正影响业务含义或授权范围的问题。</dd></div>
-        <div><dt>用真实检查检验结果</dt><dd>每个阶段实际检查成果，诊断问题、修复并复验。测试与部署保留真实证据，未验证的部分明确说明。</dd></div>
+        <div><dt>按阶段选择合适的方法</dt><dd>需求与产品推敲、视觉方案、架构设计、测试诊断各有对应方法；根据任务自动选择，无需用户逐个挑选。</dd></div>
+        <div><dt>方法必须落实为具体成果</dt><dd>从场景、术语和决策，到设计预览、代码与测试证据。每个阶段记录方法实际产生的成果，不能只写“遵循最佳实践”。</dd></div>
         <div><dt>随时暂停，接着完成</dt><dd>统一记录目标、决定、成果与验证证据。换会话或换 agent 后接着做；上游变化时重新核验下游结果。</dd></div>
       </dl>
     </section>
@@ -47,7 +48,7 @@ import StageFlow from './StageFlow.vue'
 
     <section class="getting-started" aria-labelledby="getting-started-title">
       <div><h2 id="getting-started-title">第一次打开终端？<br>我们从这里一起开始。</h2><p>跟着完整教程做一个温度换算网页。从安装技能到在 agent 中提出任务，每一步都有操作说明。</p><a class="primary" :href="withBase('/guide/preparation.html')">准备运行环境</a></div>
-      <ol class="reading-path"><li><a :href="withBase('/guide/preparation.html')">安装工具，检查连接</a><span>安装器、coding agent 和阶段技能</span></li><li><a :href="withBase('/guide/first-run.html')">在 agent 中开始任务</a><span>自主执行与统一交接</span></li><li><a :href="withBase('/guide/delivery.html')">找到结果，打开网页</a><span>阅读交付说明，亲手试一试</span></li></ol>
+      <ol class="reading-path"><li><a :href="withBase('/guide/preparation.html')">安装工具，检查连接</a><span>安装器、coding agent 和阶段技能</span></li><li><a :href="withBase('/guide/first-run.html')">在 agent 中开始任务</a><span>方案确认与自动交接</span></li><li><a :href="withBase('/guide/delivery.html')">找到结果，打开网页</a><span>阅读交付说明，亲手试一试</span></li></ol>
     </section>
     <p class="scope-note">Stagecraft 使用当前 agent 的账号、工具和权限。能力取决于宿主与环境；安装技能不提供模型或托管服务。<a :href="withBase('/guide/troubleshooting.html')">查看平台支持与常见问题</a></p>
   </main>

@@ -20,16 +20,16 @@ description: Stagecraft Skills-first 零基础教程：阶段包与技能安装�
 只装你需要的阶段即可；多阶段连续交付需安装目标范围里的技能。以下每一行是独立安装命令，把路径替换为你的项目完整路径，把 `codex` 替换为下表对应的 agent：
 
 ```sh
-npx --yes @gaaraa/discover@0.4.0 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/spec@0.4.0 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/design@0.4.0 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/architect@0.4.0 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/build@0.4.0 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/test@0.4.0 init --agent codex --dir "/目标项目路径"
-npx --yes @gaaraa/deploy@0.4.0 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/discover@0.4.1 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/spec@0.4.1 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/design@0.4.1 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/architect@0.4.1 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/build@0.4.1 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/test@0.4.1 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/deploy@0.4.1 init --agent codex --dir "/目标项目路径"
 ```
 
-这些命令通过 npm 下载包，并把技能文件复制到项目的宿主技能目录。仅执行 `npm install @gaaraa/build` 会把包放入 node_modules，不等于完成技能安装；新手建议直接使用上面的 npx 命令。`@gaaraa/runner@0.4.0` 供旧任务恢复使用，直接使用 Skills 不需要安装 runner。
+这些命令通过 npm 下载包，并把技能文件复制到项目的宿主技能目录。仅执行 `npm install @gaaraa/build` 会把包放入 node_modules，不等于完成技能安装；新手建议直接使用上面的 npx 命令。`@gaaraa/runner@0.4.1` 供旧任务恢复使用，直接使用 Skills 不需要安装 runner。
 
 ## 使用通用 skills CLI 安装整套技能
 
@@ -52,7 +52,7 @@ npx skills add Jahseh-bot/stagecraft --skill stagecraft-build stagecraft-test --
 npx skills add Jahseh-bot/stagecraft --skill '*' --agent codex
 ```
 
-正确顺序是 `npx skills add`。通用 CLI 的 agent 名称由它自己定义，例如 Claude Code 使用 `--agent claude-code`，与上方 Stagecraft 安装器的 `--agent claude` 不同。两种安装方式选一种即可；通用 CLI 使用 GitHub 当前版本，固定 npm 0.4.0 则使用上方各阶段命令。
+正确顺序是 `npx skills add`。通用 CLI 的 agent 名称由它自己定义，例如 Claude Code 使用 `--agent claude-code`，与上方 Stagecraft 安装器的 `--agent claude` 不同。两种安装方式选一种即可；通用 CLI 使用 GitHub 当前版本，固定 npm 0.4.1 则使用上方各阶段命令。
 
 仓库根目录和 release 产物最外层的 `skills/` 都包含七个完整技能，以及各自的引用资料、报告模板、脚本和许可证。源码仍维护在 `packages/<阶段>/skills/`，通过 `npm run build` 自动同步根目录，避免手工维护两份。
 

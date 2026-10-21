@@ -26,7 +26,8 @@ for (const [stage, entry] of Object.entries({build:'prd',test:'test',deploy:'dep
     const result=spawnSync(process.execPath,args,{cwd:consumer,env:{...process.env,STAGECRAFT_CODEX_BIN:fake},encoding:'utf8'});
     assert.equal(result.status,2,result.stderr);const reply=JSON.parse(result.stdout);const state=JSON.parse(await readFile(join(reply.runDir,'state.json')));
     assert.equal(state.entry,entry);assert.equal(state.pending.kind,'execution_error');
-    const lock=JSON.parse(await readFile(join(reply.runDir,'skills.lock.json')));assert.equal(lock.skills.length,38);
+    const lock=JSON.parse(await readFile(join(reply.runDir,'skills.lock.json')));assert.equal(lock.skills.length,40);
+    for (const id of ['grill-with-docs','domain-modeling']) assert.ok(lock.skills.some(skill => skill.id === id), `Missing bundled method: ${id}`);
     const {skillContext}=await import(pathToFileURL(join(installed,'runtime/src/skills.mjs')).href);
     assert.match(await skillContext(reply.runDir,'repair'),/Diagnosing Bugs/);
     assert.equal((await readdir(join(root,'runs'))).length,1);

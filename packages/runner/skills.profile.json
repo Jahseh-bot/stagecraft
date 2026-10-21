@@ -266,6 +266,20 @@
       "source": "https://github.com/Jeffallan/claude-skills/tree/36f3fe8052da7c57083783268c6ea3265d075265/skills/java-architect",
       "revision": "36f3fe8052da7c57083783268c6ea3265d075265",
       "license": "MIT"
+    },
+    {
+      "id": "grill-with-docs",
+      "path": "vendor/mattpocock/grill-with-docs",
+      "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/grill-with-docs",
+      "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "license": "MIT"
+    },
+    {
+      "id": "domain-modeling",
+      "path": "vendor/mattpocock/domain-modeling",
+      "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/domain-modeling",
+      "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "license": "MIT"
     }
   ],
   "phases": {

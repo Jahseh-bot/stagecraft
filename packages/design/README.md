@@ -2,15 +2,15 @@
 
 交互设计
 
-版本 0.4.0。npm 命令以该版本已实际发布为前提；未发布时从仓库执行 node packages/design/bin/cli.mjs。
+版本 0.4.1。npm 命令以该版本已实际发布为前提；未发布时从仓库执行 node packages/design/bin/cli.mjs。
 
-在当前 coding agent 中完成 design 阶段的执行、验证、修复与交接，无需安装其他阶段包。
+在当前 coding agent 中完成 design 阶段的执行、验证、修复与交接，无需安装其他阶段包。Stagecraft 按任务选择内置方法；请读取 references/methods.md 并实际应用，阶段报告记录具体产物和验证证据。
 
 ```sh
-npx --yes @gaaraa/design@0.4.0 init --agent codex --dir ./my-project
+npx --yes @gaaraa/design@0.4.1 init --agent codex --dir ./my-project
 ```
 
-然后在 agent 中说：“使用 stagecraft-design 完成本次任务，自行完成职责内的验证和修复，只在关键阻塞时询问我。”
+然后在 agent 中说：“使用 stagecraft-design 完成本次任务，未确认的关键方向先给方案与推荐理由，等待我选择；确认后自动执行、验证、修复和交接。”
 
 支持 --agent codex、claude、cursor、copilot、gemini、opencode、generic；也可用 --skills-dir 指定宿主目录。使用 --dry-run 预览；不同内容拒绝覆盖。没有原生 Skills 的宿主可直接读取安装目录里的 SKILL.md。宿主必须有任务所需的文件、执行及验证能力。
 

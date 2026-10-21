@@ -9,7 +9,7 @@ description: Stagecraft Skills-first 零基础教程：部署与发布验证。
 
 ## 向 agent 说明目标
 
-安装 deploy 技能后，明确目标、权限和你希望公开的内容。例如：
+安装 deploy 技能后，明确目标、权限和你希望公开的内容。不知道如何选择时，要求 agent 给出部署方案、费用、限制和推荐理由，等你确认后再发布。例如：
 
 ```text
 使用 stagecraft-deploy，把这个静态网站部署到我已授权的 GitHub Pages 仓库。

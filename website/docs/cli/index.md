@@ -10,8 +10,8 @@ description: Skills 安装器与可选交接助手；旧 runner 兼容入口。
 新版默认在 coding agent 会话中使用技能。CLI 负责复制技能，不运行模型。
 
 ```sh
-npx --yes @gaaraa/build@0.4.0 init --agent codex --dir ./my-project
-npx --yes @gaaraa/test@0.4.0 init --skills-dir .custom/skills --dir ./my-project --dry-run
+npx --yes @gaaraa/build@0.4.1 init --agent codex --dir ./my-project
+npx --yes @gaaraa/test@0.4.1 init --skills-dir .custom/skills --dir ./my-project --dry-run
 ```
 
 `--agent` 支持 codex、claude、cursor、copilot、gemini、opencode、generic。`--skills-dir` 与 `--agent` 二选一；`--dry-run` 只预览。不同内容冲突拒绝覆盖。
@@ -22,7 +22,7 @@ npx --yes @gaaraa/test@0.4.0 init --skills-dir .custom/skills --dir ./my-project
 
 ## 旧 runner 兼容参考
 
-以下 start、answer、resume 等命令供旧任务使用，要求已登录的 Codex CLI。新版 Skills 不依赖这些执行入口；旧运行器 init 只安装技能，不等于 agent 已完成任务。旧 JSON 协议仍接受 answers.json。0.4.0 源码兼容入口额外支持终端交互与 --json。
+以下 start、answer、resume 等命令供旧任务使用，要求已登录的 Codex CLI。新版 Skills 不依赖这些执行入口；旧运行器 init 只安装技能，不等于 agent 已完成任务。旧 JSON 协议仍接受 answers.json。0.4.1 源码兼容入口额外支持终端交互与 --json。
 
 ## 包与用途
 

@@ -37,3 +37,22 @@ test('public skills catalog contains exactly seven complete standalone stage cop
     for (const path of files) assert.deepEqual(await readFile(join(published,path)), await readFile(join(source,path)), `${stage}/${path}`);
   }
 });
+
+test('stage recipes ship every selected method and composite dependency with provenance', async () => {
+  const recipes = JSON.parse(await readFile('tooling/stage-methods.json','utf8'));
+  for (const [stage, recipe] of Object.entries(recipes)) {
+    const root = `packages/${stage}/skills/stagecraft-${stage}`;
+    const index = await readFile(join(root,'references/methods.md'),'utf8');
+    const sources = JSON.parse(await readFile(join(root,'references/upstream/sources.json'),'utf8'));
+    const ids = recipe.methods.map(method => method.id);
+    assert.equal(new Set(ids).size,ids.length);
+    for (const method of recipe.methods) {
+      assert.ok(method.when && method.action && method.output);
+      const source = sources.find(item => item.id===method.id);
+      assert.ok(source?.revision && source?.source && source?.license,`${stage}: ${method.id}`);
+      await access(join(root,'references/upstream',method.id,'SKILL.md'));
+    }
+    for (const [,link] of index.matchAll(/\]\(([^)]+)\)/g)) await access(join(root,'references',link));
+    if(ids.includes('grill-with-docs')) for(const dependency of ['grilling','domain-modeling']) assert.ok(ids.includes(dependency));
+  }
+});

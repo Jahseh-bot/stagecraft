@@ -6,6 +6,12 @@
     "license": "MIT"
   },
   {
+    "id": "diagnosing-bugs",
+    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/diagnosing-bugs",
+    "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+    "license": "MIT"
+  },
+  {
     "id": "vue-best-practices",
     "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-best-practices",
     "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",

@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test('从首页进入指南，翻页、目录和代码复制都可操作', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await page.goto('/')
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('到能运行的应用')
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('不用纠结选哪套 Skill')
   await page.getByRole('link', { name: '开始使用', exact: true }).click()
   await expect(page).toHaveURL(/\/guide\/$/)
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('什么是 Stagecraft')
@@ -26,5 +26,5 @@ test('顶栏各入口有真实正文，404 可返回首页', async ({ page }) =>
   }
   await page.goto('/404.html')
   await page.getByRole('link', { name: '返回首页', exact: true }).click()
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('到能运行的应用')
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('不用纠结选哪套 Skill')
 })

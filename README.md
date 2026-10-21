@@ -1,8 +1,8 @@
 # Stagecraft
 
-在你正在使用的 coding agent 里完成产品开发。七个独立 Skill 分别负责创意判断、需求规格、界面设计、架构、开发、测试和部署；每个阶段都包含检查、执行、验证、修复和交接。
+Stagecraft 为产品开发各阶段筛选并组合成熟方法，让用户不再纠结底层 Skills 的选择。七个阶段入口负责创意、需求、产品与视觉设计、架构、开发、测试和部署；关键产品方向由用户选择，方法编排、执行、验证与交接由当前 coding agent 完成。
 
-**0.4.0 Skills-first 已发布到 npm，可直接安装各阶段技能。** 0.3.0 是已发布的旧 runner 版本；0.3.1 发布中断，仅 architect 已上传，不作为完整推荐版本。
+**0.4.1 Skills-first 已发布到 npm，可直接安装各阶段技能。** 0.3.0 是已发布的旧 runner 版本；0.3.1 发布中断，仅 architect 已上传，不作为完整推荐版本。
 
 - [零基础使用指南](docs/npm-usage.md)
 - [Agent 兼容与安装路径](docs/agent-compatibility.md)
@@ -15,12 +15,12 @@
 直接通过 npm 安装（需要 Node.js 22+，无需克隆源码或登录 npm）：
 
 ```sh
-npx --yes @gaaraa/build@0.4.0 init --agent codex --dir /absolute/path/to/my-project
+npx --yes @gaaraa/build@0.4.1 init --agent codex --dir /absolute/path/to/my-project
 ```
 
 在目标项目的 coding agent 会话中输入：
 
-> 使用 stagecraft-build，把 PRD.md 实现成可运行的应用。自行完成常规技术选择、测试和修复，只在关键业务歧义或权限阻塞时询问我。
+> 使用 stagecraft-build，把 PRD.md 实现成可运行的应用。未确认的关键方向先给方案和推荐理由，等我选择确认；确认后自动实现、测试、修复和交接。
 
 `--agent` 可换成 `claude`、`cursor`、`copilot`、`gemini`、`opencode` 或 `generic`。不支持原生 Skills 的 agent，可让它直接读取安装目录中的 `SKILL.md`。无需安装 Codex CLI；由当前 agent 执行任务。
 
@@ -52,7 +52,7 @@ npx skills add Jahseh-bot/stagecraft
 
 同一项目的交接放在 `.stagecraft/workflows/<id>/`，记录目标、入口/终点、决定、AC、成果路径、真实验证证据与下一步。可选助手校验文件及哈希，发现上游变化会使相关下游结果失效，避免把旧测试当成本次结果。
 
-常规可逆选择自主完成；业务关键歧义、权限、凭据、不可逆或超出授权的动作才询问用户。真实环境不足时准确记录阻塞，不承诺任何 agent 在没有执行能力时也能完成验证。
+产品范围、功能模块、核心流程、视觉风格、技术选型和部署方式先给方案与推荐理由，等待用户选择；已确认边界内的实现细节、测试和修复自动完成。真实环境不足时准确记录阻塞，不承诺任何 agent 在没有执行能力时也能完成验证。
 
 ## 维护与验证
 
@@ -63,3 +63,9 @@ npm run release:publish -- --dry-run
 ```
 
 七阶段包自带协议、模板、脚本和固定版本上游方法及许可证；安装器不调用模型，不修改其他宿主配置。`runner` 及 build/test/deploy 的旧执行入口仅为已有用户保留，详见兼容文档。
+
+## 方法如何真正生效
+
+每个阶段先读取随包的 `references/methods.md`，按触发条件应用 grilling、grill-with-docs/domain-modeling、frontend-design、codebase-design、tdd、webapp-testing、diagnosing-bugs 等方法及适配技术栈的专项实践。报告必须记录具体产物与证据，不能只列方法名称。用户选择产品方案，不必选择底层 Skill。
+
+[方法编排与来源说明](https://jahseh-bot.github.io/stagecraft/guide/methods.html)

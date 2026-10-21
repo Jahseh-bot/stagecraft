@@ -1,13 +1,43 @@
 [
   {
+    "id": "grilling",
+    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/productivity/grilling",
+    "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+    "license": "MIT"
+  },
+  {
+    "id": "grill-with-docs",
+    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/grill-with-docs",
+    "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+    "license": "MIT"
+  },
+  {
+    "id": "domain-modeling",
+    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/domain-modeling",
+    "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+    "license": "MIT"
+  },
+  {
+    "id": "frontend-design",
+    "source": "https://github.com/anthropics/skills/tree/dbd4588f9e1033efb41dad4bef2f7947c8993d44/skills/frontend-design",
+    "revision": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "codebase-design",
+    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/codebase-design",
+    "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+    "license": "MIT"
+  },
+  {
     "id": "tdd",
     "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/tdd",
     "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
     "license": "MIT"
   },
   {
-    "id": "codebase-design",
-    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/codebase-design",
+    "id": "diagnosing-bugs",
+    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/diagnosing-bugs",
     "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
     "license": "MIT"
   },

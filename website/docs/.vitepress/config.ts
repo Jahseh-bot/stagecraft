@@ -5,7 +5,8 @@ const guide = [
     { text: '准备环境', link: '/guide/preparation' },
     { text: '创建需求说明', link: '/guide/requirements' },
     { text: '开始第一个任务', link: '/guide/first-run' },
-    { text: '自主执行与必要确认', link: '/guide/confirmation' },
+    { text: '不再纠结选哪套 Skill', link: '/guide/methods' },
+    { text: '关键方案确认与自动执行', link: '/guide/confirmation' },
     { text: '查看成果与启动网页', link: '/guide/delivery' }
   ] },
   { text: '继续使用', items: [

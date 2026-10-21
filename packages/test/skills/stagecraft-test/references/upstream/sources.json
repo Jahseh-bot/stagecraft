@@ -1,5 +1,23 @@
 [
   {
+    "id": "grill-with-docs",
+    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/grill-with-docs",
+    "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+    "license": "MIT"
+  },
+  {
+    "id": "grilling",
+    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/productivity/grilling",
+    "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+    "license": "MIT"
+  },
+  {
+    "id": "domain-modeling",
+    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/domain-modeling",
+    "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+    "license": "MIT"
+  },
+  {
     "id": "tdd",
     "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/tdd",
     "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
