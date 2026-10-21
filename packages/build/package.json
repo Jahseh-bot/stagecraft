@@ -1,0 +1,31 @@
+{
+  "name": "@gaaraa/build",
+  "version": "0.3.0",
+  "description": "Standalone PRD delivery runner and build skills",
+  "files": [
+    "README.md",
+    "bin",
+    "skills",
+    "runtime",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "stagecraft-build": "bin/cli.mjs"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "keywords": [
+    "agent-skills",
+    "sdd",
+    "codex",
+    "stagecraft"
+  ]
+}

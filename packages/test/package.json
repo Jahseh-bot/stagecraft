@@ -1,0 +1,31 @@
+{
+  "name": "@gaaraa/test",
+  "version": "0.3.0",
+  "description": "Standalone existing-project test and repair runner",
+  "files": [
+    "README.md",
+    "bin",
+    "skills",
+    "runtime",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "stagecraft-test": "bin/cli.mjs"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "keywords": [
+    "agent-skills",
+    "sdd",
+    "codex",
+    "stagecraft"
+  ]
+}

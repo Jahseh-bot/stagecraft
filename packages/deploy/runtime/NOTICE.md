@@ -1,0 +1,1 @@
+Stagecraft code is MIT licensed. Bundled third-party skills retain their own licenses and copyright notices. See vendor/ or skills/*/references/upstream/ and runtime/vendor/ where present; skills.profile.json and sources.json record upstream sources and revisions.

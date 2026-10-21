@@ -1,0 +1,32 @@
+{
+  "name": "@gaaraa/runner",
+  "version": "0.3.0",
+  "type": "module",
+  "description": "Persistent PRD-to-running-app delivery orchestrator",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "stagecraft": "bin/cli.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "vendor",
+    "skills.profile.json",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "keywords": [
+    "agent-skills",
+    "sdd",
+    "codex",
+    "stagecraft"
+  ]
+}

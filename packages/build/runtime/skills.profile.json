@@ -1,0 +1,853 @@
+{
+  "version": 1,
+  "skills": [
+    {
+      "id": "grilling",
+      "path": "vendor/mattpocock/grilling",
+      "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/productivity/grilling",
+      "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "license": "MIT"
+    },
+    {
+      "id": "codebase-design",
+      "path": "vendor/mattpocock/codebase-design",
+      "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/codebase-design",
+      "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "license": "MIT"
+    },
+    {
+      "id": "tdd",
+      "path": "vendor/mattpocock/tdd",
+      "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/tdd",
+      "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "license": "MIT"
+    },
+    {
+      "id": "diagnosing-bugs",
+      "path": "vendor/mattpocock/diagnosing-bugs",
+      "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/diagnosing-bugs",
+      "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "license": "MIT"
+    },
+    {
+      "id": "frontend-design",
+      "path": "vendor/anthropic/frontend-design",
+      "source": "https://github.com/anthropics/skills/tree/dbd4588f9e1033efb41dad4bef2f7947c8993d44/skills/frontend-design",
+      "revision": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+      "license": "Apache-2.0"
+    },
+    {
+      "id": "webapp-testing",
+      "path": "vendor/anthropic/webapp-testing",
+      "source": "https://github.com/anthropics/skills/tree/dbd4588f9e1033efb41dad4bef2f7947c8993d44/skills/webapp-testing",
+      "revision": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+      "license": "Apache-2.0"
+    },
+    {
+      "id": "docker-expert",
+      "path": "vendor/antigravity/docker-expert",
+      "source": "https://github.com/sickn33/antigravity-awesome-skills/tree/c808e6e480696d243e0668ebbc3499bb8e7e10a4/skills/docker-expert",
+      "revision": "c808e6e480696d243e0668ebbc3499bb8e7e10a4",
+      "license": "MIT"
+    },
+    {
+      "id": "vue-best-practices",
+      "path": "vendor/vuejs-ai/vue-best-practices",
+      "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-best-practices",
+      "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+      "license": "MIT"
+    },
+    {
+      "id": "vue-debug-guides",
+      "path": "vendor/vuejs-ai/vue-debug-guides",
+      "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-debug-guides",
+      "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+      "license": "MIT"
+    },
+    {
+      "id": "vue-testing-best-practices",
+      "path": "vendor/vuejs-ai/vue-testing-best-practices",
+      "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-testing-best-practices",
+      "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+      "license": "MIT"
+    },
+    {
+      "id": "vue-options-api-best-practices",
+      "path": "vendor/vuejs-ai/vue-options-api-best-practices",
+      "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-options-api-best-practices",
+      "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+      "license": "MIT"
+    },
+    {
+      "id": "vue-jsx-best-practices",
+      "path": "vendor/vuejs-ai/vue-jsx-best-practices",
+      "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-jsx-best-practices",
+      "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+      "license": "MIT"
+    },
+    {
+      "id": "vue-pinia-best-practices",
+      "path": "vendor/vuejs-ai/vue-pinia-best-practices",
+      "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-pinia-best-practices",
+      "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+      "license": "MIT"
+    },
+    {
+      "id": "vue-router-best-practices",
+      "path": "vendor/vuejs-ai/vue-router-best-practices",
+      "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-router-best-practices",
+      "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+      "license": "MIT"
+    },
+    {
+      "id": "flutter-apply-architecture-best-practices",
+      "path": "vendor/flutter/flutter-apply-architecture-best-practices",
+      "source": "https://github.com/flutter/agent-plugins/tree/6e590650bb4bab87f33187423dc10113d04d4836/skills/flutter-apply-architecture-best-practices",
+      "revision": "6e590650bb4bab87f33187423dc10113d04d4836",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "id": "flutter-build-responsive-layout",
+      "path": "vendor/flutter/flutter-build-responsive-layout",
+      "source": "https://github.com/flutter/agent-plugins/tree/6e590650bb4bab87f33187423dc10113d04d4836/skills/flutter-build-responsive-layout",
+      "revision": "6e590650bb4bab87f33187423dc10113d04d4836",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "id": "flutter-add-widget-test",
+      "path": "vendor/flutter/flutter-add-widget-test",
+      "source": "https://github.com/flutter/agent-plugins/tree/6e590650bb4bab87f33187423dc10113d04d4836/skills/flutter-add-widget-test",
+      "revision": "6e590650bb4bab87f33187423dc10113d04d4836",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "id": "flutter-add-integration-test",
+      "path": "vendor/flutter/flutter-add-integration-test",
+      "source": "https://github.com/flutter/agent-plugins/tree/6e590650bb4bab87f33187423dc10113d04d4836/skills/flutter-add-integration-test",
+      "revision": "6e590650bb4bab87f33187423dc10113d04d4836",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "id": "dart-fix-runtime-errors",
+      "path": "vendor/flutter/dart-fix-runtime-errors",
+      "source": "https://github.com/flutter/agent-plugins/tree/6e590650bb4bab87f33187423dc10113d04d4836/skills/dart-fix-runtime-errors",
+      "revision": "6e590650bb4bab87f33187423dc10113d04d4836",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "id": "dart-run-static-analysis",
+      "path": "vendor/flutter/dart-run-static-analysis",
+      "source": "https://github.com/flutter/agent-plugins/tree/6e590650bb4bab87f33187423dc10113d04d4836/skills/dart-run-static-analysis",
+      "revision": "6e590650bb4bab87f33187423dc10113d04d4836",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "id": "react-best-practices",
+      "path": "vendor/vercel/react-best-practices",
+      "source": "https://github.com/vercel-labs/agent-skills/tree/063bee94c3f4df8453406c830b0a7df0f2860278/skills/react-best-practices",
+      "revision": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "license": "MIT"
+    },
+    {
+      "id": "react-native-skills",
+      "path": "vendor/vercel/react-native-skills",
+      "source": "https://github.com/vercel-labs/agent-skills/tree/063bee94c3f4df8453406c830b0a7df0f2860278/skills/react-native-skills",
+      "revision": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "license": "MIT"
+    },
+    {
+      "id": "nodejs-backend-patterns",
+      "path": "vendor/wshobson/nodejs-backend-patterns",
+      "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/javascript-typescript/skills/nodejs-backend-patterns",
+      "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "license": "MIT"
+    },
+    {
+      "id": "fastapi-templates",
+      "path": "vendor/wshobson/fastapi-templates",
+      "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/api-scaffolding/skills/fastapi-templates",
+      "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "license": "MIT"
+    },
+    {
+      "id": "python-testing-patterns",
+      "path": "vendor/wshobson/python-testing-patterns",
+      "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/python-development/skills/python-testing-patterns",
+      "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "license": "MIT"
+    },
+    {
+      "id": "javascript-testing-patterns",
+      "path": "vendor/wshobson/javascript-testing-patterns",
+      "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/javascript-typescript/skills/javascript-testing-patterns",
+      "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "license": "MIT"
+    },
+    {
+      "id": "e2e-testing-patterns",
+      "path": "vendor/wshobson/e2e-testing-patterns",
+      "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/developer-essentials/skills/e2e-testing-patterns",
+      "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "license": "MIT"
+    },
+    {
+      "id": "sql-optimization-patterns",
+      "path": "vendor/wshobson/sql-optimization-patterns",
+      "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/developer-essentials/skills/sql-optimization-patterns",
+      "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "license": "MIT"
+    },
+    {
+      "id": "supabase-postgres-best-practices",
+      "path": "vendor/supabase/supabase-postgres-best-practices",
+      "source": "https://github.com/supabase/agent-skills/tree/c9be0e931b7930f7d02126d04774d904c381e7d7/skills/supabase-postgres-best-practices",
+      "revision": "c9be0e931b7930f7d02126d04774d904c381e7d7",
+      "license": "MIT"
+    },
+    {
+      "id": "vitest",
+      "path": "vendor/antfu/vitest",
+      "source": "https://github.com/antfu/skills/tree/feb0f3aba6566426f12230e7fc7a10d97c1293bb/skills/vitest",
+      "revision": "feb0f3aba6566426f12230e7fc7a10d97c1293bb",
+      "license": "MIT"
+    },
+    {
+      "id": "redis-core",
+      "path": "vendor/redis/redis-core",
+      "source": "https://github.com/redis/agent-skills/tree/a84871d065f398fed55e1633f66b66f731eb4e2b/skills/redis-core",
+      "revision": "a84871d065f398fed55e1633f66b66f731eb4e2b",
+      "license": "MIT"
+    },
+    {
+      "id": "redis-connections",
+      "path": "vendor/redis/redis-connections",
+      "source": "https://github.com/redis/agent-skills/tree/a84871d065f398fed55e1633f66b66f731eb4e2b/skills/redis-connections",
+      "revision": "a84871d065f398fed55e1633f66b66f731eb4e2b",
+      "license": "MIT"
+    },
+    {
+      "id": "mongodb-schema-design",
+      "path": "vendor/mongodb/mongodb-schema-design",
+      "source": "https://github.com/mongodb/agent-skills/tree/155bb9c4b42a9a3e019f47be0669de0e4547d1ea/skills/mongodb-schema-design",
+      "revision": "155bb9c4b42a9a3e019f47be0669de0e4547d1ea",
+      "license": "Apache-2.0"
+    },
+    {
+      "id": "mongodb-query-optimizer",
+      "path": "vendor/mongodb/mongodb-query-optimizer",
+      "source": "https://github.com/mongodb/agent-skills/tree/155bb9c4b42a9a3e019f47be0669de0e4547d1ea/skills/mongodb-query-optimizer",
+      "revision": "155bb9c4b42a9a3e019f47be0669de0e4547d1ea",
+      "license": "Apache-2.0"
+    },
+    {
+      "id": "python-design-patterns",
+      "path": "vendor/wshobson/python-design-patterns",
+      "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/python-development/skills/python-design-patterns",
+      "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "license": "MIT"
+    },
+    {
+      "id": "mysql",
+      "path": "vendor/planetscale/mysql",
+      "source": "https://github.com/planetscale/database-skills/tree/f6ed002d03084cb39c01d1d58904d47a36f5322a/skills/mysql",
+      "revision": "f6ed002d03084cb39c01d1d58904d47a36f5322a",
+      "license": "MIT"
+    },
+    {
+      "id": "golang-pro",
+      "path": "vendor/jeffallan/golang-pro",
+      "source": "https://github.com/Jeffallan/claude-skills/tree/36f3fe8052da7c57083783268c6ea3265d075265/skills/golang-pro",
+      "revision": "36f3fe8052da7c57083783268c6ea3265d075265",
+      "license": "MIT"
+    },
+    {
+      "id": "java-architect",
+      "path": "vendor/jeffallan/java-architect",
+      "source": "https://github.com/Jeffallan/claude-skills/tree/36f3fe8052da7c57083783268c6ea3265d075265/skills/java-architect",
+      "revision": "36f3fe8052da7c57083783268c6ea3265d075265",
+      "license": "MIT"
+    }
+  ],
+  "phases": {
+    "clarify": [
+      "grilling"
+    ],
+    "plan": [
+      "codebase-design",
+      "tdd",
+      "frontend-design"
+    ],
+    "implement": [
+      "tdd",
+      "codebase-design",
+      "frontend-design"
+    ],
+    "repair": [
+      "diagnosing-bugs",
+      "tdd"
+    ],
+    "test_plan": [
+      "tdd",
+      "webapp-testing"
+    ],
+    "deploy_plan": [
+      "docker-expert"
+    ],
+    "test_prepare": [
+      "tdd",
+      "webapp-testing"
+    ],
+    "deploy_discover": [
+      "docker-expert"
+    ]
+  },
+  "technologySkills": {
+    "vue": {
+      "plan": [
+        "vue-best-practices"
+      ],
+      "implement": [
+        "vue-best-practices"
+      ],
+      "repair": [
+        "vue-best-practices",
+        "vue-debug-guides"
+      ],
+      "test_plan": [
+        "vue-testing-best-practices"
+      ],
+      "test_prepare": [
+        "vue-testing-best-practices"
+      ],
+      "deploy_discover": [
+        "vue-best-practices"
+      ],
+      "deploy_plan": [
+        "vue-best-practices"
+      ]
+    },
+    "pinia": {
+      "plan": [
+        "vue-pinia-best-practices"
+      ],
+      "implement": [
+        "vue-pinia-best-practices"
+      ],
+      "repair": [
+        "vue-pinia-best-practices"
+      ],
+      "test_plan": [
+        "vue-pinia-best-practices"
+      ],
+      "test_prepare": [
+        "vue-pinia-best-practices"
+      ],
+      "deploy_discover": [
+        "vue-pinia-best-practices"
+      ],
+      "deploy_plan": [
+        "vue-pinia-best-practices"
+      ]
+    },
+    "vue-router": {
+      "plan": [
+        "vue-router-best-practices"
+      ],
+      "implement": [
+        "vue-router-best-practices"
+      ],
+      "repair": [
+        "vue-router-best-practices"
+      ],
+      "test_plan": [
+        "vue-router-best-practices"
+      ],
+      "test_prepare": [
+        "vue-router-best-practices"
+      ],
+      "deploy_discover": [
+        "vue-router-best-practices"
+      ],
+      "deploy_plan": [
+        "vue-router-best-practices"
+      ]
+    },
+    "vue-options": {
+      "plan": [
+        "vue-options-api-best-practices"
+      ],
+      "implement": [
+        "vue-options-api-best-practices"
+      ],
+      "repair": [
+        "vue-options-api-best-practices"
+      ],
+      "test_plan": [
+        "vue-options-api-best-practices"
+      ],
+      "test_prepare": [
+        "vue-options-api-best-practices"
+      ],
+      "deploy_discover": [
+        "vue-options-api-best-practices"
+      ],
+      "deploy_plan": [
+        "vue-options-api-best-practices"
+      ]
+    },
+    "vue-jsx": {
+      "plan": [
+        "vue-jsx-best-practices"
+      ],
+      "implement": [
+        "vue-jsx-best-practices"
+      ],
+      "repair": [
+        "vue-jsx-best-practices"
+      ],
+      "test_plan": [
+        "vue-jsx-best-practices"
+      ],
+      "test_prepare": [
+        "vue-jsx-best-practices"
+      ],
+      "deploy_discover": [
+        "vue-jsx-best-practices"
+      ],
+      "deploy_plan": [
+        "vue-jsx-best-practices"
+      ]
+    },
+    "flutter": {
+      "plan": [
+        "flutter-apply-architecture-best-practices"
+      ],
+      "implement": [
+        "flutter-apply-architecture-best-practices",
+        "flutter-build-responsive-layout"
+      ],
+      "repair": [
+        "dart-fix-runtime-errors",
+        "dart-run-static-analysis"
+      ],
+      "test_plan": [
+        "flutter-add-widget-test",
+        "flutter-add-integration-test",
+        "dart-run-static-analysis"
+      ],
+      "test_prepare": [
+        "flutter-add-widget-test",
+        "flutter-add-integration-test"
+      ],
+      "deploy_discover": [
+        "dart-run-static-analysis"
+      ],
+      "deploy_plan": [
+        "dart-run-static-analysis"
+      ]
+    },
+    "react": {
+      "plan": [
+        "react-best-practices"
+      ],
+      "implement": [
+        "react-best-practices"
+      ],
+      "repair": [
+        "react-best-practices"
+      ]
+    },
+    "nextjs": {
+      "plan": [
+        "react-best-practices"
+      ],
+      "implement": [
+        "react-best-practices"
+      ],
+      "repair": [
+        "react-best-practices"
+      ]
+    },
+    "react-native": {
+      "plan": [
+        "react-native-skills"
+      ],
+      "implement": [
+        "react-native-skills"
+      ],
+      "repair": [
+        "react-native-skills"
+      ]
+    },
+    "nodejs": {
+      "plan": [
+        "nodejs-backend-patterns"
+      ],
+      "implement": [
+        "nodejs-backend-patterns"
+      ],
+      "repair": [
+        "nodejs-backend-patterns"
+      ],
+      "test_plan": [
+        "nodejs-backend-patterns"
+      ],
+      "test_prepare": [
+        "nodejs-backend-patterns"
+      ],
+      "deploy_discover": [
+        "nodejs-backend-patterns"
+      ],
+      "deploy_plan": [
+        "nodejs-backend-patterns"
+      ]
+    },
+    "express": {
+      "plan": [
+        "nodejs-backend-patterns"
+      ],
+      "implement": [
+        "nodejs-backend-patterns"
+      ],
+      "repair": [
+        "nodejs-backend-patterns"
+      ],
+      "test_plan": [
+        "nodejs-backend-patterns"
+      ],
+      "test_prepare": [
+        "nodejs-backend-patterns"
+      ],
+      "deploy_discover": [
+        "nodejs-backend-patterns"
+      ],
+      "deploy_plan": [
+        "nodejs-backend-patterns"
+      ]
+    },
+    "fastify": {
+      "plan": [
+        "nodejs-backend-patterns"
+      ],
+      "implement": [
+        "nodejs-backend-patterns"
+      ],
+      "repair": [
+        "nodejs-backend-patterns"
+      ],
+      "test_plan": [
+        "nodejs-backend-patterns"
+      ],
+      "test_prepare": [
+        "nodejs-backend-patterns"
+      ],
+      "deploy_discover": [
+        "nodejs-backend-patterns"
+      ],
+      "deploy_plan": [
+        "nodejs-backend-patterns"
+      ]
+    },
+    "python": {
+      "plan": [
+        "python-design-patterns"
+      ],
+      "implement": [
+        "python-design-patterns"
+      ],
+      "repair": [
+        "python-testing-patterns"
+      ],
+      "test_plan": [
+        "python-testing-patterns"
+      ],
+      "test_prepare": [
+        "python-testing-patterns"
+      ],
+      "deploy_discover": [
+        "python-design-patterns"
+      ],
+      "deploy_plan": [
+        "python-design-patterns"
+      ]
+    },
+    "fastapi": {
+      "plan": [
+        "fastapi-templates"
+      ],
+      "implement": [
+        "fastapi-templates"
+      ],
+      "repair": [
+        "fastapi-templates"
+      ],
+      "deploy_discover": [
+        "fastapi-templates"
+      ],
+      "deploy_plan": [
+        "fastapi-templates"
+      ],
+      "test_plan": [
+        "python-testing-patterns"
+      ],
+      "test_prepare": [
+        "python-testing-patterns"
+      ]
+    },
+    "postgres": {
+      "plan": [
+        "supabase-postgres-best-practices"
+      ],
+      "implement": [
+        "supabase-postgres-best-practices"
+      ],
+      "repair": [
+        "supabase-postgres-best-practices",
+        "sql-optimization-patterns"
+      ],
+      "test_plan": [
+        "supabase-postgres-best-practices"
+      ],
+      "test_prepare": [
+        "supabase-postgres-best-practices"
+      ],
+      "deploy_discover": [
+        "supabase-postgres-best-practices"
+      ],
+      "deploy_plan": [
+        "supabase-postgres-best-practices"
+      ]
+    },
+    "vitest": {
+      "plan": [
+        "vitest"
+      ],
+      "implement": [
+        "vitest"
+      ],
+      "repair": [
+        "vitest"
+      ],
+      "test_plan": [
+        "vitest"
+      ],
+      "test_prepare": [
+        "vitest"
+      ]
+    },
+    "jest": {
+      "plan": [
+        "javascript-testing-patterns"
+      ],
+      "implement": [
+        "javascript-testing-patterns"
+      ],
+      "repair": [
+        "javascript-testing-patterns"
+      ],
+      "test_plan": [
+        "javascript-testing-patterns"
+      ],
+      "test_prepare": [
+        "javascript-testing-patterns"
+      ]
+    },
+    "pytest": {
+      "plan": [
+        "python-testing-patterns"
+      ],
+      "implement": [
+        "python-testing-patterns"
+      ],
+      "repair": [
+        "python-testing-patterns"
+      ],
+      "test_plan": [
+        "python-testing-patterns"
+      ],
+      "test_prepare": [
+        "python-testing-patterns"
+      ]
+    },
+    "playwright": {
+      "plan": [
+        "e2e-testing-patterns"
+      ],
+      "implement": [
+        "e2e-testing-patterns"
+      ],
+      "repair": [
+        "e2e-testing-patterns"
+      ],
+      "test_plan": [
+        "e2e-testing-patterns"
+      ],
+      "test_prepare": [
+        "e2e-testing-patterns"
+      ]
+    },
+    "cypress": {
+      "plan": [
+        "e2e-testing-patterns"
+      ],
+      "implement": [
+        "e2e-testing-patterns"
+      ],
+      "repair": [
+        "e2e-testing-patterns"
+      ],
+      "test_plan": [
+        "e2e-testing-patterns"
+      ],
+      "test_prepare": [
+        "e2e-testing-patterns"
+      ]
+    },
+    "redis": {
+      "plan": [
+        "redis-core",
+        "redis-connections"
+      ],
+      "implement": [
+        "redis-core",
+        "redis-connections"
+      ],
+      "repair": [
+        "redis-core",
+        "redis-connections"
+      ],
+      "test_plan": [
+        "redis-core",
+        "redis-connections"
+      ],
+      "test_prepare": [
+        "redis-core",
+        "redis-connections"
+      ],
+      "deploy_discover": [
+        "redis-core",
+        "redis-connections"
+      ],
+      "deploy_plan": [
+        "redis-core",
+        "redis-connections"
+      ]
+    },
+    "mongodb": {
+      "plan": [
+        "mongodb-schema-design"
+      ],
+      "implement": [
+        "mongodb-schema-design"
+      ],
+      "repair": [
+        "mongodb-schema-design",
+        "mongodb-query-optimizer"
+      ],
+      "test_plan": [
+        "mongodb-schema-design"
+      ],
+      "test_prepare": [
+        "mongodb-schema-design"
+      ],
+      "deploy_discover": [
+        "mongodb-schema-design"
+      ],
+      "deploy_plan": [
+        "mongodb-schema-design"
+      ]
+    },
+    "mysql": {
+      "plan": [
+        "mysql"
+      ],
+      "implement": [
+        "mysql"
+      ],
+      "repair": [
+        "mysql"
+      ],
+      "test_plan": [
+        "mysql"
+      ],
+      "test_prepare": [
+        "mysql"
+      ],
+      "deploy_discover": [
+        "mysql"
+      ],
+      "deploy_plan": [
+        "mysql"
+      ]
+    },
+    "go": {
+      "plan": [
+        "golang-pro"
+      ],
+      "implement": [
+        "golang-pro"
+      ],
+      "repair": [
+        "golang-pro"
+      ],
+      "test_plan": [
+        "golang-pro"
+      ],
+      "test_prepare": [
+        "golang-pro"
+      ],
+      "deploy_discover": [
+        "golang-pro"
+      ],
+      "deploy_plan": [
+        "golang-pro"
+      ]
+    },
+    "java": {
+      "plan": [
+        "java-architect"
+      ],
+      "implement": [
+        "java-architect"
+      ],
+      "repair": [
+        "java-architect"
+      ],
+      "test_plan": [
+        "java-architect"
+      ],
+      "test_prepare": [
+        "java-architect"
+      ],
+      "deploy_discover": [
+        "java-architect"
+      ],
+      "deploy_plan": [
+        "java-architect"
+      ]
+    },
+    "springboot": {
+      "plan": [
+        "java-architect"
+      ],
+      "implement": [
+        "java-architect"
+      ],
+      "repair": [
+        "java-architect"
+      ],
+      "test_plan": [
+        "java-architect"
+      ],
+      "test_prepare": [
+        "java-architect"
+      ],
+      "deploy_discover": [
+        "java-architect"
+      ],
+      "deploy_plan": [
+        "java-architect"
+      ]
+    }
+  }
+}

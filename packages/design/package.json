@@ -1,0 +1,30 @@
+{
+  "name": "@gaaraa/design",
+  "version": "0.3.0",
+  "description": "交互设计",
+  "files": [
+    "README.md",
+    "bin",
+    "skills",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "stagecraft-design": "bin/cli.mjs"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "keywords": [
+    "agent-skills",
+    "sdd",
+    "codex",
+    "stagecraft"
+  ]
+}

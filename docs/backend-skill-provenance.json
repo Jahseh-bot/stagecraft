@@ -1,0 +1,146 @@
+[
+  {
+    "id": "nodejs-backend-patterns",
+    "path": "vendor/wshobson/nodejs-backend-patterns",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/javascript-typescript/skills/nodejs-backend-patterns",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-17T17:39:17-04:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "fastapi-templates",
+    "path": "vendor/wshobson/fastapi-templates",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/api-scaffolding/skills/fastapi-templates",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-17T17:39:17-04:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "python-testing-patterns",
+    "path": "vendor/wshobson/python-testing-patterns",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/python-development/skills/python-testing-patterns",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-17T17:39:17-04:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "javascript-testing-patterns",
+    "path": "vendor/wshobson/javascript-testing-patterns",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/javascript-typescript/skills/javascript-testing-patterns",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-17T17:39:17-04:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "e2e-testing-patterns",
+    "path": "vendor/wshobson/e2e-testing-patterns",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/developer-essentials/skills/e2e-testing-patterns",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-17T17:39:17-04:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "sql-optimization-patterns",
+    "path": "vendor/wshobson/sql-optimization-patterns",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/developer-essentials/skills/sql-optimization-patterns",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-17T17:39:17-04:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "supabase-postgres-best-practices",
+    "path": "vendor/supabase/supabase-postgres-best-practices",
+    "source": "https://github.com/supabase/agent-skills/tree/c9be0e931b7930f7d02126d04774d904c381e7d7/skills/supabase-postgres-best-practices",
+    "revision": "c9be0e931b7930f7d02126d04774d904c381e7d7",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-02T14:34:48+02:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "vitest",
+    "path": "vendor/antfu/vitest",
+    "source": "https://github.com/antfu/skills/tree/feb0f3aba6566426f12230e7fc7a10d97c1293bb/skills/vitest",
+    "revision": "feb0f3aba6566426f12230e7fc7a10d97c1293bb",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-09T15:36:34+09:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "redis-core",
+    "path": "vendor/redis/redis-core",
+    "source": "https://github.com/redis/agent-skills/tree/a84871d065f398fed55e1633f66b66f731eb4e2b/skills/redis-core",
+    "revision": "a84871d065f398fed55e1633f66b66f731eb4e2b",
+    "license": "MIT",
+    "latestCommitAt": "2026-09-08T13:56:41+03:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "redis-connections",
+    "path": "vendor/redis/redis-connections",
+    "source": "https://github.com/redis/agent-skills/tree/a84871d065f398fed55e1633f66b66f731eb4e2b/skills/redis-connections",
+    "revision": "a84871d065f398fed55e1633f66b66f731eb4e2b",
+    "license": "MIT",
+    "latestCommitAt": "2026-09-08T13:56:41+03:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "mongodb-schema-design",
+    "path": "vendor/mongodb/mongodb-schema-design",
+    "source": "https://github.com/mongodb/agent-skills/tree/155bb9c4b42a9a3e019f47be0669de0e4547d1ea/skills/mongodb-schema-design",
+    "revision": "155bb9c4b42a9a3e019f47be0669de0e4547d1ea",
+    "license": "Apache-2.0",
+    "latestCommitAt": "2026-10-19T23:01:33+02:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "mongodb-query-optimizer",
+    "path": "vendor/mongodb/mongodb-query-optimizer",
+    "source": "https://github.com/mongodb/agent-skills/tree/155bb9c4b42a9a3e019f47be0669de0e4547d1ea/skills/mongodb-query-optimizer",
+    "revision": "155bb9c4b42a9a3e019f47be0669de0e4547d1ea",
+    "license": "Apache-2.0",
+    "latestCommitAt": "2026-10-19T23:01:33+02:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "python-design-patterns",
+    "path": "vendor/wshobson/python-design-patterns",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/python-development/skills/python-design-patterns",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-17T17:39:17-04:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "mysql",
+    "path": "vendor/planetscale/mysql",
+    "source": "https://github.com/planetscale/database-skills/tree/f6ed002d03084cb39c01d1d58904d47a36f5322a/skills/mysql",
+    "revision": "f6ed002d03084cb39c01d1d58904d47a36f5322a",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-07T13:09:14-05:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "golang-pro",
+    "path": "vendor/jeffallan/golang-pro",
+    "source": "https://github.com/Jeffallan/claude-skills/tree/36f3fe8052da7c57083783268c6ea3265d075265/skills/golang-pro",
+    "revision": "36f3fe8052da7c57083783268c6ea3265d075265",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-16T11:28:12-05:00",
+    "reviewedAt": "2026-10-20"
+  },
+  {
+    "id": "java-architect",
+    "path": "vendor/jeffallan/java-architect",
+    "source": "https://github.com/Jeffallan/claude-skills/tree/36f3fe8052da7c57083783268c6ea3265d075265/skills/java-architect",
+    "revision": "36f3fe8052da7c57083783268c6ea3265d075265",
+    "license": "MIT",
+    "latestCommitAt": "2026-10-16T11:28:12-05:00",
+    "reviewedAt": "2026-10-20"
+  }
+]

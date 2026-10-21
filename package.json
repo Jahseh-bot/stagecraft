@@ -1,0 +1,23 @@
+{
+  "name": "stagecraft-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Independent stage packages for specification-driven product development",
+  "workspaces": [
+    "packages/*"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node tooling/build.mjs",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "stagecraft": "node packages/runner/bin/cli.mjs",
+    "release": "node tooling/release.mjs",
+    "release:scope": "node tooling/version.mjs scope",
+    "release:version": "node tooling/version.mjs version",
+    "release:publish": "node tooling/publish.mjs",
+    "verify:registry": "node tooling/verify-registry.mjs"
+  }
+}

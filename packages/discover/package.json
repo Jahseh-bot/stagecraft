@@ -1,0 +1,30 @@
+{
+  "name": "@gaaraa/discover",
+  "version": "0.3.0",
+  "description": "创意判断",
+  "files": [
+    "README.md",
+    "bin",
+    "skills",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "stagecraft-discover": "bin/cli.mjs"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "keywords": [
+    "agent-skills",
+    "sdd",
+    "codex",
+    "stagecraft"
+  ]
+}
