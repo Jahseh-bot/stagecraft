@@ -16,3 +16,24 @@ for (const stage of ['discover','spec','design','architect','build','test','depl
     for (const ids of Object.values(mappings)) for (const id of ids) await access(join(root,'references/upstream',id,'SKILL.md'));
   });
 }
+
+async function inventory(root, prefix = '') {
+  const entries = [];
+  for (const item of await readdir(join(root, prefix), { withFileTypes: true })) {
+    const path = join(prefix, item.name);
+    if (item.isDirectory()) entries.push(...await inventory(root, path));
+    else entries.push(path);
+  }
+  return entries.sort();
+}
+test('public skills catalog contains exactly seven complete standalone stage copies', async () => {
+  const stages = ['architect','build','deploy','design','discover','spec','test'];
+  assert.deepEqual((await readdir('skills')).sort(), stages.map(s => `stagecraft-${s}`));
+  for (const stage of stages) {
+    const source = `packages/${stage}/skills/stagecraft-${stage}`;
+    const published = `skills/stagecraft-${stage}`;
+    const files = await inventory(source);
+    assert.deepEqual(await inventory(published), files);
+    for (const path of files) assert.deepEqual(await readFile(join(published,path)), await readFile(join(source,path)), `${stage}/${path}`);
+  }
+});

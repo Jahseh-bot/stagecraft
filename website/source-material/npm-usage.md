@@ -10,7 +10,7 @@ Stagecraft 是一组直接在 coding agent 中使用的阶段技能。你可以�
 
 第一次可以做一个温度换算网页。安装 build 和 test 技能后，在你正在使用的 agent 中描述需求，要求它实现并测试。常规技术细节由 agent 处理；只有关键业务歧义、权限或环境阻塞才会问你。
 
-当前 0.4.0 是源码可用的 Skills-first 重构版本。npm 发布尚未完成，下面先提供源码安装方式。0.3.0 为旧版 runner；0.3.1 曾部分发布，仅 architect 已上传，不要将它作为完整新版安装。
+0.4.0 是已发布到 npm 的 Skills-first 版本，下面使用 npm 自带的 npx 直接安装技能，无需下载 Stagecraft 源码。0.3.0 为旧版 runner；0.3.1 曾部分发布，仅 architect 已上传，不要将它作为完整新版安装。
 
 安装技能不会自动调用模型，也不会替你购买或配置模型账号。执行时使用当前 coding agent 的账号、额度、工具和权限。
 
@@ -36,23 +36,20 @@ node --version
 
 无需为了使用 Stagecraft 单独安装 Codex CLI。其他 agent 没有原生 Skills 功能时，可让它直接读取 SKILL.md；只有纯聊天能力、不能操作文件和验证结果的工具不能完成编码闭环。
 
-## 第四步 获取当前源码
+## 第四步 检查 npm 和 npx
 
-先检查 Git：
-
-```sh
-git --version
-```
-
-然后执行：
+安装 Node.js 时会同时安装 npm 和 npx。分别执行：
 
 ```sh
-git clone https://github.com/Jahseh-bot/stagecraft.git
-cd stagecraft
-npm run build
+npm --version
+npx --version
 ```
 
-`git clone` 下载源码，`cd` 进入源码目录，`npm run build` 生成各阶段的独立安装器和完整资源。后续安装命令在这个 stagecraft 目录执行。
+两条命令都输出版本号即可。若提示找不到命令，先关闭并重新打开终端；仍不行时重新安装 Node.js。
+
+npx 会从 npm 下载指定的 Stagecraft 包并运行安装器。无需安装 Git、克隆源码或全局安装 Stagecraft，也无需登录 npm。首次使用需要联网，`--yes` 表示同意下载指定包。
+
+下一步创建目标项目文件夹，并按照“开始第一个任务”安装技能。安装完成后由你的 coding agent 执行任务。
 
 ## 创建需求说明
 
@@ -83,11 +80,11 @@ npm run build
 
 先在电脑上创建一个空文件夹作为目标项目，例如桌面的 `my-app`。复制它的完整路径，将以下命令中的路径替换掉。路径有空格时保留双引号。
 
-在 stagecraft 源码目录执行：
+在终端任意目录执行以下两条命令。请把示例路径改成刚创建的项目文件夹路径：
 
 ```sh
-node packages/build/bin/cli.mjs init --agent codex --dir "/你的项目完整路径/my-app"
-node packages/test/bin/cli.mjs init --agent codex --dir "/你的项目完整路径/my-app"
+npx --yes @gaaraa/build@0.4.0 init --agent codex --dir "/你的项目完整路径/my-app"
+npx --yes @gaaraa/test@0.4.0 init --agent codex --dir "/你的项目完整路径/my-app"
 ```
 
 使用 Claude Code 将 `codex` 换成 `claude`，Cursor 换成 `cursor`，其他选项见“阶段包与技能安装”。看到“已安装”表示技能文件已放到目标项目。
@@ -122,26 +119,6 @@ node packages/test/bin/cli.mjs init --agent codex --dir "/你的项目完整路�
 
 “只审计、不改业务代码”就只审计；“只设计界面”不会自动上线；“本机预览”不会自动创建云服务器。既有授权无需重复确认，新的敏感边界仍遵守宿主和用户要求。
 
-## 查看成果与启动网页
-
-## 找到交付结果
-
-agent 最后应给出成果文件、实际验证结果、启动方法和仍未验证的部分。交接报告通常在目标项目 `.stagecraft/workflows/任务编号/` 下，文件可直接在编辑器里打开。
-
-检查报告里的 AC（验收编号），确认你的每个要求都有对应成果及证据。“completed”只代表本次约定范围完成，不是保证软件没有任何缺陷。
-
-## 打开网页
-
-按 agent 给出的具体启动命令操作。不同项目的命令和端口不同，不要照抄其他项目的地址。例如项目确实提供 `dev` 脚本时：
-
-```sh
-npm run dev
-```
-
-终端显示本地地址后，用浏览器打开它。逐一试试温度换算、空值、非法输入和清空按钮。测试时临时启动的服务可能已经关闭；交付说明应明确是否需要你重新启动。
-
-不要双击源码 HTML 代替项目启动流程。若启动失败，把错误直接发给当前 agent，让它根据交接记录继续诊断。
-
 ## 恢复与处理失败
 
 ## 在同一或另一个 agent 中继续
@@ -166,6 +143,26 @@ npm run dev
 ## 旧 runner 任务
 
 `.stagecraft/runs` 是旧运行器记录，新技能使用 `.stagecraft/workflows`，两者不能混写。旧记录仍可用创建它的 runner 版本恢复。迁移到 Skill 时读取旧记录中的需求和已确认决定作为输入，不自动把旧状态转换为新版已完成记录。
+
+## 查看成果与启动网页
+
+## 找到交付结果
+
+agent 最后应给出成果文件、实际验证结果、启动方法和仍未验证的部分。交接报告通常在目标项目 `.stagecraft/workflows/任务编号/` 下，文件可直接在编辑器里打开。
+
+检查报告里的 AC（验收编号），确认你的每个要求都有对应成果及证据。“completed”只代表本次约定范围完成，不是保证软件没有任何缺陷。
+
+## 打开网页
+
+按 agent 给出的具体启动命令操作。不同项目的命令和端口不同，不要照抄其他项目的地址。例如项目确实提供 `dev` 脚本时：
+
+```sh
+npm run dev
+```
+
+终端显示本地地址后，用浏览器打开它。逐一试试温度换算、空值、非法输入和清空按钮。测试时临时启动的服务可能已经关闭；交付说明应明确是否需要你重新启动。
+
+不要双击源码 HTML 代替项目启动流程。若启动失败，把错误直接发给当前 agent，让它根据交接记录继续诊断。
 
 ## 已有项目测试与修复
 
@@ -212,17 +209,54 @@ npm run dev
 
 ## 七个包各司其职
 
-| 包目录 | Skill | 用途 |
+| npm 包 | Skill | 用途 |
 | --- | --- | --- |
-| discover | stagecraft-discover | 创意、证据和验证实验 |
-| spec | stagecraft-spec | 需求与可验证规格 |
-| design | stagecraft-design | 体验、界面和交互 |
-| architect | stagecraft-architect | 架构与技术可行性 |
-| build | stagecraft-build | 实现、自测和修复 |
-| test | stagecraft-test | 测试、审计或授权修复 |
-| deploy | stagecraft-deploy | 发布、验证和回滚 |
+| @gaaraa/discover | stagecraft-discover | 创意、证据和验证实验 |
+| @gaaraa/spec | stagecraft-spec | 需求与可验证规格 |
+| @gaaraa/design | stagecraft-design | 体验、界面和交互 |
+| @gaaraa/architect | stagecraft-architect | 架构与技术可行性 |
+| @gaaraa/build | stagecraft-build | 实现、自测和修复 |
+| @gaaraa/test | stagecraft-test | 测试、审计或授权修复 |
+| @gaaraa/deploy | stagecraft-deploy | 发布、验证和回滚 |
 
-源码安装统一使用 `node packages/包目录/bin/cli.mjs init --agent 宿主 --dir "目标项目路径"`。只装你需要的阶段即可；多阶段连续交付需安装目标范围里的技能。
+只装你需要的阶段即可；多阶段连续交付需安装目标范围里的技能。以下每一行是独立安装命令，把路径替换为你的项目完整路径，把 `codex` 替换为下表对应的 agent：
+
+```sh
+npx --yes @gaaraa/discover@0.4.0 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/spec@0.4.0 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/design@0.4.0 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/architect@0.4.0 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/build@0.4.0 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/test@0.4.0 init --agent codex --dir "/目标项目路径"
+npx --yes @gaaraa/deploy@0.4.0 init --agent codex --dir "/目标项目路径"
+```
+
+这些命令通过 npm 下载包，并把技能文件复制到项目的宿主技能目录。仅执行 `npm install @gaaraa/build` 会把包放入 node_modules，不等于完成技能安装；新手建议直接使用上面的 npx 命令。`@gaaraa/runner@0.4.0` 供旧任务恢复使用，直接使用 Skills 不需要安装 runner。
+
+## 使用通用 skills CLI 安装整套技能
+
+也可以通过 [skills CLI](https://github.com/vercel-labs/skills) 直接从 GitHub 安装。此方式需要 Node.js 22.20 或以上版本及 Git。先在终端进入你的目标项目：
+
+```sh
+cd "/目标项目路径"
+npx skills add Jahseh-bot/stagecraft
+```
+
+按界面提示选择技能和 coding agent。只安装开发、测试两个技能到 Codex，可执行：
+
+```sh
+npx skills add Jahseh-bot/stagecraft --skill stagecraft-build stagecraft-test --agent codex
+```
+
+安装全部七个技能到 Codex：
+
+```sh
+npx skills add Jahseh-bot/stagecraft --skill '*' --agent codex
+```
+
+正确顺序是 `npx skills add`。通用 CLI 的 agent 名称由它自己定义，例如 Claude Code 使用 `--agent claude-code`，与上方 Stagecraft 安装器的 `--agent claude` 不同。两种安装方式选一种即可；通用 CLI 使用 GitHub 当前版本，固定 npm 0.4.0 则使用上方各阶段命令。
+
+仓库根目录和 release 产物最外层的 `skills/` 都包含七个完整技能，以及各自的引用资料、报告模板、脚本和许可证。源码仍维护在 `packages/<阶段>/skills/`，通过 `npm run build` 自动同步根目录，避免手工维护两份。
 
 ## 宿主目录
 
@@ -249,7 +283,7 @@ npm run dev
 | --- | --- |
 | 找不到 node | 安装 Node.js 22+，重新打开终端 |
 | 找不到 Skill | 检查 --agent 与宿主一致；重载项目；让 agent 直接读取安装后的 SKILL.md |
-| npm 下载 0.4.0 返回 404 | 该版本尚未发布或传播完成，使用当前文档的源码安装方式 |
+| npm 下载 0.4.0 返回 404 | 检查包名及版本；若使用镜像源，命令改为 `npx --yes --registry=https://registry.npmjs.org @gaaraa/build@0.4.0 init --agent codex --dir "目标项目路径"` 后重试 |
 | 安装提示不同内容 | 原有技能可能被修改；先备份和对比，不强制覆盖 |
 | 提示符后输入“是”报错 | 系统终端不是 agent 对话框。新版在 agent 会话直接回答 |
 | workflow locked | 检查占用者与进程是否仍运行；不要自动删除活跃锁 |
@@ -266,15 +300,15 @@ npm run dev
 
 ## 当前版本状态
 
-0.4.0 是 Skills-first 重构，源码可用；npm 发布状态以 registry 实际版本为准。0.3.0 是旧 runner；0.3.1 发布中断，仅 architect 已上传。
+0.4.0 是已发布到 npm 的 Skills-first 版本。0.3.0 是旧 runner；0.3.1 发布中断，仅 architect 已上传。
 
-0.4.0 全部发布完成后，才可使用例如以下的固定版本安装：
+推荐固定版本安装，方便团队成员使用相同技能：
 
 ```sh
 npx --yes @gaaraa/build@0.4.0 init --agent codex --dir "/目标项目路径"
 ```
 
-暂时不要假定这个 npm 命令已经可下载。当前可用方式见“准备环境”和“开始第一个任务”。
+检查可用版本可运行 `npm view @gaaraa/build version --registry=https://registry.npmjs.org`。升级时将安装命令中的版本号替换为目标版本。
 
 ## 从旧 runner 迁移
 

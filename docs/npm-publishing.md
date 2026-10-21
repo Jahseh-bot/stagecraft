@@ -1,6 +1,6 @@
 # npm 正式发布流程
 
-本仓库已具备公共包发布配置，但本次 owner scope 为 @gaaraa，npm CLI 用户 gaaraa；后续维护者需具备该scope的发布权限和有效登录。当前没有连接 Git remote；工作流文件只有在推送到 GitHub 后才会运行。不要把本地 dry-run 等同于已上线。
+本仓库已具备公共包发布配置，但本次 owner scope 为 @gaaraa，npm CLI 用户 gaaraa；后续维护者需具备该scope的发布权限和有效登录。仓库为 Jahseh-bot/stagecraft，GitHub Actions 已启用。不要把本地 dry-run 等同于已上线。
 
 ## 首次发布
 
@@ -17,7 +17,7 @@ npm run release:publish
 npm run verify:registry
 ```
 
-`npm run release` 自动更新当前 scope/version 对应的包 README 与 docs/npm-usage.md。`output/releases/<version>/manifest.json` 记录八个包的文件清单、SHA256、npm integrity；`publish-results.json` 保存逐包结果；`registry-verification.json` 验证公共registry的完整性，并在仓库外使用独立缓存执行全部八个包的 npx 入口。
+`npm run release` 自动更新当前 scope/version 对应的包 README；docs/npm-usage.md 与官网教程需同步维护。`output/releases/<version>/manifest.json` 记录八个包的文件清单、SHA256、npm integrity；`publish-results.json` 保存逐包结果；`registry-verification.json` 验证公共registry的完整性，并在仓库外使用独立缓存执行全部八个包的 npx 入口。
 
 首次发布可能要求 npm 2FA/网页验证，应在自己的终端完成。脚本不收集凭据。dry-run 不验证scope所有权，也不能证明实际发布权限。
 
@@ -29,7 +29,7 @@ npm run verify:registry
 
 ## CI 与后续可信发布
 
-`.github/workflows/release-check.yml` 在push/PR/manual运行Node24回归、打包和publish dry-run，并上传审核产物，不含长期token，也不会自动发布。首次本地发布和真实GitHub仓库建立后，可在每个npm包的设置配置可信发布者（准确的owner/repository/workflow）；之后再启用OIDC发布工作流。当前不虚构GitHub URL或声称OIDC已接通。
+`.github/workflows/release-check.yml` 在push/PR/manual运行Node24回归、打包和publish dry-run，并上传审核产物，不含长期token，也不会自动发布。首次本地发布和真实GitHub仓库建立后，可在每个npm包的设置配置可信发布者（准确的owner/repository/workflow）；之后再启用OIDC发布工作流。当前尚未配置 OIDC 自动发布。
 
 发布验证不替代真实模型回归：registry验证检查下载、完整性与CLI启动；自动开发/修复/部署另用 docs/package-live-drill.md 的外部演练流程验证，需要已登录的Codex和Docker。
 

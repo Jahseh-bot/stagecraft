@@ -2,7 +2,7 @@
 
 在你正在使用的 coding agent 里完成产品开发。七个独立 Skill 分别负责创意判断、需求规格、界面设计、架构、开发、测试和部署；每个阶段都包含检查、执行、验证、修复和交接。
 
-**0.4.0 为 Skills-first 重构版本，当前源码可用，npm 发布需以 registry 实际可下载为准。** 0.3.0 是已发布的旧 runner 版本；0.3.1 发布中断，仅 architect 已上传，不作为完整推荐版本。
+**0.4.0 Skills-first 已发布到 npm，可直接安装各阶段技能。** 0.3.0 是已发布的旧 runner 版本；0.3.1 发布中断，仅 architect 已上传，不作为完整推荐版本。
 
 - [零基础使用指南](docs/npm-usage.md)
 - [Agent 兼容与安装路径](docs/agent-compatibility.md)
@@ -12,13 +12,10 @@
 
 ## 从一个阶段开始
 
-当前源码使用方式（Node.js 22+ 仅用于安装与可选交接助手）：
+直接通过 npm 安装（需要 Node.js 22+，无需克隆源码或登录 npm）：
 
 ```sh
-git clone git@github.com:Jahseh-bot/stagecraft.git
-cd stagecraft
-npm run build
-node packages/build/bin/cli.mjs init --agent codex --dir /absolute/path/to/my-project
+npx --yes @gaaraa/build@0.4.0 init --agent codex --dir /absolute/path/to/my-project
 ```
 
 在目标项目的 coding agent 会话中输入：
@@ -26,6 +23,16 @@ node packages/build/bin/cli.mjs init --agent codex --dir /absolute/path/to/my-pr
 > 使用 stagecraft-build，把 PRD.md 实现成可运行的应用。自行完成常规技术选择、测试和修复，只在关键业务歧义或权限阻塞时询问我。
 
 `--agent` 可换成 `claude`、`cursor`、`copilot`、`gemini`、`opencode` 或 `generic`。不支持原生 Skills 的 agent，可让它直接读取安装目录中的 `SKILL.md`。无需安装 Codex CLI；由当前 agent 执行任务。
+
+## 通过通用 skills CLI 安装
+
+在目标项目目录执行（需要 Node.js 22.20+ 和 Git）：
+
+```sh
+npx skills add Jahseh-bot/stagecraft
+```
+
+按提示选择技能与 agent；安装全部七个到 Codex 可加 `--skill '*' --agent codex`。根目录 `skills/` 和 release 输出中的 `skills/` 都是完整可安装目录，由 `npm run build` 从阶段包自动同步。详见 [skills CLI 官方说明](https://github.com/vercel-labs/skills)。
 
 ## 七个阶段
 

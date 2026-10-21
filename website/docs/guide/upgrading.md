@@ -7,15 +7,15 @@ description: Stagecraft Skills-first 零基础教程：版本与迁移。
 
 ## 当前版本状态
 
-0.4.0 是 Skills-first 重构，源码可用；npm 发布状态以 registry 实际版本为准。0.3.0 是旧 runner；0.3.1 发布中断，仅 architect 已上传。
+0.4.0 是已发布到 npm 的 Skills-first 版本。0.3.0 是旧 runner；0.3.1 发布中断，仅 architect 已上传。
 
-0.4.0 全部发布完成后，才可使用例如以下的固定版本安装：
+推荐固定版本安装，方便团队成员使用相同技能：
 
 ```sh
 npx --yes @gaaraa/build@0.4.0 init --agent codex --dir "/目标项目路径"
 ```
 
-暂时不要假定这个 npm 命令已经可下载。当前可用方式见“准备环境”和“开始第一个任务”。
+检查可用版本可运行 `npm view @gaaraa/build version --registry=https://registry.npmjs.org`。升级时将安装命令中的版本号替换为目标版本。
 
 ## 从旧 runner 迁移
 

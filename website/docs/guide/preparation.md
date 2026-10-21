@@ -25,20 +25,17 @@ node --version
 
 无需为了使用 Stagecraft 单独安装 Codex CLI。其他 agent 没有原生 Skills 功能时，可让它直接读取 SKILL.md；只有纯聊天能力、不能操作文件和验证结果的工具不能完成编码闭环。
 
-## 第四步 获取当前源码
+## 第四步 检查 npm 和 npx
 
-先检查 Git：
-
-```sh
-git --version
-```
-
-然后执行：
+安装 Node.js 时会同时安装 npm 和 npx。分别执行：
 
 ```sh
-git clone https://github.com/Jahseh-bot/stagecraft.git
-cd stagecraft
-npm run build
+npm --version
+npx --version
 ```
 
-`git clone` 下载源码，`cd` 进入源码目录，`npm run build` 生成各阶段的独立安装器和完整资源。后续安装命令在这个 stagecraft 目录执行。
+两条命令都输出版本号即可。若提示找不到命令，先关闭并重新打开终端；仍不行时重新安装 Node.js。
+
+npx 会从 npm 下载指定的 Stagecraft 包并运行安装器。无需安装 Git、克隆源码或全局安装 Stagecraft，也无需登录 npm。首次使用需要联网，`--yes` 表示同意下载指定包。
+
+下一步创建目标项目文件夹，并按照“开始第一个任务”安装技能。安装完成后由你的 coding agent 执行任务。

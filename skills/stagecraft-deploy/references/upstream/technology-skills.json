@@ -1,0 +1,57 @@
+{
+  "vue": [
+    "vue-best-practices"
+  ],
+  "pinia": [
+    "vue-pinia-best-practices"
+  ],
+  "vue-router": [
+    "vue-router-best-practices"
+  ],
+  "vue-options": [
+    "vue-options-api-best-practices"
+  ],
+  "vue-jsx": [
+    "vue-jsx-best-practices"
+  ],
+  "flutter": [
+    "dart-run-static-analysis"
+  ],
+  "nodejs": [
+    "nodejs-backend-patterns"
+  ],
+  "express": [
+    "nodejs-backend-patterns"
+  ],
+  "fastify": [
+    "nodejs-backend-patterns"
+  ],
+  "python": [
+    "python-design-patterns"
+  ],
+  "fastapi": [
+    "fastapi-templates"
+  ],
+  "postgres": [
+    "supabase-postgres-best-practices"
+  ],
+  "redis": [
+    "redis-core",
+    "redis-connections"
+  ],
+  "mongodb": [
+    "mongodb-schema-design"
+  ],
+  "mysql": [
+    "mysql"
+  ],
+  "go": [
+    "golang-pro"
+  ],
+  "java": [
+    "java-architect"
+  ],
+  "springboot": [
+    "java-architect"
+  ]
+}

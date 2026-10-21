@@ -10,8 +10,8 @@ description: Skills 安装器与可选交接助手；旧 runner 兼容入口。
 新版默认在 coding agent 会话中使用技能。CLI 负责复制技能，不运行模型。
 
 ```sh
-node packages/build/bin/cli.mjs init --agent codex --dir ./my-project
-node packages/test/bin/cli.mjs init --skills-dir .custom/skills --dir ./my-project --dry-run
+npx --yes @gaaraa/build@0.4.0 init --agent codex --dir ./my-project
+npx --yes @gaaraa/test@0.4.0 init --skills-dir .custom/skills --dir ./my-project --dry-run
 ```
 
 `--agent` 支持 codex、claude、cursor、copilot、gemini、opencode、generic。`--skills-dir` 与 `--agent` 二选一；`--dry-run` 只预览。不同内容冲突拒绝覆盖。

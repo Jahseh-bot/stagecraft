@@ -1,11 +1,12 @@
 # Changelog
 
-## 0.4.0 — Skills-first source release (npm pending)
+## 0.4.0 — Skills-first npm release
 
 - Seven agent-native closed-loop skills with common durable handoffs and bounded repair.
 - Six host directory adapters plus generic/custom skill locations.
 - Self-contained checkpoint helper with evidence hashes, stale-stage invalidation and locks.
 - Legacy runner retained only for compatibility.
+- Repository/release-root skills catalog supports `npx skills add Jahseh-bot/stagecraft`; generated from stage packages without changing published npm tarballs.
 
 ## 0.3.1 — partial publication, 2026-10-21
 

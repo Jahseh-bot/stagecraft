@@ -1,0 +1,14 @@
+[
+  {
+    "id": "frontend-design",
+    "source": "https://github.com/anthropics/skills/tree/dbd4588f9e1033efb41dad4bef2f7947c8993d44/skills/frontend-design",
+    "revision": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "flutter-build-responsive-layout",
+    "source": "https://github.com/flutter/agent-plugins/tree/6e590650bb4bab87f33187423dc10113d04d4836/skills/flutter-build-responsive-layout",
+    "revision": "6e590650bb4bab87f33187423dc10113d04d4836",
+    "license": "BSD-3-Clause"
+  }
+]

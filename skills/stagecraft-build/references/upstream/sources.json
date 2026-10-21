@@ -1,0 +1,152 @@
+[
+  {
+    "id": "tdd",
+    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/tdd",
+    "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+    "license": "MIT"
+  },
+  {
+    "id": "codebase-design",
+    "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/codebase-design",
+    "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+    "license": "MIT"
+  },
+  {
+    "id": "vue-best-practices",
+    "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-best-practices",
+    "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+    "license": "MIT"
+  },
+  {
+    "id": "vue-pinia-best-practices",
+    "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-pinia-best-practices",
+    "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+    "license": "MIT"
+  },
+  {
+    "id": "vue-router-best-practices",
+    "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-router-best-practices",
+    "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+    "license": "MIT"
+  },
+  {
+    "id": "vue-options-api-best-practices",
+    "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-options-api-best-practices",
+    "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+    "license": "MIT"
+  },
+  {
+    "id": "vue-jsx-best-practices",
+    "source": "https://github.com/vuejs-ai/skills/tree/f5d4b3b869bb8a86ddfea148196f7db64aeefeab/skills/vue-jsx-best-practices",
+    "revision": "f5d4b3b869bb8a86ddfea148196f7db64aeefeab",
+    "license": "MIT"
+  },
+  {
+    "id": "flutter-apply-architecture-best-practices",
+    "source": "https://github.com/flutter/agent-plugins/tree/6e590650bb4bab87f33187423dc10113d04d4836/skills/flutter-apply-architecture-best-practices",
+    "revision": "6e590650bb4bab87f33187423dc10113d04d4836",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "id": "flutter-build-responsive-layout",
+    "source": "https://github.com/flutter/agent-plugins/tree/6e590650bb4bab87f33187423dc10113d04d4836/skills/flutter-build-responsive-layout",
+    "revision": "6e590650bb4bab87f33187423dc10113d04d4836",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "id": "react-best-practices",
+    "source": "https://github.com/vercel-labs/agent-skills/tree/063bee94c3f4df8453406c830b0a7df0f2860278/skills/react-best-practices",
+    "revision": "063bee94c3f4df8453406c830b0a7df0f2860278",
+    "license": "MIT"
+  },
+  {
+    "id": "react-native-skills",
+    "source": "https://github.com/vercel-labs/agent-skills/tree/063bee94c3f4df8453406c830b0a7df0f2860278/skills/react-native-skills",
+    "revision": "063bee94c3f4df8453406c830b0a7df0f2860278",
+    "license": "MIT"
+  },
+  {
+    "id": "nodejs-backend-patterns",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/javascript-typescript/skills/nodejs-backend-patterns",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT"
+  },
+  {
+    "id": "python-design-patterns",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/python-development/skills/python-design-patterns",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT"
+  },
+  {
+    "id": "fastapi-templates",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/api-scaffolding/skills/fastapi-templates",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT"
+  },
+  {
+    "id": "supabase-postgres-best-practices",
+    "source": "https://github.com/supabase/agent-skills/tree/c9be0e931b7930f7d02126d04774d904c381e7d7/skills/supabase-postgres-best-practices",
+    "revision": "c9be0e931b7930f7d02126d04774d904c381e7d7",
+    "license": "MIT"
+  },
+  {
+    "id": "vitest",
+    "source": "https://github.com/antfu/skills/tree/feb0f3aba6566426f12230e7fc7a10d97c1293bb/skills/vitest",
+    "revision": "feb0f3aba6566426f12230e7fc7a10d97c1293bb",
+    "license": "MIT"
+  },
+  {
+    "id": "javascript-testing-patterns",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/javascript-typescript/skills/javascript-testing-patterns",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT"
+  },
+  {
+    "id": "python-testing-patterns",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/python-development/skills/python-testing-patterns",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT"
+  },
+  {
+    "id": "e2e-testing-patterns",
+    "source": "https://github.com/wshobson/agents/tree/0874a27b17a22e2b7c2e2bcd725768e0803cad06/plugins/developer-essentials/skills/e2e-testing-patterns",
+    "revision": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+    "license": "MIT"
+  },
+  {
+    "id": "redis-core",
+    "source": "https://github.com/redis/agent-skills/tree/a84871d065f398fed55e1633f66b66f731eb4e2b/skills/redis-core",
+    "revision": "a84871d065f398fed55e1633f66b66f731eb4e2b",
+    "license": "MIT"
+  },
+  {
+    "id": "redis-connections",
+    "source": "https://github.com/redis/agent-skills/tree/a84871d065f398fed55e1633f66b66f731eb4e2b/skills/redis-connections",
+    "revision": "a84871d065f398fed55e1633f66b66f731eb4e2b",
+    "license": "MIT"
+  },
+  {
+    "id": "mongodb-schema-design",
+    "source": "https://github.com/mongodb/agent-skills/tree/155bb9c4b42a9a3e019f47be0669de0e4547d1ea/skills/mongodb-schema-design",
+    "revision": "155bb9c4b42a9a3e019f47be0669de0e4547d1ea",
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "mysql",
+    "source": "https://github.com/planetscale/database-skills/tree/f6ed002d03084cb39c01d1d58904d47a36f5322a/skills/mysql",
+    "revision": "f6ed002d03084cb39c01d1d58904d47a36f5322a",
+    "license": "MIT"
+  },
+  {
+    "id": "golang-pro",
+    "source": "https://github.com/Jeffallan/claude-skills/tree/36f3fe8052da7c57083783268c6ea3265d075265/skills/golang-pro",
+    "revision": "36f3fe8052da7c57083783268c6ea3265d075265",
+    "license": "MIT"
+  },
+  {
+    "id": "java-architect",
+    "source": "https://github.com/Jeffallan/claude-skills/tree/36f3fe8052da7c57083783268c6ea3265d075265/skills/java-architect",
+    "revision": "36f3fe8052da7c57083783268c6ea3265d075265",
+    "license": "MIT"
+  }
+]

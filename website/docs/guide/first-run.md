@@ -9,11 +9,11 @@ description: Stagecraft Skills-first 零基础教程：开始第一个任务。
 
 先在电脑上创建一个空文件夹作为目标项目，例如桌面的 `my-app`。复制它的完整路径，将以下命令中的路径替换掉。路径有空格时保留双引号。
 
-在 stagecraft 源码目录执行：
+在终端任意目录执行以下两条命令。请把示例路径改成刚创建的项目文件夹路径：
 
 ```sh
-node packages/build/bin/cli.mjs init --agent codex --dir "/你的项目完整路径/my-app"
-node packages/test/bin/cli.mjs init --agent codex --dir "/你的项目完整路径/my-app"
+npx --yes @gaaraa/build@0.4.0 init --agent codex --dir "/你的项目完整路径/my-app"
+npx --yes @gaaraa/test@0.4.0 init --agent codex --dir "/你的项目完整路径/my-app"
 ```
 
 使用 Claude Code 将 `codex` 换成 `claude`，Cursor 换成 `cursor`，其他选项见“阶段包与技能安装”。看到“已安装”表示技能文件已放到目标项目。

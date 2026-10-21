@@ -1,11 +1,11 @@
 # Skills-first 验证记录
 
-验证日期：2026-10-21。对应 0.4.0 源码版；npm 尚未发布。
+验证日期：2026-10-21。对应 0.4.0 Skills-first 版本；八个 npm 包已发布。
 
 ## 自动检查
 
-- `npm test`：64 项通过，覆盖旧 runner、交互兼容、独立安装包、协议、阶段契约、证据缺失、路径/链接限制、并发锁和证据过期。
-- `npm run release`：8 个独立 npm 包构建成功；`npm run release:publish -- --dry-run` 通过，没有发布。
+- `npm test`：65 项通过，覆盖旧 runner、交互兼容、独立安装包、协议、阶段契约、证据缺失、路径/链接限制、并发锁和证据过期。
+- `npm run release`：8 个独立 npm 包构建成功；发布预检通过，随后从同一批 tarball 完成正式发布。
 - 官网 Playwright：7 项通过，覆盖导航、全文搜索、主题、手机布局和键盘交互。
 - 官网以 `SITE_BASE=/stagecraft/` 构建成功；在 website 目录以相同环境变量运行 `node --test tests/*.test.mjs`，4 项内容、链接和资源检查通过。
 
@@ -28,3 +28,9 @@
 独立包安装检查覆盖 Codex、Claude Code、Cursor、Copilot、Gemini CLI、OpenCode 与 generic 目录；路径依据官方文档，详见 [宿主适配](agent-compatibility.md)。这些是安装和内容契约验证，不是六种宿主全部实际运行认证。
 
 真实 agent 样本仅验证 build/test；discover、spec、design、architect、deploy 已通过文件契约和打包检查，尚未做各宿主端到端实跑。没有进行生产部署技能的真实发布演练。宿主缺少执行权限或工具时必须如实报告阻塞，不能承诺所有环境无人工介入。
+
+## 通用 skills CLI 分发
+
+根目录 `skills/` 由构建同步七个完整阶段目录，自动化检查逐文件内容与源目录相同。release 最外层也输出 `skills/`，已发布的 0.4.0 npm tarball 保持原字节不变。
+
+实际执行 `npx skills add <本地仓库> --list` 发现恰好七个 Skill；在独立空目录通过 `--skill '*' --agent codex --copy --yes` 安装全部七个。安装后的主文件、引用资料、模板、许可证、脚本与源文件相同，七个交接脚本均可执行。通用 CLI 自行过滤上游 `metadata.json`，其他运行文件完整；源目录与 release 目录仍保留这些元数据。

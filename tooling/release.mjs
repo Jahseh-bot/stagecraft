@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile, cp, rm } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -8,6 +8,8 @@ const version = JSON.parse(await readFile(join(root, 'packages/runner/package.js
 const destination = resolve(process.argv[2] ?? join(root, 'output/releases', version));
 execFileSync(process.execPath, [join(root, 'tooling/build.mjs')], { cwd: root, stdio: 'inherit' });
 await mkdir(destination, { recursive: true });
+await rm(join(destination, 'skills'), { recursive: true, force: true });
+await cp(join(root, 'skills'), join(destination, 'skills'), { recursive: true });
 const artifacts = [];
 for (const name of (await readdir(join(root, 'packages'), { withFileTypes: true })).filter(entry => entry.isDirectory()).map(entry => entry.name).sort()) {
   const cwd = join(root, 'packages', name);

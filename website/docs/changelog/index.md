@@ -1,13 +1,13 @@
 ---
 title: 更新记录
-description: Stagecraft 0.3.0 公共 npm 发布与 0.2.0 本地 tarball 分发记录，以及版本固定与恢复建议。
+description: Stagecraft 0.4.0 Skills-first npm 发布记录，以及版本固定与恢复建议。
 ---
 
 # 更新记录
 
 依据项目 CHANGELOG 整理。以下是产品版本，不是官网依赖版本。
 
-## 0.4.0 · 源码版，待完整发布
+## 0.4.0 · npm 已发布
 
 - 七阶段改为当前 coding agent 原生执行的 Skills，职责内自主验证、修复和交接。
 - 六种宿主官方目录适配及 generic/自定义目录兜底。

@@ -1,0 +1,40 @@
+---
+name: stagecraft-build
+description: Implement and fully verify a scoped feature or bug fix in a new or existing repository, including diagnosis, repair and a runnable handoff. Use when asked to build, implement, fix or complete code; execute within this agent without requiring a runner.
+compatibility: Any coding agent with file access; terminal/browser/network tools as required by the task. Optional checkpoint helper needs Node.js 22+.
+---
+
+# 开发实现
+
+在当前 coding agent 中直接完成本阶段，不启动嵌套模型或要求用户操作 runner。先阅读本技能内的 [统一执行与交接协议](references/protocol.md)，它定义自主决策、有限修复、授权边界与跨阶段恢复。用户目标与项目约定优先；不要求安装其他阶段技能。
+
+## 接手与恢复
+
+识别用户的目标、当前项目、入口与终点。已有匹配工作流时读取交接记录、真实成果和验证证据，复用已确认决定；输入改变则重新检查相关结论。没有上游成果时补足本阶段必需输入即可开始，不为凑齐七阶段而要求重复采访。
+
+## 执行闭环
+
+1. 读取仓库说明、用户改动、现有测试与可用交接报告。没有正式规格时从用户任务建立最小 AC，不要求先运行 spec/architect。避免覆盖用户工作。
+2. 找到当前行为并建立基线；修复缺陷先复现，新增行为先明确可观察测试。选择最小可行方案，按垂直功能切片实现，保留现有框架与锁文件策略。
+3. 实际编写并运行与改动相称的测试和构建，检查关键边界、失败路径和已有功能回归。Web任务在可用浏览器中检查关键交互与布局；运行服务时记录地址和进程归属。
+4. 对失败定位根因并修复，按协议进行有证据的有限修复循环；先跑失败测试再跑受影响回归。不得通过删断言、跳过有效用例或修改验收标准来取得通过。分清原有失败、新失败与环境阻塞。
+5. 检查最终 diff、AC 覆盖、运行说明和外部副作用，保存实际验证日志。需要安装依赖时核实兼容性与锁文件；无能力执行必要验证时给出具体阻塞，不写“应该可以”。
+6. 交付可运行成果、启动命令、依赖要求和未验证项。测试用临时进程在结束时清理，用户请求保持运行的预览应明确地址。若授权目标包含 test，持同一交接目录直接进入测试技能。
+
+## 本阶段交付与验收
+
+交付：代码与必要测试、AC覆盖表、真实构建/测试/运行证据、启动说明、已知限制和后续验证范围。
+
+完成条件：约定 AC 已实现并实际验证；没有新增相关失败；有效测试未被弱化；必需运行检查已执行，否则标为 blocked/partial。
+
+使用 [报告模板](assets/report.md) 保存目标、AC、成果、实际证据及剩余问题。用 [交接助手](scripts/handoff.mjs) 记录阶段；无 Node 时按协议使用 Markdown 交接，明确验证能力限制。不能以“已写报告”代替真实验收，也不能让用户自己填状态文件。
+
+## 平滑交接
+
+test：传递变更范围、基线、测试命令和剩余风险；不要把开发自测等同于全面测试。
+
+用户授权继续且下一技能可用时，在同一 agent 中直接读取下一阶段 SKILL.md，沿用同一工作流、AC 标识与已确认决定。只请求本阶段新发现且不可自行解决的关键决定。阶段未完成时先修复或准确记录 blocker，不能把阻塞状态包装成完成后传下去。
+
+## 按需加载的方法
+
+检查 [技术栈映射](references/upstream/technology-skills.json) 与 [来源和许可](references/upstream/sources.json)，只读取与当前任务相关的上游方法目录。维持现有框架、版本和测试工具。上游的全面 grilling、人工确认、子代理或发布建议均受统一协议和用户实际授权约束，不构成额外强制步骤。没有专门方法匹配时使用通用工程能力并说明覆盖范围，不宣称已经过专门方法验证。

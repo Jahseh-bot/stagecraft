@@ -36,12 +36,18 @@ for(const item of manifest.artifacts){
   if((await invoke('--version')).trim()!==item.version)throw Error(`Wrong CLI version: ${item.name}`);
   const selection=JSON.parse(await invoke('skills','--dir',project,'--stack','vue,postgres','--phase','repair'));
   if(!selection.ids.includes('vue-debug-guides')||!selection.ids.includes('supabase-postgres-best-practices'))throw Error(`Missing bundled skills: ${item.name}`);
- }else{
+ }
+ if(stage!=='runner'){
   await invoke('init','--agent','codex','--dir',project);
   const skill=await readFile(join(project,'.agents/skills',`stagecraft-${stage}`,'SKILL.md'),'utf8');
-  if(!skill.trim())throw Error(`Empty installed skill: ${item.name}`);
+  if(!skill.includes('references/protocol.md'))throw Error(`Missing Skills protocol: ${item.name}`);
+  const skillRoot=join(project,'.agents/skills',`stagecraft-${stage}`);
+  const protocol=await readFile(join(skillRoot,'references/protocol.md'),'utf8');
+  if(!protocol.includes('stagecraft/workflows'))throw Error(`Invalid handoff protocol: ${item.name}`);
+  const helper=execFileSync(process.execPath,[join(skillRoot,'scripts/handoff.mjs'),'--help'],{encoding:'utf8'});
+  if(!helper.includes('complete --workflow'))throw Error(`Invalid installed helper: ${item.name}`);
  }
- results.push({name:item.name,integrity:true,npx:true,functional:runtime?'version and Vue/Postgres skill routing':'installed Codex skill'});
+ results.push({name:item.name,integrity:true,npx:true,functional:stage==='runner'?'version and Vue/Postgres skill routing':runtime?'installed Codex skill, handoff helper, version and skill routing':'installed Codex skill and handoff helper'});
  console.log(`Verified ${item.name}@${item.version}`);
 }
 await writeFile(join(directory,'registry-verification.json'),JSON.stringify({consumer,results},null,2)+'\n');

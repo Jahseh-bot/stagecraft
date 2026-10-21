@@ -43,4 +43,4 @@ Files: `tests/skill-handoff.test.mjs`, `tests/skills-contract.test.mjs`, `evals/
 - [x] Run `npm test`, `npm run release`, `npm run release:publish -- --dry-run`, and `SITE_BASE=/stagecraft/ npm --prefix website run build` plus website content/output checks.
 - [x] Commit and push coherent refactor. Publish only fully tested artifacts; if npm requires user verification, retain exact artifacts and provide concrete verification handoff. Verify registry availability before claiming release complete.
 
-Delivery note: npm 0.4.0 publication is deferred; eight tarballs and publish dry-run passed. No registry release is claimed. See docs/skills-validation.md for scope and limitations.
+Delivery update: all eight npm 0.4.0 packages were published on 2026-10-21 from the validated tarballs. See docs/skills-validation.md for scope and limitations.

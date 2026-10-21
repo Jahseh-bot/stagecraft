@@ -1,0 +1,81 @@
+{
+  "vue": [
+    "vue-best-practices"
+  ],
+  "pinia": [
+    "vue-pinia-best-practices"
+  ],
+  "vue-router": [
+    "vue-router-best-practices"
+  ],
+  "vue-options": [
+    "vue-options-api-best-practices"
+  ],
+  "vue-jsx": [
+    "vue-jsx-best-practices"
+  ],
+  "flutter": [
+    "flutter-apply-architecture-best-practices"
+  ],
+  "react": [
+    "react-best-practices"
+  ],
+  "nextjs": [
+    "react-best-practices"
+  ],
+  "react-native": [
+    "react-native-skills"
+  ],
+  "nodejs": [
+    "nodejs-backend-patterns"
+  ],
+  "express": [
+    "nodejs-backend-patterns"
+  ],
+  "fastify": [
+    "nodejs-backend-patterns"
+  ],
+  "python": [
+    "python-design-patterns"
+  ],
+  "fastapi": [
+    "fastapi-templates"
+  ],
+  "postgres": [
+    "supabase-postgres-best-practices"
+  ],
+  "vitest": [
+    "vitest"
+  ],
+  "jest": [
+    "javascript-testing-patterns"
+  ],
+  "pytest": [
+    "python-testing-patterns"
+  ],
+  "playwright": [
+    "e2e-testing-patterns"
+  ],
+  "cypress": [
+    "e2e-testing-patterns"
+  ],
+  "redis": [
+    "redis-core",
+    "redis-connections"
+  ],
+  "mongodb": [
+    "mongodb-schema-design"
+  ],
+  "mysql": [
+    "mysql"
+  ],
+  "go": [
+    "golang-pro"
+  ],
+  "java": [
+    "java-architect"
+  ],
+  "springboot": [
+    "java-architect"
+  ]
+}

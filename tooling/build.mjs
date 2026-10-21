@@ -61,5 +61,9 @@ for (const entry of await readdir(join(root, 'packages'), { withFileTypes: true 
     await writeFile(join(upstream, 'sources.json'), JSON.stringify(sources, null, 2) + '\n');
     await writeFile(join(upstream, 'technology-skills.json'), JSON.stringify(technologySkills, null, 2) + '\n');
   }
+  // Public skills CLI discovery root; keep every bundled reference and license.
+  const publicSkill = join(root, 'skills', `stagecraft-${entry.name}`);
+  await rm(publicSkill, { recursive: true, force: true });
+  await cp(skillRoot, publicSkill, { recursive: true });
 }
 console.log('已构建所有阶段包的独立安装器。');

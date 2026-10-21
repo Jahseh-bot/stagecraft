@@ -1,0 +1,39 @@
+---
+name: stagecraft-spec
+description: Turn an idea, PRD, issue, conversation or existing behavior into a complete, testable specification with acceptance IDs and resolved contradictions. Use for requirements and scope clarification without mandatory interviews.
+compatibility: Any coding agent with file access; terminal/browser/network tools as required by the task. Optional checkpoint helper needs Node.js 22+.
+---
+
+# 需求规格
+
+在当前 coding agent 中直接完成本阶段，不启动嵌套模型或要求用户操作 runner。先阅读本技能内的 [统一执行与交接协议](references/protocol.md)，它定义自主决策、有限修复、授权边界与跨阶段恢复。用户目标与项目约定优先；不要求安装其他阶段技能。
+
+## 接手与恢复
+
+识别用户的目标、当前项目、入口与终点。已有匹配工作流时读取交接记录、真实成果和验证证据，复用已确认决定；输入改变则重新检查相关结论。没有上游成果时补足本阶段必需输入即可开始，不为凑齐七阶段而要求重复采访。
+
+## 执行闭环
+
+1. 读取已给材料、相关实现、已有需求和交接报告。整理本次目标、用户、范围与排除项；没有 discover 报告也直接从实际任务建立规格。
+2. 为关键路径定义输入、输出、状态变化、错误路径、权限与数据规则。能从代码和用户指令确定的直接记录；对不影响产品语义的细节采用可逆默认，写明理由。
+3. 对业务语义冲突、数据保留、付费或权限规则的关键歧义，集中提出最少问题。不要为颜色、按钮文案、内部函数名等常规选择中断流程。
+4. 为每个需求赋稳定 AC-1、AC-2 等标识，写 Given/When/Then 或输入/预期表，覆盖正常、边界、空值、非法值和恢复场景。补充性能、可访问性、平台兼容等与目标相称的约束。
+5. 检查同一状态的规则是否矛盾、验收能否执行、依赖是否可得、范围能否实现；用具体示例走查全部关键路径，自行修正规格并保留变更依据。未解决关键规则时标明阻塞，不编造用户决定。
+
+## 本阶段交付与验收
+
+交付：版本化规格、范围/非目标、用户流程、数据与错误规则、AC验收矩阵、依赖与明确剩余问题。
+
+完成条件：每个范围内功能映射至少一个可观察验收条件；负向路径有定义；无互相矛盾规则；关键业务歧义已解决或阶段明确阻塞。
+
+使用 [报告模板](assets/report.md) 保存目标、AC、成果、实际证据及剩余问题。用 [交接助手](scripts/handoff.mjs) 记录阶段；无 Node 时按协议使用 Markdown 交接，明确验证能力限制。不能以“已写报告”代替真实验收，也不能让用户自己填状态文件。
+
+## 平滑交接
+
+design / architect：传递 AC 标识和不变约束；不重新询问已确认需求。
+
+用户授权继续且下一技能可用时，在同一 agent 中直接读取下一阶段 SKILL.md，沿用同一工作流、AC 标识与已确认决定。只请求本阶段新发现且不可自行解决的关键决定。阶段未完成时先修复或准确记录 blocker，不能把阻塞状态包装成完成后传下去。
+
+## 按需加载的方法
+
+检查 [技术栈映射](references/upstream/technology-skills.json) 与 [来源和许可](references/upstream/sources.json)，只读取与当前任务相关的上游方法目录。维持现有框架、版本和测试工具。上游的全面 grilling、人工确认、子代理或发布建议均受统一协议和用户实际授权约束，不构成额外强制步骤。没有专门方法匹配时使用通用工程能力并说明覆盖范围，不宣称已经过专门方法验证。
