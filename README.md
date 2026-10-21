@@ -2,11 +2,13 @@
 
 0.3.0 已发布到公共 npm registry，正式 scope 为 @gaaraa。48项回归通过，8个包的仓库外 npx 下载与功能验收全部通过。
 
-- [用户使用指南（npx）](docs/npm-usage.md)
+- **[零基础使用指南：从安装到打开第一个网页](docs/npm-usage.md)**
 - [维护者发布流程](docs/npm-publishing.md)
 - [版本记录](CHANGELOG.md)
 
-# Stagecraft（暂定名）
+## 第一次使用
+
+没有开发经验，请先按上方零基础指南操作；无需下载源码或配置 GitHub。下面的 `npm run stagecraft` 命令供已下载本仓库的开发者使用，普通用户使用指南中的 `npx` 命令。
 
 输入 PRD，确认关键问题和技术方案后，自动实现、测试修复并验证本地可运行版本；选择 `--until deploy` 后继续生成配置并完成本机 Compose 部署。支持中途人工介入、持久化检查点和恢复。
 
@@ -14,7 +16,7 @@
 
 新增 `@gaaraa/runner`，包含状态机、Codex CLI 适配器、真实命令验收、HTTP 启动烟测、修复预算、人工答案接入和运行日志。build/test/deploy 包也内置独立执行运行器；其余四个阶段包提供技能安装。
 
-支持 PRD 起步，以及已有项目直接进入测试或本机 Compose 部署。没有通用 DAG 调度、远端生产发布或 Web 操作界面；未公开发布 npm。
+支持 PRD 起步，以及已有项目直接进入测试或本机 Compose 部署。没有通用 DAG 调度、远端生产发布或 Web 操作界面。
 
 ## 跑一个 PRD
 
@@ -125,13 +127,13 @@ npm run stagecraft -- start --prd examples/task-board/PRD.md \
 
 技术方法覆盖 Node/Express/Fastify、Python/FastAPI、Go、Java/Spring Boot、PostgreSQL、MySQL、Redis、MongoDB，以及 Vitest、Jest、pytest、Playwright、Cypress；按项目清单和阶段选择，已有版本优先。完整来源与覆盖限制见仓库 docs/technology-skills.md。
 
-## 安装 0.2.0 包
+## 开发者本地打包
 
 `npm run release` 生成八个可独立安装的 tarball 和校验清单。安装用户无需源码仓库：
 
 ```sh
-npm install /path/to/stagecraft-draft-runner-0.2.0.tgz
+npm install /path/to/gaaraa-runner-0.3.0.tgz
 npx --no-install stagecraft start --prd /path/to/PRD.md --dir /path/to/app --until deploy
 ```
 
-完整命令、宿主条件和独立阶段包用法见 [npm 分发指南](docs/npm-distribution.md)。当前为 tarball 分发，尚未公开发布 registry；不会声称远程包名已可安装。
+完整命令、宿主条件和独立阶段包用法见 [npm 分发指南](docs/npm-distribution.md)。0.3.0 已发布到公共 npm；一般用户按零基础指南使用 npx 即可，本节用于本地打包验证。

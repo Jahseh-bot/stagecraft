@@ -1,45 +1,475 @@
-# Stagecraft npm 使用指南
+# Stagecraft 零基础使用指南
 
-当前版本：0.3.0；scope：@gaaraa。0.3.0已正式发布，八包公共registry与仓库外npx验收全部通过。
+Stagecraft 可以根据你写的需求说明，调用 Codex 编写应用、执行测试，并在需要你做决定时停下来提问。本指南从打开终端开始，带你做一个能在自己电脑浏览器中打开的温度换算网页。
 
-需要 Node.js >=22、已安装且登录的 Codex CLI。部署还需要可运行的 Docker/Compose；只支持本机 Compose 部署，是否运行业务应用需要的额外环境由项目决定。Codex 调用使用你的账户与额度。
+适用版本：Stagecraft 0.3.0，npm 包名前缀为 `@gaaraa`。第一次只需使用 `@gaaraa/runner`，不用分别安装八个包，也不用下载本仓库或配置 GitHub Token。
 
-## 从任意入口开始
+完整跟做步骤以 **Mac** 为例，这是当前项目已经验证过的环境。Windows 用户先看文末的系统说明，不要把 Mac 的安装命令直接粘贴到 PowerShell。
+
+## 先了解你将完成什么
+
+流程是：准备运行工具 → 写需求文件 → 启动 Stagecraft → 回答问题 → 确认方案 → 等待生成和测试 → 打开自己的网页。
+
+你不需要先学编程，但需要阅读程序提出的问题，并决定是否接受方案。Stagecraft 会使用你已登录的 Codex 账号及其额度；安装 Stagecraft 不等于获得模型使用额度。账号是否可用以 Codex 登录和实际请求结果为准。
+
+第一次练习先做一个小网页，不包含登录、支付、数据库或云服务器。后面可以用同样的方法描述自己的需求。
+
+| 文档中出现的词 | 可以怎样理解 |
+| --- | --- |
+| 终端 | 在电脑里输入命令的窗口 |
+| 命令 | 复制到终端后，按回车让电脑执行的一行文字 |
+| Node.js | 运行 Stagecraft 所需的基础软件，版本须为 22 或更高 |
+| npm 和 npx | 随 Node.js 提供的工具；本指南用 npx 下载并运行 Stagecraft |
+| Codex CLI | 在终端中运行的 AI 编程工具；仅安装桌面 App 不代表终端命令已可用 |
+| PRD | 需求说明文件，用普通中文写清楚想做什么即可 |
+| 项目目录 | 保存生成代码的文件夹 |
+| 运行目录 runDir | 保存一次任务的状态、日志和交付说明的文件夹 |
+| 本机部署 | 让应用在你这台电脑上运行，不等于发布到互联网 |
+
+## 第一步 打开终端
+
+1. 按键盘上的 `Command + 空格` 打开系统搜索。
+2. 输入“终端”或 `Terminal`，按回车。
+3. 你会看到带有光标的窗口，左侧可能有用户名、文件夹名和 `%` 或 `$`。
+
+后面的命令都粘贴到这个窗口里执行。**不要复制代码框外的说明、行首提示符或 Markdown 的三个反引号。** 单行命令粘贴后按回车；多行代码块要完整复制。看到原来的命令提示符重新出现，通常表示这条命令已结束，接着看是否有报错。
+
+## 第二步 安装并检查 Node.js
+
+先输入下面一行并回车：
 
 ```sh
-# PRD → 方案确认 → 编码 → 测试修复 → 部署配置确认 → 本机部署
-npx --yes @gaaraa/runner@0.3.0 start --prd ./PRD.md --dir ./my-app --until deploy
-
-# 已有项目：只测试并修复，不需要 PRD
-npx --yes @gaaraa/test@0.3.0 run --dir ./my-app --mode repair
-
-# 已有项目：识别栈、生成缺失配置、确认后部署
-npx --yes @gaaraa/deploy@0.3.0 run --dir ./my-app
-
-# 单独从开发阶段启动
-npx --yes @gaaraa/build@0.3.0 run --prd ./PRD.md --dir ./my-app
+node --version
 ```
 
-`--yes` 只跳过 npm 下载确认，不跳过运行器的方案/部署确认。每个可执行阶段包都内置运行器，不需要安装 runner 包。其余 discover/spec/design/architect 目前提供 skills 安装入口：
+如果输出 `v22.x.x`、`v24.x.x` 或更高版本，说明版本满足要求；这里的 `x` 代表不同的小版本数字，不需要完全相同。然后直接检查 npm 和 npx。
+
+如果显示 `command not found: node`，或者版本小于 22：
+
+1. 打开 [Node.js 官方下载页](https://nodejs.org/en/download)。
+2. 选择 **LTS** 版本，确认主版本不低于 22；选择 macOS 安装包（`.pkg`）。
+3. 双击下载的安装包，按向导完成安装。
+4. 关闭终端，再重新打开，重新执行 `node --version`。
+
+接着分别执行下面两行：
+
+```sh
+npm --version
+npx --version
+```
+
+两条命令都应显示版本数字。如果某一条找不到，先重新打开终端；仍失败时检查 Node.js 是否安装完成。不要跳过这一步继续运行 Stagecraft。
+
+## 第三步 安装并登录 Codex
+
+先检查是否已有命令：
+
+```sh
+codex --version
+```
+
+如果显示版本号，跳过安装，直接进行登录检查。如果显示找不到命令，可使用官方 macOS 安装命令：
+
+```sh
+curl -fsSL https://chatgpt.com/codex/install.sh | sh
+```
+
+安装完成后按安装器提示操作，重新打开终端，再运行 `codex --version`。安装入口和登录方式见 [Codex CLI 官方指南](https://developers.openai.com/codex/cli/)。
+
+接下来准备一个专门的练习文件夹，避免把项目散落在其他目录：
+
+```sh
+mkdir -p "$HOME/stagecraft-practice"
+cd "$HOME/stagecraft-practice"
+```
+
+然后启动 Codex：
+
+```sh
+codex
+```
+
+首次运行时，按提示选择 **Sign in with ChatGPT**，在浏览器中完成登录，然后回到终端。如果已登录，不一定再次出现登录界面。若出现目录信任提示，确认显示的是你刚创建的 `stagecraft-practice` 文件夹。
+
+在 Codex 输入框里输入下面这句话并回车：
+
+```text
+请只回复“连接成功”，不要创建或修改任何文件。
+```
+
+收到正常回复，说明模型连接可用。如果提示登录失败、没有访问权限或额度不足，先解决对应账号问题，再继续。完成后按 `Ctrl + C` 退出；若出现再次按键退出的提示，再按一次，直到回到普通终端提示符。
+
+## 第四步 检查 Stagecraft 能否下载运行
+
+在普通终端中执行：
+
+```sh
+npx --yes @gaaraa/runner@0.3.0 --version
+```
+
+第一次会从 npm 下载软件，速度取决于网络。成功时会输出：
+
+```text
+0.3.0
+```
+
+`--yes` 表示同意 npx 下载这个包；它不会替你批准后面的开发或部署方案。`@0.3.0` 表示固定使用这一个版本，方便后续恢复任务。
+
+如果下载报错，先看文末的排错表，不要反复新建开发任务。
+
+## 第五步 创建需求说明文件
+
+先确保终端位于练习文件夹：
+
+```sh
+cd "$HOME/stagecraft-practice"
+```
+
+把下面**整个代码块**复制到终端，按回车。它会在练习文件夹中创建 `PRD.md`，内容是一份可以直接使用的需求。若你已经有同名文件，请先备份或改名；这条命令会覆盖它。
+
+```sh
+cat > PRD.md <<'EOF_PRD'
+# 温度换算网页
+
+我要做一个给普通人使用的中文温度换算网页。
+
+## 功能
+- 输入摄氏度，显示对应的华氏度。
+- 输入华氏度，显示对应的摄氏度。
+- 有清空按钮。
+- 输入为空或不是有效数字时，显示中文提示。
+- 结果保留一位小数。
+
+## 外观
+- 页面简洁，手机和电脑都能使用。
+- 输入框和按钮足够大，文字容易阅读。
+
+## 范围
+- 只在我的电脑上运行。
+- 不需要账号、数据库、支付或外部 API。
+- 使用 Node.js 环境可以运行的简单网页方案。
+
+## 怎样算完成
+- 0 摄氏度对应 32.0 华氏度。
+- 100 摄氏度对应 212.0 华氏度。
+- 32 华氏度对应 0.0 摄氏度。
+- 非法输入会显示错误提示。
+- 有自动测试，以及明确的本地启动命令和浏览器地址。
+EOF_PRD
+```
+
+最后一行 `EOF_PRD` 必须单独占一行，前后不要加空格。如果终端一直显示 `>` 等待输入，通常是结束标记没复制完整；可按 `Ctrl + C` 取消，再完整复制。
+
+检查文件内容：
+
+```sh
+cat PRD.md
+```
+
+看到刚才的中文需求，就可以继续。`.md` 是纯文本文件的扩展名；使用文本编辑器手动保存时，要避免保存成 `PRD.md.txt` 或富文本文件。
+
+以后做自己的应用，可以保留这个结构，把内容换成“给谁用、要做什么、长什么样、不做什么、怎样算完成”。
+
+## 第六步 启动第一次开发任务
+
+仍在 `stagecraft-practice` 文件夹中执行：
+
+```sh
+npx --yes @gaaraa/runner@0.3.0 start --prd ./PRD.md --dir ./my-app
+```
+
+这条命令的意思是：
+
+| 部分 | 作用 |
+| --- | --- |
+| `start` | 开始一次新的需求开发任务 |
+| `--prd ./PRD.md` | 读取当前文件夹中的需求说明 |
+| `--dir ./my-app` | 将应用代码放到当前文件夹下的 my-app 中，缺少该目录时自动创建 |
+
+`./` 表示“当前文件夹”。第一次练习请使用一个新的 `my-app` 目录；如果同名目录已有重要文件，换成 `./my-app-2`，后面的项目路径也要对应修改。
+
+终端会输出类似内容：
+
+```text
+Run directory: /Users/你的用户名/stagecraft-practice/my-app/.stagecraft/runs/一串任务编号
+```
+
+**复制并保存这条完整路径。** 每个人的用户名和任务编号都不同，后面查询和回答问题必须使用自己的路径。下文将它称为“运行目录”。
+
+运行时可能暂时没有新输出，因为 Codex 正在处理当前阶段。不要连续再次执行 `start`；每执行一次都会创建新的任务。需要暂停时按一次 `Ctrl + C`，等待程序结束并保存状态。
+
+## 第七步 回答问题并确认方案
+
+### 先判断程序为什么停下
+
+终端最后会输出一段带大括号的结构化文字，称为 JSON。重点看这些字段：
+
+| 字段或值 | 含义 |
+| --- | --- |
+| `runDir` | 本次任务的运行目录 |
+| `status: "waiting_input"` | 正在等待你的回答，不是程序卡住 |
+| `pending.questions` | 当前需要回答的问题列表 |
+| `id` | 问题的标识，写答案文件时必须原样保留 |
+| `question` | 问题内容 |
+| `recommendation` | 程序给出的建议，可结合需求选择 |
+| `plan` | 待确认的技术方案、任务和验收命令 |
+
+等待回答时，命令退出码可能为 `2`，有些终端会显示红色标记；只要状态是 `waiting_input`，就应进入回答步骤。
+
+### 保存自己的运行目录
+
+在终端输入以下命令，**先把引号里的说明替换为刚才复制的完整路径**，再回车。保留两边英文双引号。
+
+```sh
+RUN_DIR="把这里替换为你的完整运行目录"
+```
+
+这是给路径起一个临时名字，后面就不用反复粘贴。检查是否设置正确：
+
+```sh
+npx --yes @gaaraa/runner@0.3.0 status --run "$RUN_DIR"
+```
+
+能看到当前状态和问题就说明正确。`RUN_DIR` 只在当前终端窗口有效；换窗口或第二天重新打开终端，需要再设置一次。
+
+### 用答案文件回答普通问题
+
+Stagecraft 当前不能直接在普通终端提示符后输入一句“同意”来回答。你需要创建 `answers.json` 文件，再交给程序读取。
+
+例如，**只有当实际问题的 id 正好是 `language` 和 `history` 时**，下面的答案才适用。真实问题由需求决定，请将字段名换成实际显示的 id，并填写自己的回答：
+
+```sh
+cat > answers.json <<'EOF_ANSWERS'
+{
+  "language": "使用简体中文",
+  "history": "这次不需要保存历史记录"
+}
+EOF_ANSWERS
+```
+
+填写规则：每个当前问题都要回答；不要多加旧问题；所有答案用英文双引号括起来；多条答案之间有逗号，最后一条后面不加逗号。不要使用中文弯引号 `“ ”`。每次新问题出现后，重新写入这个文件即可。
+
+提交答案：
+
+```sh
+npx --yes @gaaraa/runner@0.3.0 answer --run "$RUN_DIR" --file ./answers.json
+```
+
+`answer` 会保存答案并自动继续运行。若又出现新的问题，按同样的步骤回答；不需要再执行 `start`。
+
+### 确认开发方案
+
+看到 `approve_plan` 时，先阅读 `plan`，检查功能是否符合需求、是否引入了不需要的数据库或收费服务，以及测试是否覆盖了你的验收要求。
+
+如果当前只有 `approve_plan` 这一个问题，并且方案符合预期，执行：
+
+```sh
+cat > answers.json <<'EOF_ANSWERS'
+{"approve_plan":"yes"}
+EOF_ANSWERS
+```
+
+然后提交：
+
+```sh
+npx --yes @gaaraa/runner@0.3.0 answer --run "$RUN_DIR" --file ./answers.json
+```
+
+如果要修改方案，把答案改成具体修改要求，保留 `revise:` 前缀：
+
+```json
+{"approve_plan":"revise:第一次只做温度换算，不要登录和数据库，请把页面改为中文。"}
+```
+
+不理解方案时，也可以要求它换成通俗说明后重新提出方案。批准后，程序会编写代码、运行测试，并在修复次数限制内尝试处理失败。
+
+## 第八步 找到结果并打开网页
+
+### 阅读交付说明
+
+任务结束后先查询状态：
+
+```sh
+npx --yes @gaaraa/runner@0.3.0 status --run "$RUN_DIR"
+```
+
+确认结果是成功，且不再等待回答。然后读取交付说明：
+
+```sh
+cat "$RUN_DIR/delivery.md"
+```
+
+这个文件会列出项目位置、验收结果和本地启动信息。没有这个文件或仍显示等待输入时，先完成当前问题，不要直接假定开发成功。
+
+### 按交付说明启动应用
+
+**默认开发流程只会临时启动网页做检查，检查结束就会关闭服务。** 因此“测试通过”后直接打开网页地址，可能显示无法连接。你还需要手动启动应用。
+
+交付说明里的 `Start locally (argv)` 是启动命令拆开的参数列表。例如：
+
+```text
+["npm","run","dev","--","--host","127.0.0.1","--port","5173"]
+```
+
+对应的终端命令是：
+
+```sh
+npm run dev -- --host 127.0.0.1 --port 5173
+```
+
+这只是格式示例，**应使用你的交付说明中实际给出的命令和端口**。如果某个参数里有空格，转成命令时用英文双引号包住这个参数。若显示 `null`，不要输入 `null`；查看项目自己的 README 和状态里的方案，确认该项目如何启动。
+
+操作顺序：
+
+1. 新开一个终端窗口（Mac 可按 `Command + N`）。
+2. 进入生成的项目目录：
+
+   ```sh
+   cd "$HOME/stagecraft-practice/my-app"
+   ```
+
+3. 执行交付说明给出的启动命令。
+4. 保持这个终端窗口开着，在浏览器地址栏输入交付说明中的 `Smoke URL` 或启动日志显示的本机地址。
+5. 实际试一下：输入 0 摄氏度，应得到 32.0 华氏度；再检查其他需求。
+
+`127.0.0.1` 和 `localhost` 指你自己的电脑，发给别人不会让他们看到你的应用。想停止网页服务，在运行它的终端按 `Ctrl + C`。下次使用时，进入项目目录再运行启动命令即可，无需重新生成项目。
+
+## 第九步 暂停后继续或处理失败
+
+### 主动暂停后继续
+
+按 `Ctrl + C` 后，等程序退出。下次打开终端，重新设置 `RUN_DIR`，然后运行：
+
+```sh
+npx --yes @gaaraa/runner@0.3.0 resume --run "$RUN_DIR"
+```
+
+`resume` 接着已有任务继续。不要删除项目里的 `.stagecraft` 文件夹，它保存恢复所需的记录。
+
+### 遇到需要处理的错误
+
+如果当前问题是 `resume_action`，先阅读错误和日志路径，解决原因后再选择操作。例如恢复网络或完成 Codex 登录后，可创建：
+
+```sh
+cat > answers.json <<'EOF_ANSWERS'
+{"resume_action":"retry"}
+EOF_ANSWERS
+```
+
+再执行 `answer` 命令。`retry` 表示重试；`manual_fix` 表示你已经手动处理了实现或部署问题，需要程序重新检查；`stop` 表示取消本次任务。只在当前确实询问 `resume_action` 时使用这些答案。
+
+修复预算用完时，不要反复提交 `retry`。查看具体失败、请有经验的人协助修复，再根据程序当前问题决定下一步。普通 `resume` 不会自动替你回答待处理的问题。
+
+## 进阶 在本机部署并保持服务运行
+
+第一次成功打开网页后，再做这一节。部署入口会检查已有项目，提出缺少的 Docker 配置，经你确认后执行本机 Docker Compose 部署。
+
+### 安装 Docker Desktop
+
+Mac 用户打开 [Docker Desktop 官方安装页](https://docs.docker.com/desktop/setup/install/mac-install/)。在“关于本机”查看芯片：Apple M 系列选 Apple silicon，Intel 选 Intel。下载后打开 `.dmg`，将 Docker 拖入“应用程序”，再启动 Docker 并完成界面提示。
+
+等 Docker 启动完成，在终端依次执行：
+
+```sh
+docker --version
+docker compose version
+docker info
+```
+
+前两条显示版本号，第三条应能显示服务端信息，而不是无法连接 Docker 的错误。后续部署时保持 Docker Desktop 运行。
+
+### 部署刚才生成的项目
+
+如果之前手动启动的网页占用了准备使用的端口，先在对应终端按 `Ctrl + C` 停止它。接着执行：
+
+```sh
+npx --yes @gaaraa/deploy@0.3.0 run --dir "$HOME/stagecraft-practice/my-app"
+```
+
+这是一次新的部署任务，会输出新的运行目录。将 `RUN_DIR` 更新为这次的路径，并使用同版本 runner 的 `status` 和 `answer` 命令处理问题。
+
+程序可能询问端口、需要保留的数据等。读清建议后作答；若出现 `approve_setup`，检查 `setup` 里的配置草稿，再用 `{"approve_setup":"yes"}` 确认。之后可能还会出现 `approve_plan`，需另行确认部署方案。每次都以当前问题为准，不要一次提交所有确认字段。
+
+成功后的 `delivery.md` 会给出服务地址和清理命令 `Scoped cleanup argv`。打开该地址检查应用；要停止这次部署，按文件提供的参数列表执行对应的 Docker 命令。不要随意增加删除数据卷的参数，以免删掉要保留的数据。
+
+本机部署需要你的电脑和 Docker 继续运行。当前流程不负责购买域名、发布到云服务器或生成公网访问地址。
+
+如果下一次想从新需求直接走到部署，可以在开始时加上 `--until deploy`：
+
+```sh
+npx --yes @gaaraa/runner@0.3.0 start --prd ./PRD.md --dir ./another-app --until deploy
+```
+
+## 进阶 检查和修复已有项目
+
+先备份项目，再把以下路径替换成自己的实际项目目录，并保留引号。
+
+只检查、不自动修复业务代码：
+
+```sh
+npx --yes @gaaraa/test@0.3.0 run --dir "/你的项目完整路径" --mode audit
+```
+
+测试失败后允许自动修复业务代码：
+
+```sh
+npx --yes @gaaraa/test@0.3.0 run --dir "/你的项目完整路径" --mode repair
+```
+
+两种方式都可能在确认后补充缺少的测试，因此 `audit` 不代表完全不写文件。后续回答和恢复方式与开发任务相同，这两个入口都不需要 PRD。
+
+## 进阶 其他阶段包有什么用
+
+| 包 | 什么时候使用 |
+| --- | --- |
+| `runner` | 从需求开始，完成开发、测试，按需继续部署；新手从这里开始 |
+| `build` | 单独从需求进入开发，`run --prd ./PRD.md --dir ./my-app` |
+| `test` | 对已有项目测试或修复 |
+| `deploy` | 对已有项目进行本机 Compose 部署 |
+| `discover`、`spec`、`design`、`architect` | 安装对应阶段的技能文件，供支持这些技能的工具使用 |
+
+例如安装设计技能：
 
 ```sh
 npx --yes @gaaraa/design@0.3.0 init --agent codex --dir ./my-app
 ```
 
-## 确认、人工介入与恢复
+`init` 只安装技能，不会单独生成完整应用。`runner/build/test/deploy` 已包含所需运行器和方法资源，不用把所有阶段包安装一遍。
 
-运行器输出 runDir、pending.questions 和计划。根据实际问题 ID 创建 answers.json，例如方案确认是 `{"approve_plan":"yes"}`；部署配置通常为 `approve_setup`，应以实际输出为准。
+## 常见问题与下一步
 
-```sh
-npx --yes @gaaraa/runner@0.3.0 status --run /absolute/path/to/run
-npx --yes @gaaraa/runner@0.3.0 answer --run /absolute/path/to/run --file ./answers.json
-npx --yes @gaaraa/runner@0.3.0 resume --run /absolute/path/to/run
-```
+| 看到的现象 | 下一步操作 |
+| --- | --- |
+| `command not found: node` 或 `npx` | 完成 Node.js 安装，重新打开终端，再检查版本 |
+| `codex` 找不到或 `spawn codex ENOENT` | 确认同一个终端中 `codex --version` 能成功；按安装器提示处理命令路径 |
+| Codex 登录失败或额度不足 | 单独运行 `codex` 检查登录和账号；解决后回答当前的恢复问题 |
+| npm 显示 `E404` | 核对包名是 `@gaaraa/runner@0.3.0`；执行 `npm config get registry` 检查下载源。如使用镜像，可在 npx 命令中加 `--registry=https://registry.npmjs.org` 重试 |
+| 下载超时或网络错误 | 确认电脑能访问 npm 和 Codex 服务，再重试对应步骤 |
+| `ENOENT`，提示找不到 `PRD.md` | 执行 `pwd` 查看当前目录，回到练习文件夹，再执行 `cat PRD.md` |
+| `PRD is empty` | 需求文件为空，重新写入需求并保存 |
+| `waiting_input`，终端出现红色退出标记 | 查看问题并创建答案文件，这是等待回答的正常状态 |
+| `Provide exactly these nonempty string answers` | 按当前问题 id 重写答案；每个都要回答，不要多加字段或留空 |
+| JSON 解析失败 | 使用英文双引号，删除最后一项后的逗号，确认文件是纯文本 |
+| `Run is not waiting for input` | 先运行 `status`；不要向已完成或未等待回答的任务重复提交答案 |
+| `RUN_DIR` 为空或路径不对 | 当前窗口重新设置路径；不要使用文档中的示例用户名或任务编号 |
+| 网页无法连接 | 默认验收后服务已关闭，按交付说明启动应用，并检查实际端口 |
+| 端口已占用 | 停止自己先前启动的同一应用，或让部署方案改用空闲端口 |
+| Docker 无法连接 | 打开 Docker Desktop，等启动完成，用 `docker info` 检查 |
+| `No reviewed skills mapping` | 当前技术栈没有对应方法映射；不要随便改已有项目技术栈，先请维护者协助 |
+| 修复次数用完或任务持续失败 | 保留日志和运行目录，提供错误内容及最后执行的命令请人协助 |
 
-answer 保存回答并自动继续。Ctrl-C 暂停后可 resume；执行错误需要按 pending 的恢复问题回答，不能假定 resume 会自动解决错误。修复有次数上限，达到上限会请求人工介入。test/deploy 包也提供 answer/status/resume，可接续同版本记录。退出码：0成功，2待输入，3审计发现失败，130暂停，1命令错误。
+寻求帮助时，可以提供：系统版本、`node --version`、Stagecraft 版本、执行的命令、当前 `status` 和错误末尾的文字。日志可能包含需求与项目内容，分享前检查；不要发送密码、Token 或密钥。
 
-技能随包固定版本分发，按阶段及技术栈匹配；可使用 `--stack vue,postgres` 显式选择。不会在执行中悄悄更新上游 skills。
+## Windows 和 Linux 用户
 
-## 升级与排障
+上面的完整实践流程已在 macOS 环境验证。Windows 与 Linux 上的安装、路径和进程行为需单独验证，不能把这份 Mac 跟做记录当作跨平台验收结果。
 
-建议固定版本以复现运行；新项目可使用 @latest。继续旧 run 时保留原版本，不保证跨版本检查点迁移。若 npm 返回404，先确认正式scope、版本和发布结果；若Codex认证失败，先在终端运行 codex 完成登录。若Docker不可用，先启动Docker并确认上下文。包安装不提供模型凭据、云服务器或数据库账户。
+Windows 用户可先查看 [Codex 官方说明](https://developers.openai.com/codex/cli/) 中的 Windows 安装入口；如果使用 WSL，请将 Node.js、Codex 和项目文件都放在同一个 WSL 环境中操作。本文的 `cat <<...`、`$HOME` 和 `RUN_DIR=...` 示例面向类 Unix 终端，不能直接当作 PowerShell 命令。需要部署时参考 [Docker Desktop Windows 安装说明](https://docs.docker.com/desktop/setup/install/windows-install/)。
+
+Linux 用户先按 [Node.js 官方下载页](https://nodejs.org/en/download) 和 Codex 官方指南完成环境准备，再在终端中确认三个工具可用。部署还需要可用的 Docker Engine 和 Compose。
+
+## 升级时注意什么
+
+第一次请固定使用本文的 `0.3.0`。恢复旧任务时继续使用创建它时的版本，不要中途改成 `@latest`。已有项目和 `.stagecraft` 目录一起保留；开始新项目时再选择新版本，并阅读对应版本说明。
+
+本指南讲的是使用公开 npm 包，不需要执行源码仓库里的 `npm run build` 或 `npm run release`。维护和发布软件的流程另见 [维护者发布指南](npm-publishing.md)。
