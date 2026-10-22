@@ -1,6 +1,6 @@
 {
   "name": "@gaaraa/test",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Standalone existing-project test and repair runner",
   "files": [
     "README.md",

@@ -12,7 +12,7 @@ for (const stage of ['discover','spec','design','architect','build','test','depl
     assert.match(skill, /执行闭环/); assert.match(skill, /验收/); assert.match(skill, /平滑交接/);
     assert.equal(await readFile(join(root,'references/protocol.md'),'utf8'), await readFile('tooling/skill-shared/protocol.md','utf8'));
     assert.equal(await readFile(join(root,'scripts/handoff.mjs'),'utf8'), await readFile('tooling/skill-shared/handoff.mjs','utf8'));
-    for (const file of ['artifact-reviews.md','coverage.md','upstream-adapters.md']) {
+    for (const file of ['artifact-reviews.md','coverage.md','upstream-adapters.md','change-control.md']) {
       assert.equal(await readFile(join(root,'references',file),'utf8'), await readFile(join('tooling/skill-shared',file),'utf8'));
     }
     await access(join(root,'references/stage-guide.md'));

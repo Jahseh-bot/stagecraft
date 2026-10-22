@@ -27,13 +27,50 @@ async function atomic(path, value) {
   try { await writeFile(temporary, JSON.stringify(value, null, 2) + '\n', { flag: 'wx', mode: 0o600 }); await rename(temporary, path); }
   finally { await rm(temporary, { force: true }); }
 }
-function invalidate(state, from, reason) {
+function impact(state, roots = []) {
+  const graph = state.trace?.graph;
+  const currentCoverage = graph && state.sequence.every(stage => state.stages[stage].artifacts.every(a => graph.nodes.some(n => n.path === a.path && n.stage === stage)));
+  // Missing mapping is uncertainty, never proof of independence.
+  if (!graph || !currentCoverage || !state.trace.coverageComplete || !roots.length || roots.some(id => !graph.nodes.some(n => n.id === id)))
+    return { nodes: graph?.nodes ?? [], stages: [...state.sequence], conservative: true };
+  const reached = new Set(roots);
+  let changed = true;
+  while (changed) {
+    changed = false;
+    const paths = new Set(graph.nodes.filter(n => reached.has(n.id)).map(n => n.path));
+    for (const node of graph.nodes) if (paths.has(node.path) && !reached.has(node.id)) { reached.add(node.id); changed = true; }
+    for (const edge of graph.edges) {
+      if (reached.has(edge.from) || reached.has(edge.to)) {
+        for (const id of [edge.from, edge.to]) if (!reached.has(id)) { reached.add(id); changed = true; }
+      }
+    }
+  }
+  const nodes = graph.nodes.filter(n => reached.has(n.id));
+  return { nodes, stages: [...new Set(nodes.map(n => n.stage))], conservative: false };
+}
+function invalidate(state, from, reason, paths = []) {
+  if (paths.length && state.trace) {
+    const roots = state.trace.graph.nodes.filter(n => paths.includes(n.path)).map(n => n.id);
+    const affected = impact(state, roots);
+    from = Math.min(from, ...affected.stages.map(s => state.sequence.indexOf(s)));
+  }
   for (const stage of state.sequence.slice(from)) {
     const item = state.stages[stage];
     if (item.status !== 'pending') { item.status = 'stale'; item.reason = reason; }
   }
 }
+async function snapshotRecord(state, directory, category, value) {
+  const path = join(directory, category, randomUUID() + '.json');
+  await noLinks(path); await mkdir(dirname(path), { recursive: true });
+  await writeFile(path, JSON.stringify(value, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+  return record(state.project, relative(state.project, path));
+}
 async function refresh(state) {
+  for (const saved of [state.trace?.record, ...(state.changes ?? []).flatMap(c => [c.record, c.resolution?.record])].filter(Boolean)) {
+    let same = false;
+    try { same = (await record(state.project, saved.path)).sha256 === saved.sha256; } catch {}
+    if (!same) { invalidate(state, 0, `Changed linkage/change record: ${saved.path}`); return; }
+  }
   for (const [index, stage] of state.sequence.entries()) {
     const item = state.stages[stage];
     if (!['completed', 'awaiting_review', 'approved'].includes(item.status)) continue;
@@ -42,7 +79,7 @@ async function refresh(state) {
     for (const file of [...item.artifacts, ...item.evidence, ...submission.snapshots, ...(submission.review ? [submission.review.record] : [])]) {
       let same = false;
       try { same = (await record(state.project, file.path)).sha256 === file.sha256; } catch { /* missing or unsafe inputs invalidate the handoff */ }
-      if (!same) { invalidate(state, index, `Changed or missing evidence: ${file.path}`); return; }
+      if (!same) { invalidate(state, index, `Changed or missing evidence: ${file.path}`, [file.path, file.original].filter(Boolean)); return; }
     }
   }
 }
@@ -75,7 +112,7 @@ export async function handoff(command, options) {
     const file = join(directory, 'workflow.json');
     await noLinks(file);
     const state = JSON.parse(await readFile(file, 'utf8'));
-    ensure(['stagecraft-handoff/v1', 'stagecraft-handoff/v2'].includes(state.schema) && Array.isArray(state.sequence), 'Unsupported handoff schema');
+    ensure(['stagecraft-handoff/v1', 'stagecraft-handoff/v2', 'stagecraft-handoff/v3'].includes(state.schema) && Array.isArray(state.sequence), 'Unsupported handoff schema');
     ensure(state.sequence.length && state.sequence.every(s => stages.includes(s) && state.stages?.[s]), 'Invalid stage sequence');
     ensure(directory === join(state.project, '.stagecraft', 'workflows', state.id), 'Workflow location does not match project');
     if (state.schema === 'stagecraft-handoff/v1') {
@@ -86,7 +123,61 @@ export async function handoff(command, options) {
     await refresh(state);
     // Persist invalidation even when the requested transition is subsequently refused.
     await atomic(file, state);
-    if (command !== 'status') {
+    if (['trace', 'change', 'change-close'].includes(command)) {
+      ensure(text(options.record), 'record is required');
+      const input = JSON.parse(await readFile(resolve(options.record), 'utf8'));
+      state.changes ??= [];
+      if (command === 'trace') {
+        ensure(!state.changes.some(c => c.status === 'open'), 'Resolve open changes before replacing the trace graph');
+        ensure(Array.isArray(input.nodes) && input.nodes.length && Array.isArray(input.edges), 'Trace requires nodes and edges');
+        const ids = new Set();
+        for (const node of input.nodes) {
+          ensure(text(node.id) && !ids.has(node.id) && state.sequence.includes(node.stage), 'Trace needs unique IDs and authorized stages');
+          ensure(text(node.label), 'Trace node needs a descriptive label');
+          await record(state.project, node.path); ids.add(node.id);
+        }
+        for (const edge of input.edges) ensure(ids.has(edge.from) && ids.has(edge.to) && text(edge.reason), 'Trace edge requires existing IDs and a reason');
+        // Complete file coverage is required; omitted artifacts force conservative impact below.
+        const known = state.sequence.flatMap(stage => state.stages[stage].artifacts.map(a => ({ stage, path: a.path })));
+        const coverageComplete = known.every(a => input.nodes.some(n => n.path === a.path && n.stage === a.stage));
+        state.traceHistory ??= []; if (state.trace) state.traceHistory.push(state.trace);
+        state.trace = { graph: input, coverageComplete, record: await snapshotRecord(state, directory, 'trace', input) };
+      } else if (command === 'change') {
+        ensure(text(input.summary) && text(input.source) && state.sequence.includes(input.originStage), 'Change needs summary, source and authorized originStage');
+        ensure(Array.isArray(input.roots) && input.roots.every(text), 'Change roots must be node IDs (empty means conservative full impact)');
+        const affected = state.trace?.coverageComplete ? impact(state, input.roots) : { nodes: state.trace?.graph.nodes ?? [], stages: [...state.sequence], conservative: true };
+        // Stage ordering remains conservative. Node-level work is scoped by the impact report.
+        const earliest = Math.min(state.sequence.indexOf(input.originStage), ...affected.stages.map(s => state.sequence.indexOf(s)));
+        const required = state.sequence.slice(earliest).filter(s => state.stages[s].status !== 'pending');
+        const change = { id: randomUUID(), status: 'open', summary: input.summary, source: input.source,
+          originStage: input.originStage, roots: input.roots, impact: affected, requiredStages: required,
+          baseline: Object.fromEntries(required.map(s => [s, state.stages[s].currentSubmission ?? null])),
+          openedAt: new Date().toISOString(), record: await snapshotRecord(state, directory, 'changes', input) };
+        state.changes.push(change); invalidate(state, earliest, `Open change ${change.id}: ${input.summary}`);
+      } else {
+        const change = state.changes.find(c => c.id === input.change && c.status === 'open');
+        ensure(change, 'Name an open change');
+        ensure(text(input.summary), 'Resolution summary required');
+        ensure(change.requiredStages.every(s => state.stages[s].status === 'completed' && state.stages[s].currentSubmission !== change.baseline[s]), 'Affected stages need fresh verified submissions and user approval');
+        ensure(Array.isArray(input.items), 'Resolution requires artifact dispositions');
+        const nodeIds = change.impact.nodes.map(n => n.id);
+        ensure(input.items.length === nodeIds.length && new Set(input.items.map(i => i.id)).size === nodeIds.length, 'Resolve each impacted node exactly once');
+        for (const item of input.items) {
+          const node = change.impact.nodes.find(n => n.id === item.id);
+          ensure(node && ['updated','retained','removed'].includes(item.action) && text(item.reason), 'Every node needs a disposition and reason');
+          const current = state.stages[node.stage];
+          ensure(current.status === 'completed', 'Impacted node stage must be reviewed');
+          const approved = [...current.artifacts, ...current.evidence];
+          ensure(approved.some(f => f.path === item.evidence), 'Disposition evidence must belong to the current approved submission');
+          if (item.action !== 'removed') ensure(approved.some(f => f.path === node.path), 'Retained or updated artifact must be in its approved stage submission');
+          else { let exists = true; try { await lstat(resolve(state.project,node.path)); } catch (e) { if(e.code === 'ENOENT') exists = false; else throw e; } ensure(!exists, 'Removed artifact still exists'); }
+        }
+        change.status = 'closed'; change.closedAt = new Date().toISOString();
+        change.resolution = { summary: input.summary, record: await snapshotRecord(state, directory, 'changes', input), submissions: Object.fromEntries(change.requiredStages.map(s => [s,state.stages[s].currentSubmission])) };
+      }
+      // Older helpers must reject linked workflows rather than ignore change obligations.
+      state.schema = 'stagecraft-handoff/v3';
+    } else if (command !== 'status') {
       const stage = options.stage, index = state.sequence.indexOf(stage);
       ensure(index >= 0, 'Stage is outside the authorized entry/until range');
       const item = state.stages[stage];
@@ -163,9 +254,9 @@ export async function handoff(command, options) {
 async function main() {
   const [command, ...args] = process.argv.slice(2);
   if (!command || ['--help', 'help'].includes(command)) {
-    console.log('init --project PATH --entry STAGE [--until STAGE] --goal TEXT\nstatus --workflow PATH\nbegin --workflow PATH --stage STAGE\nsubmit --workflow PATH --stage STAGE --receipt FILE\nreview --workflow PATH --stage STAGE --record FILE\ncomplete --workflow PATH --stage STAGE\nblock --workflow PATH --stage STAGE --reason TEXT'); return;
+    console.log('init --project PATH --entry STAGE [--until STAGE] --goal TEXT\nstatus --workflow PATH\nbegin --workflow PATH --stage STAGE\nsubmit --workflow PATH --stage STAGE --receipt FILE\nreview --workflow PATH --stage STAGE --record FILE\ncomplete --workflow PATH --stage STAGE\nblock --workflow PATH --stage STAGE --reason TEXT\ntrace --workflow PATH --record FILE\nchange --workflow PATH --record FILE\nchange-close --workflow PATH --record FILE'); return;
   }
-  const allowed = { init: ['project','entry','until','goal'], status: ['workflow'], begin: ['workflow','stage'], submit: ['workflow','stage','receipt'], review: ['workflow','stage','record'], complete: ['workflow','stage'], block: ['workflow','stage','reason'] }[command];
+  const allowed = { init: ['project','entry','until','goal'], status: ['workflow'], trace: ['workflow','record'], change: ['workflow','record'], 'change-close': ['workflow','record'], begin: ['workflow','stage'], submit: ['workflow','stage','receipt'], review: ['workflow','stage','record'], complete: ['workflow','stage'], block: ['workflow','stage','reason'] }[command];
   ensure(allowed, 'Unknown command');
   const options = {};
   while (args.length) {

@@ -184,3 +184,55 @@ test('agent self-review, missing presentation and invalid decisions cannot appro
   await assert.rejects(attempt(),/decision/);
   assert.equal((await handoff('status',r)).stages.build.status,'awaiting_review');
 });
+
+async function linked(t) {
+  const r = await rig(t);
+  await handoff('begin',{...r,stage:'build'}); await r.complete('build');
+  await handoff('begin',{...r,stage:'test'}); await r.complete('test');
+  const record = join(r.project,'linkage.json');
+  const graph = {nodes:[{id:'CODE-1',stage:'build',path:'code.mjs',label:'implementation'}, {id:'TC-1',stage:'test',path:'code.mjs',label:'tested contract'}],edges:[{from:'CODE-1',to:'TC-1',reason:'verifies'}]};
+  await writeFile(record,JSON.stringify(graph)); await handoff('trace',{...r,record});
+  return {...r,record,graph};
+}
+test('test-origin change traverses dependencies backwards, invalidates approvals and cannot close early',async t=>{
+  const r=await linked(t);
+  await writeFile(r.record,JSON.stringify({originStage:'test',roots:['TC-1'],summary:'Test exposes requirement mismatch',source:'explicit user change'}));
+  let s=await handoff('change',{...r,record:r.record});
+  assert.equal(s.schema,'stagecraft-handoff/v3');assert.equal(s.stages.build.status,'stale');assert.equal(s.stages.test.status,'stale');
+  const c=s.changes[0];assert.deepEqual(c.impact.nodes.map(n=>n.id),['CODE-1','TC-1']);
+  await writeFile(r.record,JSON.stringify({change:c.id,summary:'done',items:[]}));
+  await assert.rejects(handoff('change-close',{...r,record:r.record}),/fresh verified/);
+  await assert.rejects(handoff('trace',{...r,record:r.record}),/open changes/);
+  await handoff('begin',{...r,stage:'build'});await r.complete('build');
+  await handoff('begin',{...r,stage:'test'});await r.complete('test');
+  await assert.rejects(handoff('change-close',{...r,record:r.record}),/each impacted node/);
+  await writeFile(r.record,JSON.stringify({change:c.id,summary:'Revalidated both revised baselines',items:[{id:'CODE-1',action:'retained',reason:'No code change after clarified requirement',evidence:'check.log'},{id:'TC-1',action:'retained',reason:'Reviewed against clarified requirement',evidence:'check.log'}]}));
+  s=await handoff('change-close',{...r,record:r.record});assert.equal(s.changes[0].status,'closed');
+  assert.equal(s.stages.build.submissions.length,2);assert.equal(s.stages.test.submissions.length,2);
+});
+test('unmapped changes fall back to full workflow; unsafe or dangling trace entries are refused',async t=>{
+  const r=await linked(t);
+  await writeFile(r.record,JSON.stringify({originStage:'test',roots:['unknown'],summary:'Unmapped change',source:'user'}));
+  const s=await handoff('change',{...r,record:r.record});assert.equal(s.changes[0].impact.conservative,true);assert.equal(s.stages.build.status,'stale');
+  const fresh=await rig(t);
+  for(const graph of [
+    {nodes:[{id:'X',stage:'build',path:'../out',label:'unsafe'}],edges:[]},
+    {nodes:[{id:'X',stage:'build',path:'code.mjs',label:'ok'}],edges:[{from:'X',to:'missing',reason:'bad'}]}
+  ]) {await writeFile(fresh.receipt,JSON.stringify(graph));await assert.rejects(handoff('trace',{...fresh,record:fresh.receipt}),/safe project-relative|existing IDs/);}
+});
+test('file edits propagate backwards through trace links even when detected at a later stage',async t=>{
+  const r=await rig(t);await writeFile(join(r.project,'cases.md'),'case v1');
+  await handoff('begin',{...r,stage:'build'});await r.complete('build');
+  await handoff('begin',{...r,stage:'test'});
+  await writeFile(r.receipt,JSON.stringify({stage:'test',summary:'Test cases',next:'review',artifacts:['cases.md'],evidence:[{path:'check.log',check:'review',method:'inspection',result:'passed'}]}));
+  await handoff('submit',{...r,stage:'test'});await r.review('test');await handoff('complete',{...r,stage:'test'});
+  const record=join(r.project,'trace.json');
+  await writeFile(record,JSON.stringify({nodes:[{id:'CODE',stage:'build',path:'code.mjs',label:'code'},{id:'TC',stage:'test',path:'cases.md',label:'cases'}],edges:[{from:'CODE',to:'TC',reason:'verifies'}]}));
+  await handoff('trace',{...r,record});await writeFile(join(r.project,'cases.md'),'changed test expectation');
+  const s=await handoff('status',r);assert.equal(s.stages.build.status,'stale');assert.equal(s.stages.test.status,'stale');
+});
+test('trace record tampering invalidates the baseline and persists after rejected transition',async t=>{
+  const r=await linked(t);const s=await handoff('status',r);await writeFile(join(r.project,s.trace.record.path),'{}');
+  await assert.rejects(handoff('complete',{...r,stage:'test'}),/review approval/);
+  assert.equal((await handoff('status',r)).stages.build.status,'stale');
+});

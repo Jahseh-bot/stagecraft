@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0 — Bidirectional change propagation (release in progress)
+
+- Link requirements, designs, architecture, code, test cases and documentation; track CRs and actual synchronization through review and revalidation.
+- Add trace/change/change-close records, bidirectional impact traversal, conservative fallback for missing mappings and fresh-approval requirements for closure. Linked workflows use v3 so older helpers refuse them.
+- Update all seven first-party skills and website prompts. Preserve third-party sources, released tarballs and stage review boundaries.
+
 ## 0.4.2 — Stage-by-stage conversation gates
 
 - End each artifact delivery turn and wait for a later user review; revised artifacts require a fresh review.

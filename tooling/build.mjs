@@ -16,6 +16,7 @@ for (const entry of await readdir(join(root, 'packages'), { withFileTypes: true 
   await mkdir(join(skillRoot, 'references'), { recursive: true });
   await copyFile(join(root, 'tooling/skill-shared/protocol.md'), join(skillRoot, 'references/protocol.md'));
   await copyFile(join(root, 'tooling/skill-shared/artifact-reviews.md'), join(skillRoot, 'references/artifact-reviews.md'));
+  await copyFile(join(root, 'tooling/skill-shared/change-control.md'), join(skillRoot, 'references/change-control.md'));
   await copyFile(join(root, 'tooling/skill-shared/coverage.md'), join(skillRoot, 'references/coverage.md'));
   await copyFile(join(root, 'tooling/skill-shared/upstream-adapters.md'), join(skillRoot, 'references/upstream-adapters.md'));
   await copyFile(join(root, 'tooling/skill-shared/handoff.mjs'), join(skillRoot, 'scripts/handoff.mjs'));
