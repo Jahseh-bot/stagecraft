@@ -89,3 +89,11 @@ macOS临时目录的 /var 为符号链接，安装器会拒绝含符号链接的
 2026-10-22，八个 `@gaaraa/*@0.5.0` 从 output/releases/0.5.0 的固定 tarball 全部发布成功。七阶段包及最外层 skills/ 已逐一检查包含变更关联图、CR 协议、v3 助手与阶段停顿规则；三方来源不变。发布记录见 publish-results.json，制品检查见 linkage-payload-verification.json。
 
 发布前 95 项项目测试、414 个入口的 Skills 审计、八包打包预检、4 项官网检查和 7 项浏览器测试通过。源码提交 c0adc05 的 GitHub Release checks（39718923711）及首轮 Pages 部署（39718923742）均成功。首次公共安装遇到 ETARGET 传播延迟，使用原始制品清单继续有限重试，不重发或修改已上传 tarball；最终公共安装与本机更新验收另行记录。
+
+### 0.5.0 最终验收
+
+八包全部通过公共 registry integrity 校验及独立缓存真实 npx 执行；七阶段技能成功安装，runtime 包版本及 Vue/Postgres 技能路由检查通过。ETARGET/404 传播延迟后继续使用原制品，验收副本仅将 ETARGET 加入原有有限重试条件，没有改变验证标准。记录见 output/releases/0.5.0/registry-verification.json。
+
+本机七个全局技能已从上述公共安装结果更新至 0.5.0，逐文件 SHA-256 与本次源码技能一致，包含全链路变更协议、v3 助手和强制阶段停顿。旧目录已移到宿主扫描目录之外备份；更新来源、文件数、integrity 和备份位置见 output/releases/0.5.0/local-skills-verification.json。下一轮使用时重新读取技能；若宿主缓存内容，重新加载 Skills 或开启新会话。
+
+官网安装教程提交 5c3abe7 的 Pages 工作流 39719229544 及 Release checks 39719229466 均 completed/success。公网上的安装、产物评审、首次任务、升级和更新记录五个页面已实际核对，显示 0.5.0、全链路变更与逐阶段评审规则，详见 website-verification.json。这次没有重新运行“每日三件事”的产品测试阶段，也没有将包分发验证宣称为所有 coding agent 的真实行为保证。
