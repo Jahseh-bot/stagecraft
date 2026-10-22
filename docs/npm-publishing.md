@@ -83,3 +83,9 @@ macOS临时目录的 /var 为符号链接，安装器会拒绝含符号链接的
 公共 registry 初期出现 ETARGET/404 缓存传播延迟，未重发或改动 tarball。以相同制品清单调整检查顺序后，八包全部通过元数据 integrity 比对、独立缓存真实 npx 执行；七阶段安装后的 SKILL.md 与共享协议逐字匹配本次修复源码。最终记录归档至 output/releases/0.4.2/registry-verification.json。
 
 官网提交 293b483 的 GitHub Pages 工作流 39584582172 已 completed/success；公网安装页显示 0.4.2，首次任务页同时展示 npm 0.4.2 和“本轮结束，等待你评审”。91 项包级回归、4 项官网检查、7 项浏览器测试均通过；这些检查不等于所有 coding agent 的真实模型行为保证。
+
+## 0.5.0 全链路变更联动发布
+
+2026-10-22，八个 `@gaaraa/*@0.5.0` 从 output/releases/0.5.0 的固定 tarball 全部发布成功。七阶段包及最外层 skills/ 已逐一检查包含变更关联图、CR 协议、v3 助手与阶段停顿规则；三方来源不变。发布记录见 publish-results.json，制品检查见 linkage-payload-verification.json。
+
+发布前 95 项项目测试、414 个入口的 Skills 审计、八包打包预检、4 项官网检查和 7 项浏览器测试通过。源码提交 c0adc05 的 GitHub Release checks（39718923711）及首轮 Pages 部署（39718923742）均成功。首次公共安装遇到 ETARGET 传播延迟，使用原始制品清单继续有限重试，不重发或修改已上传 tarball；最终公共安装与本机更新验收另行记录。

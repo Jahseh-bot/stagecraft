@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.0 — Bidirectional change propagation (release in progress)
+## 0.5.0 — Bidirectional change propagation (published 2026-10-22)
 
 - Link requirements, designs, architecture, code, test cases and documentation; track CRs and actual synchronization through review and revalidation.
 - Add trace/change/change-close records, bidirectional impact traversal, conservative fallback for missing mappings and fresh-approval requirements for closure. Linked workflows use v3 so older helpers refuse them.
