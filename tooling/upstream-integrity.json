@@ -240,6 +240,12 @@
       "path": "vendor/mattpocock/domain-modeling",
       "sha256": "a173418210ad5696ec8767bf2fc6355860a6d77b8ee65302ce6cc70d53ed3c85",
       "files": 5
+    },
+    {
+      "id": "reverse-engineer-anything",
+      "path": "vendor/morluto/reverse-engineer-anything",
+      "sha256": "7e97840225e7426ff7c925536d300a3e8f0274eb9370fe95048cad2d80762bf8",
+      "files": 9
     }
   ]
 }

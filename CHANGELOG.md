@@ -1,5 +1,25 @@
 # Changelog
 
+## Unreleased — Native harness decision UI
+
+- Prefer discovered native choice tools for questions and reviews across all seven stages, with recommendation-first options, custom input and explicit fallback reasons.
+- Allow artifact presentation and version-bound native review after submission without bypassing stage boundaries; never accept automatic or empty responses as approval.
+- Document mode/tool restrictions, asynchronous answers, stale review responses and the limits of skills-only UI adaptation.
+
+## Unreleased — Complete architecture options
+
+- Require comparable end-to-end technology proposals rather than frontend-only stacks, with explicit capability ownership and justified omissions.
+- Cover backend/API, data, identity, conditional infrastructure, engineering, delivery and operations; retain user choices and stage review gates.
+- Expand architecture report templates and beginner prompts; third-party skills remain unchanged.
+
+## Unreleased — Reference-product research in spec
+
+- Route reference products through available REA artifact/runtime analysis or direct source inspection, with explicit evidence limits.
+- Persist core technology and business logic, adoption decisions and REF-to-AC links in spec; preserve research/PRD review gates and downstream change control.
+- Bundle the unmodified REA skill and all seven reference guides at upstream cce33142ede98d39c0ce289931700c8c7a0d9cdc, with MIT license and integrity tracking. Existing third-party skills remain unchanged; MCP providers are not installed.
+- Add first-party guidance and beginner prompts.
+
+
 ## 0.5.0 — Bidirectional change propagation (published 2026-10-22)
 
 - Link requirements, designs, architecture, code, test cases and documentation; track CRs and actual synchronization through review and revalidation.

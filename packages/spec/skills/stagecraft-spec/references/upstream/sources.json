@@ -16,5 +16,11 @@
     "source": "https://github.com/mattpocock/skills/tree/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/domain-modeling",
     "revision": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
     "license": "MIT"
+  },
+  {
+    "id": "reverse-engineer-anything",
+    "source": "https://github.com/morluto/rea/tree/cce33142ede98d39c0ce289931700c8c7a0d9cdc/.agents/skills/reverse-engineer-anything",
+    "revision": "cce33142ede98d39c0ce289931700c8c7a0d9cdc",
+    "license": "MIT"
   }
 ]
